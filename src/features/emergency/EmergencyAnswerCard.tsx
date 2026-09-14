@@ -11,8 +11,8 @@ interface EmergencyAnswerCardProps {
 
 export function EmergencyAnswerCard({ guide }: EmergencyAnswerCardProps) {
   return (
-    <article aria-live="polite">
-      <h3>緊急指引</h3>
+    <article aria-live="polite" aria-labelledby="emergency-answer-heading">
+      <h3 id="emergency-answer-heading">緊急指引</h3>
       <section>
         <h4>現在先做</h4>
         <ul>

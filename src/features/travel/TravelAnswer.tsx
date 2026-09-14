@@ -11,8 +11,8 @@ export function TravelAnswer({ travelAnswer }: TravelAnswerProps) {
   const actionList = Array.isArray(travelAnswer.action) ? travelAnswer.action : [travelAnswer.action];
 
   return (
-    <article aria-live="polite">
-      <h3>結論</h3>
+    <article aria-live="polite" aria-labelledby="travel-answer-heading">
+      <h3 id="travel-answer-heading">結論</h3>
       <p>{travelAnswer.conclusion}</p>
 
       <h3>怎麼做</h3>

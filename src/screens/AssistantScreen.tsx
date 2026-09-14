@@ -3,7 +3,10 @@ import { requestAssistant } from '../services/api';
 import type { AssistantResult } from '../types/assistant';
 import type { UserTone } from '../types/request';
 import { TranslationResult } from '../features/translation/TranslationResult';
+import { TravelAnswer } from '../features/travel/TravelAnswer';
+import { EmergencyAnswerCard } from '../features/emergency/EmergencyAnswerCard';
 import { StatusMessage } from '../components/StatusMessage';
+import { LiveDataStatus } from '../components/LiveDataStatus';
 
 interface AssistantScreenProps { initialText?: string; onBack: () => void; }
 
@@ -19,6 +22,7 @@ export function AssistantScreen({ initialText = '', onBack }: AssistantScreenPro
     if (!source.trim()) return;
     setLoading(true);
     setError(undefined);
+    setResult(undefined);
     try {
       const nextResult = await requestAssistant({
         id: crypto.randomUUID(),
@@ -57,6 +61,13 @@ export function AssistantScreen({ initialText = '', onBack }: AssistantScreenPro
         {loading ? '處理中…' : '送出'}
       </button>
       {error && <StatusMessage>{error}</StatusMessage>}
+      {result && (
+        <LiveDataStatus
+          status={result.liveDataStatus}
+          message={result.liveDataMessage}
+          nextAction={result.liveDataNextAction}
+        />
+      )}
       {result?.translation && (
         <TranslationResult
           sourceText={result.translation.sourceText}
@@ -67,6 +78,8 @@ export function AssistantScreen({ initialText = '', onBack }: AssistantScreenPro
           onToneChange={(nextTone) => void handleToneChange(nextTone)}
         />
       )}
+      {result?.travelAnswer && <TravelAnswer travelAnswer={result.travelAnswer} />}
+      {result?.emergencyGuide && <EmergencyAnswerCard guide={result.emergencyGuide} />}
     </section>
   );
 }
