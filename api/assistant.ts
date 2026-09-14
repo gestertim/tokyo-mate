@@ -1,11 +1,11 @@
-import { createOpenAIClient, getOpenAIModel } from './_lib/openai';
-import { failure, isRecord, readJsonBody, success } from './_lib/http';
-import { normalizeAssistantResult } from './_lib/assistant-schema';
-import { translationInstruction } from './_lib/prompts/translation';
-import { travelInstruction } from './_lib/prompts/travel';
-import { liveDataInstruction } from './_lib/prompts/live-data';
-import { emergencyInstruction } from './_lib/prompts/emergency';
-import { selectKnowledgeEntries, serializeKnowledgeContext } from '../src/services/knowledge';
+import { createOpenAIClient, getOpenAIModel } from './_lib/openai.js';
+import { failure, isRecord, readJsonBody, success } from './_lib/http.js';
+import { normalizeAssistantResult } from './_lib/assistant-schema.js';
+import { translationInstruction } from './_lib/prompts/translation.js';
+import { travelInstruction } from './_lib/prompts/travel.js';
+import { liveDataInstruction } from './_lib/prompts/live-data.js';
+import { emergencyInstruction } from './_lib/prompts/emergency.js';
+import { selectKnowledgeEntries, serializeKnowledgeContext } from '../src/services/knowledge.js';
 import type { AssistantResult } from '../src/types/assistant';
 import type { UserRequest, UserTone } from '../src/types/request';
 

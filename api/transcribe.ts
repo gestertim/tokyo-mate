@@ -1,5 +1,5 @@
-import { createOpenAIClient } from './_lib/openai';
-import { failure, success } from './_lib/http';
+import { createOpenAIClient } from './_lib/openai.js';
+import { failure, success } from './_lib/http.js';
 
 const allowedMimeTypes = new Set(['audio/webm', 'audio/mp4', 'audio/m4a', 'audio/wav', 'audio/aac']);
 const mimeExtensionMap: Record<string, string> = {

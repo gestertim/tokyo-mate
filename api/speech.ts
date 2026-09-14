@@ -1,5 +1,5 @@
-import { createOpenAIClient } from './_lib/openai';
-import { failure, isRecord, readJsonBody, success } from './_lib/http';
+import { createOpenAIClient } from './_lib/openai.js';
+import { failure, isRecord, readJsonBody, success } from './_lib/http.js';
 import type { SpeechGenerationRequest } from '../src/types/speech';
 
 const invalidSpeech = { code: 'INVALID_INPUT' as const, userTitle: '無法合成語音', userMessage: '發音內容過長或格式不正確。', actionableStep: '請直接展示畫面上的日文字給對方觀看。' };

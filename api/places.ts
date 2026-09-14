@@ -1,4 +1,4 @@
-import { failure, isRecord, isNonEmptyString, readJsonBody, success } from './_lib/http';
+import { failure, isRecord, isNonEmptyString, readJsonBody, success } from './_lib/http.js';
 import type { ProductError } from '../src/types/error';
 
 const allowedCategories = ['food', 'shopping', 'attraction', 'convenience', 'station', 'all'] as const;
