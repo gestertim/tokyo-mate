@@ -151,6 +151,68 @@ describe('AssistantScreen result wiring', () => {
     expect(requestAssistantSpy).toHaveBeenCalledTimes(2);
   });
 
+  it('sends the current textarea text on a second manual submit instead of the previous translation source', async () => {
+    const user = userEvent.setup();
+    const requestAssistantSpy = vi.spyOn(api, 'requestAssistant').mockImplementation(async (request) =>
+      baseResult({
+        intent: 'translation',
+        answerType: 'direct_translation',
+        primaryContent: '翻譯結果',
+        translation: {
+          sourceText: request.text,
+          targetText: '翻譯結果',
+          toneUsed: request.tone ?? 'default',
+        },
+      }),
+    );
+
+    render(<AssistantScreen initialText="第一句話" onBack={vi.fn()} />);
+    await user.click(screen.getByRole('button', { name: '送出' }));
+    expect(await screen.findByRole('heading', { name: '翻譯結果' })).toBeInTheDocument();
+    expect(requestAssistantSpy.mock.calls[0][0].text).toBe('第一句話');
+
+    const input = screen.getByLabelText('輸入內容');
+    await user.clear(input);
+    await user.type(input, '第二句話');
+    await user.click(screen.getByRole('button', { name: '送出' }));
+
+    await waitFor(() => {
+      expect(requestAssistantSpy).toHaveBeenCalledTimes(2);
+    });
+    expect(requestAssistantSpy.mock.calls[1][0].text).toBe('第二句話');
+  });
+
+  it('keeps using the previous translation source text when the user changes tone', async () => {
+    const user = userEvent.setup();
+    const requestAssistantSpy = vi.spyOn(api, 'requestAssistant').mockImplementation(async (request) =>
+      baseResult({
+        intent: 'translation',
+        answerType: 'direct_translation',
+        primaryContent: '翻譯結果',
+        translation: {
+          sourceText: request.text,
+          targetText: '翻譯結果',
+          toneUsed: request.tone ?? 'default',
+        },
+      }),
+    );
+
+    render(<AssistantScreen initialText="第一句話" onBack={vi.fn()} />);
+    await user.click(screen.getByRole('button', { name: '送出' }));
+    expect(await screen.findByRole('heading', { name: '翻譯結果' })).toBeInTheDocument();
+
+    const input = screen.getByLabelText('輸入內容');
+    await user.clear(input);
+    await user.type(input, '第二句話');
+    await user.click(screen.getByRole('button', { name: '更禮貌' }));
+
+    await waitFor(() => {
+      expect(requestAssistantSpy).toHaveBeenCalledTimes(2);
+    });
+    expect(requestAssistantSpy.mock.calls[1][0].text).toBe('第一句話');
+    expect(requestAssistantSpy.mock.calls[1][0].tone).toBe('polite');
+  });
+
   it('shows StatusMessage on failure without keeping the previous primary answer visible', async () => {
     const user = userEvent.setup();
     vi.spyOn(api, 'requestAssistant')

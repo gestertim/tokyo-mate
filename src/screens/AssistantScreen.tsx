@@ -17,8 +17,7 @@ export function AssistantScreen({ initialText = '', onBack }: AssistantScreenPro
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>();
 
-  async function submit(targetTone: UserTone = tone) {
-    const source = result?.translation?.sourceText || text;
+  async function runAssistantRequest(source: string, targetTone: UserTone) {
     if (!source.trim()) return;
     setLoading(true);
     setError(undefined);
@@ -42,9 +41,15 @@ export function AssistantScreen({ initialText = '', onBack }: AssistantScreenPro
     }
   }
 
-  async function handleToneChange(nextTone: UserTone) {
+  async function submitCurrentInput() {
+    await runAssistantRequest(text, tone);
+  }
+
+  async function resubmitTranslationWithTone(nextTone: UserTone) {
     setTone(nextTone);
-    await submit(nextTone);
+    const translationSource = result?.translation?.sourceText;
+    if (!translationSource?.trim()) return;
+    await runAssistantRequest(translationSource, nextTone);
   }
 
   return (
@@ -57,7 +62,7 @@ export function AssistantScreen({ initialText = '', onBack }: AssistantScreenPro
         輸入內容
         <textarea value={text} onChange={(event) => setText(event.target.value)} />
       </label>
-      <button type="button" onClick={() => void submit(tone)} disabled={loading || !text.trim()}>
+      <button type="button" onClick={() => void submitCurrentInput()} disabled={loading || !text.trim()}>
         {loading ? '處理中…' : '送出'}
       </button>
       {error && <StatusMessage>{error}</StatusMessage>}
@@ -75,7 +80,7 @@ export function AssistantScreen({ initialText = '', onBack }: AssistantScreenPro
           tone={result.translation.toneUsed}
           sourceLanguage={result.sourceLanguage}
           targetLanguage={result.targetLanguage}
-          onToneChange={(nextTone) => void handleToneChange(nextTone)}
+          onToneChange={(nextTone) => void resubmitTranslationWithTone(nextTone)}
         />
       )}
       {result?.travelAnswer && <TravelAnswer travelAnswer={result.travelAnswer} />}
