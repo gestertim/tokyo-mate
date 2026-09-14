@@ -1,9 +1,9 @@
-import areas from '../data/tokyo/areas.json';
-import transport from '../data/tokyo/transport.json';
-import food from '../data/tokyo/food.json';
-import shopping from '../data/tokyo/shopping.json';
-import culture from '../data/tokyo/culture.json';
-import emergency from '../data/tokyo/emergency.json';
+import areas from '../data/tokyo/areas.json' with { type: 'json' };
+import transport from '../data/tokyo/transport.json' with { type: 'json' };
+import food from '../data/tokyo/food.json' with { type: 'json' };
+import shopping from '../data/tokyo/shopping.json' with { type: 'json' };
+import culture from '../data/tokyo/culture.json' with { type: 'json' };
+import emergency from '../data/tokyo/emergency.json' with { type: 'json' };
 import type { KnowledgeCategory, KnowledgeEntry } from '../types/knowledge';
 
 const catalog = [...areas, ...transport, ...food, ...shopping, ...culture, ...emergency] as KnowledgeEntry[];
