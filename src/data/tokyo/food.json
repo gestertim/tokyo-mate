@@ -1,0 +1,32 @@
+[
+  {
+    "id": "food-ramen",
+    "category": "food",
+    "area": "東京",
+    "title": "拉麵與日式餐食",
+    "summary": "拉麵與日式餐館是旅客最容易快速找到的選擇。",
+    "content": {
+      "highlights": ["快速用餐", "價格清楚", "口味多樣"],
+      "howToExplore": ["先點主餐與小菜", "看櫃台是否可直接支付"],
+      "mustTryOrBuy": ["牛丼", "拉麵", "日式定食"],
+      "practicalJapanese": [{ "japanese": "辛くないものをお願いします。", "meaning": "請給我不辣的。" }]
+    },
+    "tags": ["美食", "拉麵", "定食", "點餐"],
+    "updatedAt": "2026-09-13"
+  },
+  {
+    "id": "food-vegetarian",
+    "category": "food",
+    "area": "東京",
+    "title": "素食與過敏飲食",
+    "summary": "可透過店員說明需求與查看標示來選擇較安心的餐點。",
+    "content": {
+      "highlights": ["素食選擇", "過敏與葷素標示", "點餐問詢"],
+      "howToExplore": ["詢問是否有海鮮以外的選擇", "提前確認調味與成分"],
+      "mustTryOrBuy": ["蔬菜丼", "蕎麥麵", "素食定食"],
+      "practicalJapanese": [{ "japanese": "野菜が入っているものはありますか？", "meaning": "有含蔬菜的嗎？" }]
+    },
+    "tags": ["素食", "過敏", "餐飲", "點餐"],
+    "updatedAt": "2026-09-13"
+  }
+]

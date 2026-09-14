@@ -1,0 +1,17 @@
+[
+  {
+    "id": "culture-etiquette",
+    "category": "culture",
+    "area": "東京",
+    "title": "餐廳與公共場所禮儀",
+    "summary": "在餐廳與公共場所保持安靜與尊重是最重要的旅遊禮儀。",
+    "content": {
+      "highlights": ["排隊", "安靜", "清潔"],
+      "howToExplore": ["遵守店家標示與排隊規則", "維持環境整潔"],
+      "importantNotes": ["請勿在公共區域大聲喧嘩", "餐廳排隊時注意指示"],
+      "practicalJapanese": [{ "japanese": "この列に並んでいいですか？", "meaning": "可以排這隊嗎？" }]
+    },
+    "tags": ["禮儀", "排隊", "公共場所", "餐廳"],
+    "updatedAt": "2026-09-13"
+  }
+]

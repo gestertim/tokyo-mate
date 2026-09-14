@@ -1,0 +1,178 @@
+[
+  {
+    "id": "area-asakusa",
+    "category": "area",
+    "area": "淺草",
+    "title": "淺草區域指南",
+    "summary": "寺廟、仲見世與雷門周邊適合午後散策與用餐。",
+    "content": {
+      "highlights": ["雷門與寺廟步道", "仲見世商店街", "隅田川夜景"],
+      "howToExplore": ["先逛雷門與寺廟，午後前往仲見世吃小吃", "傍晚再到隅田川散步看夜景"],
+      "stayDuration": "半天到一天",
+      "importantNotes": ["假日人潮較多，建議早上或傍晚前往"],
+      "practicalJapanese": [{ "japanese": "浅草駅までどのくらいかかりますか？", "meaning": "到淺草站大約多久？" }]
+    },
+    "tags": ["淺草", "寺廟", "美食", "散步"],
+    "updatedAt": "2026-09-13"
+  },
+  {
+    "id": "area-ure-no",
+    "category": "area",
+    "area": "上野",
+    "title": "上野區域指南",
+    "summary": "公園、博物館與深夜美食都很方便，適合半日安排。",
+    "content": {
+      "highlights": ["上野公園", "阿美橫町", "美術館與夜市"],
+      "howToExplore": ["先逛公園與博物館", "晚上前往阿美橫町吃晚餐"],
+      "stayDuration": "半天",
+      "importantNotes": ["深夜景點較多，留意隨身物品"],
+      "practicalJapanese": [{ "japanese": "上野駅はどこですか？", "meaning": "上野站在哪裡？" }]
+    },
+    "tags": ["上野", "公園", "美食", "博物館"],
+    "updatedAt": "2026-09-13"
+  },
+  {
+    "id": "area-shinjuku",
+    "category": "area",
+    "area": "新宿",
+    "title": "新宿區域指南",
+    "summary": "交通樞紐與夜生活都很便利，適合轉乘與美食。",
+    "content": {
+      "highlights": ["新宿站轉乘", "歌舞伎町", "百貨與餐廳"],
+      "howToExplore": ["從新宿站做交通轉乘", "在西口或歌舞伎町安排晚餐"],
+      "stayDuration": "半天到一天",
+      "importantNotes": ["新宿站出入口多，先確認正確出口"],
+      "practicalJapanese": [{ "japanese": "新宿駅の出口はどこですか？", "meaning": "新宿站的出口在哪裡？" }]
+    },
+    "tags": ["新宿", "交通", "夜生活", "轉乘"],
+    "updatedAt": "2026-09-13"
+  },
+  {
+    "id": "area-shibuya",
+    "category": "area",
+    "area": "澀谷",
+    "title": "澀谷區域指南",
+    "summary": "最適合看夜景、購物與跨站轉乘。",
+    "content": {
+      "highlights": ["交叉步行區", "百貨", "夜景"] ,
+      "howToExplore": ["先看渋谷十字路口", "下午到百貨購物、晚上看夜景"],
+      "stayDuration": "半天",
+      "importantNotes": ["人潮多，注意轉乘路線與路標"],
+      "practicalJapanese": [{ "japanese": "渋谷でおすすめの場所はどこですか？", "meaning": "澀谷推薦的地方在哪裡？" }]
+    },
+    "tags": ["澀谷", "夜景", "購物", "轉乘"],
+    "updatedAt": "2026-09-13"
+  },
+  {
+    "id": "area-ginza",
+    "category": "area",
+    "area": "銀座",
+    "title": "銀座區域指南",
+    "summary": "適合購物與高級餐飲，交通便捷且步行舒適。",
+    "content": {
+      "highlights": ["高級百貨", "夜間餐飲", "步行街"],
+      "howToExplore": ["可從銀座站開始漫步", "晚上挑選餐廳用餐"],
+      "stayDuration": "半天",
+      "importantNotes": ["商店營業時間可能較晚，建議提前查詢"],
+      "practicalJapanese": [{ "japanese": "ここで一番おすすめの店はどこですか？", "meaning": "這裡最推薦的店是哪裡？" }]
+    },
+    "tags": ["銀座", "購物", "餐廳", "步行"],
+    "updatedAt": "2026-09-13"
+  },
+  {
+    "id": "area-akihabara",
+    "category": "area",
+    "area": "秋葉原",
+    "title": "秋葉原區域指南",
+    "summary": "動漫、電器與咖啡店密集，適合購物與休息。",
+    "content": {
+      "highlights": ["動漫街", "電器店", "咖啡館"],
+      "howToExplore": ["先逛動漫與電器店", "下午休息在咖啡店"],
+      "stayDuration": "3-5 小時",
+      "importantNotes": ["店鋪眾多，請先先擬定購物清單"],
+      "practicalJapanese": [{ "japanese": "ここで電池や充電器はどこで買えますか？", "meaning": "這裡哪裡可以買電池或充電器？" }]
+    },
+    "tags": ["秋葉原", "動漫", "電器", "購物"],
+    "updatedAt": "2026-09-13"
+  },
+  {
+    "id": "area-tokyo-station",
+    "category": "area",
+    "area": "東京車站",
+    "title": "東京車站區域指南",
+    "summary": "適合轉乘、購物與往東京其他區域出發。",
+    "content": {
+      "highlights": ["轉乘中心", "百貨", "交通連結"],
+      "howToExplore": ["從車站直接換乘其他路線", "利用周邊百貨休息"],
+      "stayDuration": "2-4 小時",
+      "importantNotes": ["車站入口多，確認出口後再前往"],
+      "practicalJapanese": [{ "japanese": "東京駅から新宿駅までどう行きますか？", "meaning": "從東京站到新宿站怎麼走？" }]
+    },
+    "tags": ["東京車站", "轉乘", "百貨", "交通"],
+    "updatedAt": "2026-09-13"
+  },
+  {
+    "id": "area-odaiba",
+    "category": "area",
+    "area": "台場",
+    "title": "台場區域指南",
+    "summary": "海景、室內設施與城市夜景都很適合雨天安排。",
+    "content": {
+      "highlights": ["海景景點", "室內展館", "夜景"],
+      "howToExplore": ["可以安排室內展館與海景步道", "傍晚看海景與城市夜景"],
+      "stayDuration": "半天",
+      "importantNotes": ["雨天也不錯，但路線安排要預留時間"],
+      "practicalJapanese": [{ "japanese": "台場まで行くにはどうすればいいですか？", "meaning": "怎麼去台場？" }]
+    },
+    "tags": ["台場", "雨天", "海景", "夜景"],
+    "updatedAt": "2026-09-13"
+  },
+  {
+    "id": "area-harajuku",
+    "category": "area",
+    "area": "原宿",
+    "title": "原宿區域指南",
+    "summary": "時尚、購物與街頭文化都很強，適合午後散步。",
+    "content": {
+      "highlights": ["時尚街區", "購物街", "街頭文化"],
+      "howToExplore": ["下午在原宿走街區", "晚上逛購物街與美食"],
+      "stayDuration": "3-5 小時",
+      "importantNotes": ["人潮集中，注意攜帶物品"],
+      "practicalJapanese": [{ "japanese": "原宿でおすすめの買い物スポットはどこですか？", "meaning": "原宿哪裡是推薦購物點？" }]
+    },
+    "tags": ["原宿", "時尚", "購物", "街區"],
+    "updatedAt": "2026-09-13"
+  },
+  {
+    "id": "area-meiji-jingu",
+    "category": "area",
+    "area": "明治神宮周邊",
+    "title": "明治神宮周邊區域指南",
+    "summary": "適合放鬆步行、拍照與短距離散步。",
+    "content": {
+      "highlights": ["神社", "步道", "放鬆散步"],
+      "howToExplore": ["先走神社步道", "搭配附近咖啡店午休"],
+      "stayDuration": "2-3 小時",
+      "importantNotes": ["神社區域請保持安靜與尊重"],
+      "practicalJapanese": [{ "japanese": "明治神宮はどこですか？", "meaning": "明治神宮在哪裡？" }]
+    },
+    "tags": ["神社", "散步", "祈福", "放鬆"],
+    "updatedAt": "2026-09-13"
+  },
+  {
+    "id": "area-umeda",
+    "category": "area",
+    "area": "大阪",
+    "title": "大阪區域指南",
+    "summary": "以美食、購物與市區動線為主，旅遊安排很有彈性。",
+    "content": {
+      "highlights": ["美食", "百貨", "交通"],
+      "howToExplore": ["先確認餐廳與購物點", "利用地鐵簡單轉乘"],
+      "stayDuration": "半天",
+      "importantNotes": ["觀光地區人潮集中，提前規劃路線"],
+      "practicalJapanese": [{ "japanese": "ここから大阪駅までどう行きますか？", "meaning": "從這裡怎麼去大阪站？" }]
+    },
+    "tags": ["大阪", "美食", "購物", "交通"],
+    "updatedAt": "2026-09-13"
+  }
+]

@@ -1,0 +1,169 @@
+* { box-sizing: border-box; }
+html { background: var(--color-paper); color: var(--color-ink); font-family: Georgia, 'Times New Roman', serif; }
+body { margin: 0; min-width: 320px; overflow-wrap: break-word; overflow-x: hidden; }
+button, input, textarea { font: inherit; }
+button { min-height: var(--touch-target); cursor: pointer; }
+button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid var(--color-coral); outline-offset: 3px; }
+#root { min-height: 100vh; }
+
+/* 基礎版面：App Shell 容器與 safe-area 留白，限制最大寬度避免過窄或無邊界延伸 */
+main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: max(var(--space-4), var(--safe-top)) max(var(--space-4), var(--safe-right)) max(var(--space-6), var(--safe-bottom)) max(var(--space-4), var(--safe-left));
+}
+
+main > header { display: flex; flex-direction: column; gap: var(--space-1); }
+main > header p[lang='en'] { margin: 0; font-size: 0.75rem; letter-spacing: 0.12em; color: var(--color-sage); }
+main > header h1 { margin: 0; font-size: 1.75rem; }
+
+/* 畫面容器：HomeScreen／AssistantScreen／TranslationResult 共用垂直排版 */
+section[aria-labelledby], article[aria-labelledby], section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+}
+section[aria-labelledby] h2, article[aria-labelledby] h2, section > h2 { margin: 0; font-size: 1.25rem; }
+section[aria-labelledby] > p, section > p { margin: 0; color: var(--color-sage); }
+
+label { display: flex; flex-direction: column; gap: var(--space-2); font-weight: 600; width: 100%; }
+
+textarea, input[type='text'], input:not([type='radio']):not([type='checkbox']) {
+  width: 100%;
+  max-width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--color-line);
+  border-radius: 0.5rem;
+  background: #fff;
+  color: var(--color-ink);
+  resize: vertical;
+}
+textarea { min-height: 5.5rem; }
+
+button { border: 1px solid var(--color-line); border-radius: 0.5rem; background: #fff; color: var(--color-ink); padding: var(--space-2) var(--space-4); }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+button[aria-pressed='true'] { background: var(--color-coral); border-color: var(--color-coral); color: var(--color-paper); }
+
+/* 主要操作／語調選擇等按鈕群組，於窄螢幕自動換行不溢出 */
+[role='group'] { display: flex; flex-wrap: wrap; gap: var(--space-2); width: 100%; }
+[role='group'] button { flex: 1 1 auto; }
+
+/* 首頁四個功能入口：兩欄 grid，避免長文字撐開版面 */
+nav[aria-label='東京功能入口'] {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+  width: 100%;
+}
+nav[aria-label='東京功能入口'] button { width: 100%; }
+
+/* 百科分類 Tab 列表 */
+[role='tablist'] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  width: 100%;
+}
+[role='tablist'] button {
+  flex: 1 1 auto;
+}
+
+/* 探索分類 fieldset */
+fieldset {
+  margin: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--color-line);
+  border-radius: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+fieldset legend {
+  padding: 0 var(--space-2);
+  font-weight: 600;
+  color: var(--color-sage);
+}
+
+fieldset label {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-2);
+  width: auto;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+/* 卡片與列表基礎排版 */
+section > ul,
+article > ul,
+article > ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+section > ul > li,
+article > ul > li,
+article > ol > li {
+  padding: var(--space-3);
+  border: 1px solid var(--color-line);
+  border-radius: 0.5rem;
+  background: #fff;
+}
+
+section > ul > li h3,
+article > ul > li h3,
+article > ol > li h3 {
+  margin: 0 0 var(--space-1) 0;
+  font-size: 1.1rem;
+}
+
+section > ul > li p,
+article > ul > li p,
+article > ol > li p {
+  margin: var(--space-1) 0;
+}
+
+[aria-label='語音播放控制'] { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
+
+/* 語音輸入 modal：底部 sheet 樣式，含錄音中／轉錄中／權限拒絕與辨識文字編輯狀態 */
+[role='dialog'] {
+  position: fixed;
+  left: var(--space-4);
+  right: var(--space-4);
+  bottom: max(var(--space-4), var(--safe-bottom));
+  max-width: 440px;
+  margin: 0 auto;
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  border-radius: 1rem;
+  padding: var(--space-6) var(--space-4);
+  box-shadow: 0 12px 32px rgba(37, 35, 42, 0.28);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  z-index: 20;
+  max-height: calc(100vh - var(--space-8));
+  overflow-y: auto;
+}
+[role='dialog'] h2 { margin: 0; font-size: 1.1rem; }
+
+[role='alert'], [role='status'] {
+  margin: 0;
+  padding: var(--space-3);
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-line);
+  background: rgba(230, 95, 61, 0.08);
+}
+[role='alert'] { border-color: var(--color-coral); font-weight: 600; }

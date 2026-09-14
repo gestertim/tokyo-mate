@@ -1,0 +1,17 @@
+[
+  {
+    "id": "emergency-police",
+    "category": "emergency",
+    "area": "東京",
+    "title": "警察與失物處理",
+    "summary": "遺失物、護照或困難情況時優先向警察或大使館求助。",
+    "content": {
+      "highlights": ["警察署", "遺失物", "官方協助"],
+      "howToExplore": ["保留證件影本與照片", "盡快聯絡警察或代表處"],
+      "importantNotes": ["先保留案件證明與紀錄"],
+      "practicalJapanese": [{ "japanese": "パスポートを紛失しました。", "meaning": "我遺失了護照。" }]
+    },
+    "tags": ["緊急", "護照", "警察", "失物"],
+    "updatedAt": "2026-09-13"
+  }
+]

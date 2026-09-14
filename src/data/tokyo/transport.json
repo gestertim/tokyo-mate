@@ -1,0 +1,32 @@
+[
+  {
+    "id": "transport-jr",
+    "category": "transport",
+    "area": "東京",
+    "title": "JR 路線與轉乘",
+    "summary": "JR 路線適合跨區旅遊與車站轉乘。",
+    "content": {
+      "highlights": ["便利的跨區移動", "車站資訊明確", "適合長距離轉乘"],
+      "transportTips": ["使用 ICOCA 或 Suica 卡更方便", "先確認車站出口後再出發"],
+      "importantNotes": ["尖峰時段擁擠，請提前預留時間"],
+      "practicalJapanese": [{ "japanese": "この駅で乗り換えできますか？", "meaning": "這個站可以轉乘嗎？" }]
+    },
+    "tags": ["交通", "JR", "轉乘", "車站"],
+    "updatedAt": "2026-09-13"
+  },
+  {
+    "id": "transport-metro",
+    "category": "transport",
+    "area": "東京",
+    "title": "Metro 與都營交通",
+    "summary": "地鐵與都營交通適合市區內短途移動。",
+    "content": {
+      "highlights": ["市區內高效", "圖方便找路", "轉乘多"],
+      "transportTips": ["查看路線圖與站內指標", "避開尖峰時段"],
+      "importantNotes": ["電車內請注意站外動線與出口"],
+      "practicalJapanese": [{ "japanese": "この路線で新宿駅へ行けますか？", "meaning": "這條路線可以到新宿站嗎？" }]
+    },
+    "tags": ["地鐵", "都營", "交通", "路線"],
+    "updatedAt": "2026-09-13"
+  }
+]

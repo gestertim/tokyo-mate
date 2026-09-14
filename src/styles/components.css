@@ -1,0 +1,105 @@
+/*
+ * FR-025 / SC-014 acceptance baseline viewport matrix：
+ * 360x800（小型手機直向）、390x844（一般手機直向）、430x932（大型手機直向）、844x390（一般手機橫向）、
+ * 768x1024（平板）、1280x800 / 1440x900（桌面）與 Installed Standalone PWA。
+ * 本檔補強響應式斷點、橫向 safe-area、平板／桌面內容寬度展開與矮螢幕鍵盤情境。
+ */
+
+/* 橫向時 notch/圓角安全區位於左右兩側，補上左右 safe-area padding 避免遮擋 */
+@media (orientation: landscape) {
+  main {
+    padding-left: max(var(--space-6), var(--safe-left));
+    padding-right: max(var(--space-6), var(--safe-right));
+  }
+}
+
+/* 360px 極窄寬度：四個入口改為單欄，避免文字被壓縮換行溢出 */
+@media (max-width: 360px) {
+  nav[aria-label='東京功能入口'] {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 平板 Viewport (min-width: 768px)：主容器展開、功能入口 4 欄、清單卡片雙欄佈局 */
+@media (min-width: 768px) {
+  main {
+    max-width: 768px;
+    gap: var(--space-6);
+    padding: max(var(--space-6), var(--safe-top)) max(var(--space-6), var(--safe-right)) max(var(--space-8), var(--safe-bottom)) max(var(--space-6), var(--safe-left));
+  }
+
+  main > header h1 {
+    font-size: 2.25rem;
+  }
+
+  nav[aria-label='東京功能入口'] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  section > ul,
+  article > ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  [role='dialog'] {
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    max-width: 520px;
+    width: calc(100% - var(--space-8));
+    max-height: 85vh;
+  }
+}
+
+/* 桌面 Viewport (min-width: 1024px)：更舒適寬敞的行前查詢閱讀寬度 */
+@media (min-width: 1024px) {
+  main {
+    max-width: 980px;
+    gap: var(--space-8);
+  }
+
+  section > ul,
+  article > ul {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-4);
+  }
+}
+
+/* 矮螢幕／橫向（如 844x390 軟體鍵盤展開時）：確保 dialog 置底且不超出 viewport */
+@media (max-height: 480px) {
+  [role='dialog'] {
+    top: auto;
+    bottom: max(var(--space-2), var(--safe-bottom));
+    left: max(var(--space-4), var(--safe-left));
+    right: max(var(--space-4), var(--safe-right));
+    transform: none;
+    max-width: 480px;
+    max-height: calc(100vh - var(--space-4));
+    padding: var(--space-3) var(--space-4);
+  }
+}
+
+/* Installed Standalone PWA 模式：確保全螢幕 safe-area 與互動邊界正常 */
+@media (display-mode: standalone) {
+  main {
+    padding-top: max(var(--space-4), var(--safe-top));
+    padding-bottom: max(var(--space-6), var(--safe-bottom));
+    padding-left: max(var(--space-4), var(--safe-left));
+    padding-right: max(var(--space-4), var(--safe-right));
+  }
+}
+
+/* FR-025 無障礙：尊重使用者減少動態效果設定 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

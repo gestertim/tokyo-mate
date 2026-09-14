@@ -1,0 +1,19 @@
+{
+  "id": "/",
+  "name": "Tokyo Mate 東京通",
+  "short_name": "東京通",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fffaf2",
+  "theme_color": "#e65f3d",
+  "lang": "zh-Hant-TW",
+  "description": "台日雙語東京旅遊助手",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

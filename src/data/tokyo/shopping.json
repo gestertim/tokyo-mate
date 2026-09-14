@@ -1,0 +1,32 @@
+[
+  {
+    "id": "shopping-department",
+    "category": "shopping",
+    "area": "東京",
+    "title": "百貨與購物指南",
+    "summary": "百貨公司適合應急購物、免稅與品牌採買。",
+    "content": {
+      "highlights": ["百貨店", "品牌選擇", "免稅資訊"],
+      "howToExplore": ["先確認各樓層與品牌", "看免稅與退稅條件"],
+      "mustTryOrBuy": ["伴手禮", "日用品", "旅行必需品"],
+      "practicalJapanese": [{ "japanese": "免税対象の品物はありますか？", "meaning": "有免稅商品嗎？" }]
+    },
+    "tags": ["購物", "百貨", "免稅", "品牌"],
+    "updatedAt": "2026-09-13"
+  },
+  {
+    "id": "shopping-electronics",
+    "category": "shopping",
+    "area": "秋葉原",
+    "title": "電器與數位周邊",
+    "summary": "適合購買行動電源、轉接頭與生活電器。",
+    "content": {
+      "highlights": ["行動電源", "轉接頭", "生活電器"],
+      "howToExplore": ["先確認電壓與插頭需求", "預留充電需求時間"],
+      "mustTryOrBuy": ["行動電源", "轉接頭", "隨身充電器"],
+      "practicalJapanese": [{ "japanese": "この充電器は使えますか？", "meaning": "這個充電器可以用嗎？" }]
+    },
+    "tags": ["電器", "行動電源", "充電", "秋葉原"],
+    "updatedAt": "2026-09-13"
+  }
+]
