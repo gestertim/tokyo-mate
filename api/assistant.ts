@@ -20,6 +20,7 @@ type AssistantRoute = 'translation' | 'travel' | 'emergency';
 type ProviderOutcome = 'success' | 'fallback' | 'parse_failure' | 'provider_error';
 
 interface VerificationTiming {
+  verificationCorrelationId: string;
   route: AssistantRoute | 'unknown';
   serverTotalMs: number;
   routingMs: number;
@@ -35,6 +36,7 @@ export async function POST(request: Request): Promise<Response> {
   const serverStart = performance.now();
   const correlationId = request.headers.get('x-tokyo-mate-verification-id') ?? `server-${Date.now()}`;
   const timing: VerificationTiming = {
+    verificationCorrelationId: correlationId,
     route: 'unknown',
     serverTotalMs: 0,
     routingMs: 0,
@@ -80,7 +82,6 @@ function timedResponse(payload: unknown, status: number, timing: VerificationTim
   ].join(', '));
   console.info(JSON.stringify({
     event: 'tokyo-mate.verification.assistant.server-timing',
-    verificationCorrelationId: correlationId,
     ...timing,
   }));
   return response;
@@ -175,7 +176,7 @@ async function createTravelResult(text: string, tone: UserTone, areaHint: string
 async function requestProviderTravel(text: string, tone: UserTone, contextSummary: string, timing: VerificationTiming): Promise<{ conclusion: string; action: string[]; caution?: string[]; phrase?: { japanese: string; pronunciation?: string; meaning: string } } | undefined> {
   const apiKeyPresent = Boolean(process.env.OPENAI_API_KEY);
   if (!apiKeyPresent) return undefined;
-  const client = createOpenAIClient() as unknown as { responses: { create: (input: unknown) => Promise<{ output_text?: string }> } };
+  const client = createOpenAIClient(timing.verificationCorrelationId) as unknown as { responses: { create: (input: unknown) => Promise<{ output_text?: string }> } };
   const model = getOpenAIModel();
   const providerStart = performance.now();
   let response: { output_text?: string };
@@ -317,7 +318,7 @@ async function createTranslationResult(text: string, tone: UserTone, timing: Ver
 async function requestProviderTranslation(text: string, tone: UserTone, timing: VerificationTiming): Promise<{ targetText: string } | undefined> {
   const apiKeyPresent = Boolean(process.env.OPENAI_API_KEY);
   if (!apiKeyPresent) return undefined;
-  const client = createOpenAIClient() as unknown as { responses: { create: (input: unknown) => Promise<{ output_text?: string }> } };
+  const client = createOpenAIClient(timing.verificationCorrelationId) as unknown as { responses: { create: (input: unknown) => Promise<{ output_text?: string }> } };
   const model = getOpenAIModel();
   const providerStart = performance.now();
   let response: { output_text?: string };
