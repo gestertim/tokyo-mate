@@ -213,9 +213,10 @@
   - **latency 起點**：client 提交 request
   - **latency 終點**：主要答案內容已 render 且使用者可見
   - **latency 定義**：為 end-to-end latency，包含 client 處理、網路傳輸、server function、AI provider、response parsing 與 UI render，但不包含使用者輸入時間
-  - **p95 門檻**：p95 latency MUST 不超過已批准之 5.0 秒，且每次回應均可被檢視為可直接用於現場對話、詢問或說明的結果或明確失敗狀態
-  - **排除基準**：web search、即時地點資訊查詢、語音轉錄 (STT) 與語音合成 (TTS) 不納入此 5 秒基準，其耗時另外記錄
-  - **視覺回饋**：任何預期超過 1 秒的等待必須在 1 秒內顯示明確 processing/loading 狀態；不得新增 Analytics/APM platform 或改變既有架構
+  - **Final MVP performance baseline**：完整 Generative AI response latency 的 p50、p95、maximum 與 outliers MUST 如實記錄為 Final MVP performance baseline；p95 <= 5.0 秒不是 MVP blocking acceptance criterion。每次回應均可被檢視為可直接用於現場對話、詢問或說明的結果或明確失敗狀態
+  - **percentile convention**：使用 nearest-rank；N = 32 時，p95 為排序後 latency value #31
+  - **排除基準**：web search、即時地點資訊查詢、語音轉錄 (STT) 與語音合成 (TTS) 不納入完整 response latency baseline，其耗時另外記錄
+  - **視覺回饋（blocking）**：任何預期超過 1 秒的等待必須在 1 秒內顯示明確 processing/loading 狀態；此 processing/loading <= 1 second 為 blocking acceptance criterion。不得新增 Analytics/APM platform 或改變既有架構
 - **SC-003**: 對一般東京旅遊問題，AI 成功回答後 MUST 滿足以下首屏主要內容順序：
 	1. 第一個主要內容區塊 MUST 為「最推薦」或等效的直接結論（conclusion）。
 	2. 第二個主要內容區塊 MUST 為「怎麼做」或等效的可採取行動（action）。

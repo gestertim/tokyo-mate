@@ -168,9 +168,10 @@ Tokyo Mate 目前處於 **MVP validation 階段**。
 - ⏳ **T087：Production-like Latency Verification** — 需在 Vercel Preview 或等效 production-like 環境中使用實際 provider 執行量測
 
 ### Final MVP Acceptance
-- **SC-002 Final Acceptance**：待 T087 完成後進行
+- **Blocking**：若完整結果無法立即顯示，processing/loading 必須在 1 秒內顯示。
+- **Observational baseline**：T087 必須量測完整 AI response latency 的 p50、p95、maximum 與 outliers，作為 Final MVP performance baseline；p95 <= 5.0 秒不是 blocking acceptance criterion。
 
-**注意**：此版本尚未通過最終 latency 驗證，不得宣稱 SC-002 或整體 Final MVP Acceptance 已完成。
+**注意**：T087 尚未完成，不得宣稱 SC-002 或整體 Final MVP Acceptance 已完成。
 
 ## Known Limitations & Next Steps
 

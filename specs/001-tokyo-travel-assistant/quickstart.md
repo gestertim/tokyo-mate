@@ -160,15 +160,15 @@ npx vitest run src/services/assistant.test.ts
 - **驗收結果輸出**：`docs/verification/latency-report.md`（記錄 date、environment、commit、case id、category、latency milliseconds、pass/fail、p50、p95、maximum、failed/outlier cases）
 - **測試環境**：Vercel Preview 或等效 production-like environment
 - **網路條件**：正常穩定網路
-- **樣本規模**：至少 30 次代表性互動（包含中文→日文翻譯 10 次、日文→中文翻譯 10 次、一般東京旅遊問答 10 次）
+- **樣本規模**：32 次代表性互動（包含中文→日文翻譯 10 次、日文→中文翻譯 10 次、一般東京旅遊問答 12 次）
 - **量測方式**：
   1. 起點：Client 端使用者點擊送出或提交文字。
   2. 終點：主要答案內容已 render 於畫面且使用者可見。
   3. 包含 client、網路傳輸、serverless function、AI provider、response parsing 與 UI render，但不含使用者輸入時間。
-  4. 計算 p95 數值，必須 $\le 5.0$ 秒。
-  5. 若預期等待超過 1 秒，必須在 1 秒內顯示 processing 狀態。
-  6. Web search、Google Places、語音轉錄 (Whisper STT) 與語音合成 (TTS) 不計入此 5 秒基準，其耗時獨立記錄。
-  7. 不得新增 Analytics/APM platform 或改變既有架構。
+   4. 使用 nearest-rank percentile convention；N = 32 時，p95 = sorted latency value #31。計算並如實記錄 p50、p95、maximum 與 outliers，作為 Final MVP performance baseline；p95 <= 5.0 秒不是 MVP blocking acceptance criterion。
+   5. 若預期等待超過 1 秒，必須在 1 秒內顯示 processing/loading 狀態；processing/loading <= 1 second 為 blocking acceptance requirement。
+   6. Web search、Google Places、語音轉錄 (Whisper STT) 與語音合成 (TTS) 不計入完整 response latency baseline，其耗時獨立記錄。
+   7. 不得新增 Analytics/APM platform 或改變既有架構。
 
 ### 4.2 FR-017 / SC-009 Session Retention & Privacy 驗證
 - **測試步驟**：

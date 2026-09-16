@@ -1,5 +1,5 @@
 {
-  "description": "SC-002 端到端 latency 驗收 dataset：涵蓋中文→日文翻譯、日文→中文翻譯、一般東京旅遊問答，至少 30 組代表性互動。latency 起點為 client 提交 request，終點為主要答案內容已 render 且使用者可見；不含使用者輸入時間；web search/Places/STT/TTS 另行獨立量測，不計入 p95 5.0 秒門檻。",
+  "description": "SC-002 端到端 latency 驗收 dataset：涵蓋中文→日文翻譯、日文→中文翻譯、一般東京旅遊問答，至少 30 組代表性互動。latency 起點為 client 提交 request，終點為主要答案內容已 render 且使用者可見；不含使用者輸入時間；完整 response latency 用於 Final MVP p50/p95/maximum/outliers baseline measurement；web search/Places/STT/TTS 另行獨立量測。",
   "cases": [
     { "id": "zh-ja-001", "category": "zh-to-ja", "input": "我想點一份不辣的牛丼" },
     { "id": "zh-ja-002", "category": "zh-to-ja", "input": "請問廁所在哪裡？" },
