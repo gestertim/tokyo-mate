@@ -182,6 +182,7 @@ async function requestProviderTravel(text: string, tone: UserTone, contextSummar
   try {
     response = await client.responses.create({
       model,
+      reasoning: { effort: 'low' },
       input: `${travelInstruction(contextSummary)}\n使用者問題：${text}\n語氣：${tone}`,
     });
   } catch (error) {
