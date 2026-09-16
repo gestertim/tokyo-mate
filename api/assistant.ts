@@ -36,6 +36,13 @@ export async function POST(request: Request): Promise<Response> {
   }
 }
 
+// Deterministic intent routing precedence (highest to lowest priority):
+// 1. emergency — safety-critical, must win even when the text also carries explicit translation framing
+//    (constitution/spec emergency-first behavior; self-reported emergency terms are never assumed to be "just a quote").
+// 2. explicit translation framing — user is explicitly asking for a translation, even if the quoted
+//    content happens to contain travel-sounding words (e.g. 附近/推薦/景點 inside a quoted phrase).
+// 3. travel intent — general Tokyo travel/logistics question.
+// 4. translation fallback — default catch-all for direct translation requests.
 async function createAssistantResult(body: Partial<UserRequest>, tone: UserTone): Promise<AssistantResult> {
   const text = body.text ?? '';
   const areaHint = body.location?.type === 'manual' ? body.location.manualArea : body.context?.currentArea;
@@ -43,12 +50,21 @@ async function createAssistantResult(body: Partial<UserRequest>, tone: UserTone)
   if (safety === 'emergency') {
     return createEmergencyResult(text, tone, areaHint);
   }
+  if (isExplicitTranslationRequest(text)) {
+    return createTranslationResult(text, tone);
+  }
   // 地名單獨出現不足以判定為 travel query，須搭配旅遊/行程意圖詞彙。
-  const isTravelQuery = /行程|安排|景點|半日|半天|一日|逛|推薦|交通|美食|活動|雨天|餐廳|旅遊|購物|營業|開店|閉店|休館|訂位|票價|轉乘/.test(text);
+  const isTravelQuery = /行程|安排|景點|半日|半天|一日|逛|推薦|交通|美食|活動|雨天|餐廳|旅遊|購物|營業|開店|閉店|休館|訂位|票價|轉乘|順遊|機場|加值|溫泉/.test(text);
   if (isTravelQuery) {
     return createTravelResult(text, tone, areaHint);
   }
   return createTranslationResult(text, tone);
+}
+
+// 明確的翻譯請求框架（例如「翻成日文」「幫我翻譯」「日文怎麼說」），優先於一般旅遊關鍵字比對，
+// 避免被引號內夾帶的旅遊詞彙（如附近、推薦、景點）誤判為 travel intent。
+function isExplicitTranslationRequest(text: string): boolean {
+  return /翻譯|翻成|日文怎麼說/.test(text);
 }
 
 async function createTravelResult(text: string, tone: UserTone, areaHint?: string): Promise<AssistantResult> {
