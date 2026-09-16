@@ -59,4 +59,18 @@ describe('POST /api/assistant translation contract', () => {
       translation: { toneUsed: 'polite' },
     });
   });
+
+  it('routes a place-name-only question without travel intent to translation, not travel', async () => {
+    const response = await postAssistant({
+      text: '請問這班電車到新宿嗎？',
+      inputType: 'text',
+      tone: 'default',
+    });
+    expect(response.status).toBe(200);
+    const payload = await response.json();
+    expect(payload.data).toMatchObject({
+      intent: 'translation',
+      answerType: 'direct_translation',
+    });
+  });
 });

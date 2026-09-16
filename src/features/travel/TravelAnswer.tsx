@@ -8,7 +8,12 @@ interface TravelAnswerProps {
 }
 
 export function TravelAnswer({ travelAnswer }: TravelAnswerProps) {
-  const actionList = Array.isArray(travelAnswer.action) ? travelAnswer.action : [travelAnswer.action];
+  const actionList = Array.isArray(travelAnswer.action)
+    ? travelAnswer.action
+    : typeof travelAnswer.action === 'string' && travelAnswer.action.trim().length > 0
+      ? [travelAnswer.action]
+      : [];
+  const cautionList = Array.isArray(travelAnswer.caution) ? travelAnswer.caution : [];
 
   return (
     <article aria-live="polite" aria-labelledby="travel-answer-heading">
@@ -22,11 +27,11 @@ export function TravelAnswer({ travelAnswer }: TravelAnswerProps) {
         ))}
       </ol>
 
-      {travelAnswer.caution && travelAnswer.caution.length > 0 && (
+      {cautionList.length > 0 && (
         <>
           <h3>注意事項</h3>
           <ul>
-            {travelAnswer.caution.map((item) => (
+            {cautionList.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>

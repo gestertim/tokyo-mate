@@ -46,4 +46,20 @@ describe('POST /api/assistant travel contract', () => {
     expect(payload.data.travelAnswer.conclusion).toContain('新宿');
     expect(payload.data.suggestedActions.some((action: { actionType: string }) => action.actionType === 'view_knowledge')).toBe(true);
   });
+
+  it('still routes a real travel-planning question with a place name to travel/action_plan', async () => {
+    const response = await postAssistant({
+      text: '淺草半日行程怎麼安排？',
+      inputType: 'text',
+      tone: 'default',
+      location: { type: 'manual', manualArea: '淺草' },
+    });
+    expect(response.status).toBe(200);
+    const payload = await response.json();
+    expect(payload.data).toMatchObject({
+      intent: 'travel',
+      answerType: 'action_plan',
+      emergency: false,
+    });
+  });
 });

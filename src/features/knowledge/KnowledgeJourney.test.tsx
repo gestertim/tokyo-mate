@@ -23,6 +23,22 @@ describe('knowledge journey', () => {
     expect(screen.getByText('實用日文')).toBeInTheDocument();
   });
 
+  it('does not crash when a malformed array-like field slips past server normalization', () => {
+    render(
+      <TravelAnswer
+        travelAnswer={{
+          conclusion: '先去淺草寺再吃晚餐',
+          action: '先去淺草寺' as unknown as string[],
+          caution: '假日人潮較多' as unknown as string[],
+        }}
+      />,
+    );
+
+    expect(screen.getByText('結論')).toBeInTheDocument();
+    expect(screen.getByText('先去淺草寺')).toBeInTheDocument();
+    expect(screen.queryByText('假日人潮較多')).not.toBeInTheDocument();
+  });
+
   it('shows knowledge categories and entries for offline browsing', () => {
     render(<KnowledgeBrowser onBack={vi.fn()} />);
 

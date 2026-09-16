@@ -35,6 +35,20 @@ describe('nearby and emergency journeys', () => {
     expect(screen.getByText(/立即向警察報案/i)).toBeInTheDocument();
     expect(screen.getByText(/聯絡代表處/i)).toBeInTheDocument();
   });
+
+  it('does not crash when emergencyGuide array-like fields slip through as a single string', () => {
+    render(
+      <EmergencyAnswerCard
+        guide={{
+          immediateAction: '立即向警察報案' as unknown as string[],
+          nextAction: '聯絡代表處' as unknown as string[],
+          phrase: 'パスポートを紛失しました。' as unknown as string[],
+        }}
+      />,
+    );
+
+    expect(screen.getByText('緊急指引')).toBeInTheDocument();
+  });
 });
 
 describe('NearbyScreen category wiring, distance and recovery', () => {

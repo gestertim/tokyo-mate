@@ -1,3 +1,4 @@
+import { isRecord } from './http.js';
 import type { AssistantResult } from '../../src/types/assistant';
 
 export const assistantSystemRules = [
@@ -7,11 +8,49 @@ export const assistantSystemRules = [
   '緊急情境先提供 immediateAction 與 nextAction，不等待即時資料。',
 ].join('\n');
 
+// 將 AI provider 可能回傳的 array-like 欄位正規化為 canonical string[]，避免非法型態流入前端造成 .map() crash。
+function normalizeStringArray(value: unknown): string[] {
+  if (Array.isArray(value)) {
+    return value.filter((item): item is string => typeof item === 'string' && item.trim().length > 0);
+  }
+  if (typeof value === 'string' && value.trim().length > 0) {
+    return [value];
+  }
+  return [];
+}
+
+function normalizeOptionalStringArray(value: unknown): string[] | undefined {
+  const normalized = normalizeStringArray(value);
+  return normalized.length > 0 ? normalized : undefined;
+}
+
+function normalizeArrayLikeFields(value: unknown): unknown {
+  if (!isRecord(value)) return value;
+  const result: Record<string, unknown> = { ...value };
+  if (isRecord(result.travelAnswer)) {
+    result.travelAnswer = {
+      ...result.travelAnswer,
+      action: normalizeStringArray(result.travelAnswer.action),
+      caution: normalizeOptionalStringArray(result.travelAnswer.caution),
+    };
+  }
+  if (isRecord(result.emergencyGuide)) {
+    result.emergencyGuide = {
+      ...result.emergencyGuide,
+      immediateAction: normalizeStringArray(result.emergencyGuide.immediateAction),
+      nextAction: normalizeStringArray(result.emergencyGuide.nextAction),
+      phrase: normalizeOptionalStringArray(result.emergencyGuide.phrase),
+    };
+  }
+  return result;
+}
+
 export function normalizeAssistantResult(value: unknown): AssistantResult {
-  if (!isAssistantResult(value)) {
+  const normalized = normalizeArrayLikeFields(value);
+  if (!isAssistantResult(normalized)) {
     throw new Error('Assistant provider response does not match the internal contract');
   }
-  return { ...value, emergency: value.safety === 'emergency', liveDataStatus: value.freshness };
+  return { ...normalized, emergency: normalized.safety === 'emergency', liveDataStatus: normalized.freshness };
 }
 
 function isAssistantResult(value: unknown): value is AssistantResult {
