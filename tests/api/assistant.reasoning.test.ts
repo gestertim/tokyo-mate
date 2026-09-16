@@ -5,12 +5,12 @@ const { createResponse, createOpenAIClient } = vi.hoisted(() => ({
   createOpenAIClient: vi.fn(),
 }));
 
-vi.mock('./_lib/openai.js', () => ({
+vi.mock('../../api/_lib/openai.js', () => ({
   createOpenAIClient,
   getOpenAIModel: () => 'gpt-5.6-terra',
 }));
 
-import { POST } from './assistant';
+import { POST } from '../../api/assistant';
 
 async function postAssistant(text: string) {
   return POST(new Request('http://localhost/api/assistant', {

@@ -1,9 +1,9 @@
 // @vitest-environment node
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { POST } from './transcribe';
-import { createOpenAIClient } from './_lib/openai';
+import { POST } from '../../api/transcribe';
+import { createOpenAIClient } from '../../api/_lib/openai';
 
-vi.mock('./_lib/openai', () => ({
+vi.mock('../../api/_lib/openai', () => ({
   createOpenAIClient: vi.fn(),
 }));
 

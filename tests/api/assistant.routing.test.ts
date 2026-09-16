@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { POST } from './assistant';
-import latencyCases from '../tests/fixtures/latency-cases.json';
+import { POST } from '../../api/assistant';
+import latencyCases from '../fixtures/latency-cases.json';
 
 // Deterministic intent routing regression matrix.
 // Reuses the authoritative SC-002 acceptance dataset (tests/fixtures/latency-cases.json, unmodified)

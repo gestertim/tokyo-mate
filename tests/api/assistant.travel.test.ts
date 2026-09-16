@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { POST } from './assistant';
+import { POST } from '../../api/assistant';
 
 async function postAssistant(body: unknown) {
   return POST(new Request('http://localhost/api/assistant', {

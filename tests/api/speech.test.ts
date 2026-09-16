@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { POST } from './speech';
+import { POST } from '../../api/speech';
 
 describe('POST /api/speech contract', () => {
   it('validates text, language and speed before generating audio', async () => {

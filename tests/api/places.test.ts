@@ -1,5 +1,5 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { POST } from './places';
+import { POST } from '../../api/places';
 
 async function postPlaces(body: unknown) {
   return POST(new Request('http://localhost/api/places', {
