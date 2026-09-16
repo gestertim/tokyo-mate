@@ -8,10 +8,26 @@ interface ApiSuccess<T> { success: true; data: T }
 interface ApiFailure { success: false; error: ProductError }
 type ApiResponse<T> = ApiSuccess<T> | ApiFailure;
 
-async function request<T>(path: string, init: RequestInit): Promise<T> {
+export interface AssistantRequestObserver {
+  verificationCorrelationId: string;
+  onFetchStart?: (at: number) => void;
+  onResponseReceived?: (at: number, response: Response) => void;
+  onResponseParsed?: (at: number, response: Response) => void;
+}
+
+let assistantRequestObserver: AssistantRequestObserver | undefined;
+
+export function setAssistantRequestObserver(observer: AssistantRequestObserver | undefined): void {
+  assistantRequestObserver = observer;
+}
+
+async function request<T>(path: string, init: RequestInit, observer?: AssistantRequestObserver): Promise<T> {
   try {
+    observer?.onFetchStart?.(performance.now());
     const response = await fetch(path, init);
+    observer?.onResponseReceived?.(performance.now(), response);
     const payload = (await response.json()) as ApiResponse<T>;
+    observer?.onResponseParsed?.(performance.now(), response);
     if (!response.ok || !payload.success) {
       throw payload.success ? new Error('Request failed') : payload.error;
     }
@@ -27,12 +43,15 @@ async function request<T>(path: string, init: RequestInit): Promise<T> {
   }
 }
 
-export function requestAssistant(input: UserRequest): Promise<AssistantResult> {
+export function requestAssistant(input: UserRequest, observer?: AssistantRequestObserver): Promise<AssistantResult> {
   return request<AssistantResult>('/api/assistant', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      ...(observer ? { 'X-Tokyo-Mate-Verification-Id': observer.verificationCorrelationId } : {}),
+    },
     body: JSON.stringify(input),
-  });
+  }, observer ?? assistantRequestObserver);
 }
 
 export function transcribeAudio(audio: Blob, language?: string): Promise<AudioTranscriptionResult> {
