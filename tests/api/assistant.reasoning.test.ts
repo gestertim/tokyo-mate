@@ -28,7 +28,7 @@ describe('POST /api/assistant travel reasoning configuration', () => {
     createOpenAIClient.mockReturnValue({ responses: { create: createResponse } });
   });
 
-  it('sends low reasoning effort only for travel and preserves one provider call per request', async () => {
+  it('sends low reasoning effort and verbosity only for travel and preserves one provider call per request', async () => {
     createResponse
       .mockResolvedValueOnce({ output_text: JSON.stringify({ conclusion: '先去淺草。', action: ['搭銀座線'] }) })
       .mockResolvedValueOnce({ output_text: JSON.stringify({ targetText: '浅草に行きます。' }) });
@@ -42,9 +42,13 @@ describe('POST /api/assistant travel reasoning configuration', () => {
     expect(createResponse).toHaveBeenNthCalledWith(1, expect.objectContaining({
       model: 'gpt-5.6-terra',
       reasoning: { effort: 'low' },
+      text: { verbosity: 'low' },
     }));
     expect(createResponse).toHaveBeenNthCalledWith(2, expect.not.objectContaining({
       reasoning: expect.anything(),
+    }));
+    expect(createResponse).toHaveBeenNthCalledWith(2, expect.not.objectContaining({
+      text: expect.anything(),
     }));
   });
 });
