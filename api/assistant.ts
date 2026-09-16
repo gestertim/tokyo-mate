@@ -44,7 +44,7 @@ async function createAssistantResult(body: Partial<UserRequest>, tone: UserTone)
     return createEmergencyResult(text, tone, areaHint);
   }
   // 地名單獨出現不足以判定為 travel query，須搭配旅遊/行程意圖詞彙。
-  const isTravelQuery = /行程|安排|景點|半日|半天|一日|逛|推薦|交通|美食|活動|雨天|餐廳|旅遊|購物|營業|開店|閉店|休館|訂位|票價/.test(text);
+  const isTravelQuery = /行程|安排|景點|半日|半天|一日|逛|推薦|交通|美食|活動|雨天|餐廳|旅遊|購物|營業|開店|閉店|休館|訂位|票價|轉乘/.test(text);
   if (isTravelQuery) {
     return createTravelResult(text, tone, areaHint);
   }
