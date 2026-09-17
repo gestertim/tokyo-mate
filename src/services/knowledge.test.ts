@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { selectKnowledgeEntries, serializeKnowledgeContext } from './knowledge';
+import {
+  getKnowledgeCategories,
+  getKnowledgeEntriesByCategory,
+  KNOWLEDGE_CATEGORIES,
+  selectKnowledgeEntries,
+  serializeKnowledgeContext,
+} from './knowledge';
 
 describe('knowledge retrieval', () => {
   it('selects the most relevant Tokyo knowledge entries for a travel query', () => {
@@ -14,5 +20,26 @@ describe('knowledge retrieval', () => {
     const context = serializeKnowledgeContext(results);
     expect(context).toContain('新宿');
     expect(context).toContain('交通');
+  });
+
+  it('returns each complete static category in stable catalog order without changing AI Top 5 retrieval', () => {
+    expect(getKnowledgeCategories()).toEqual([...KNOWLEDGE_CATEGORIES]);
+
+    for (const category of KNOWLEDGE_CATEGORIES) {
+      const entries = getKnowledgeEntriesByCategory(category);
+      expect(entries.length).toBeGreaterThan(0);
+      expect(entries.every((entry) => entry.category === category)).toBe(true);
+      expect(getKnowledgeEntriesByCategory(category).map((entry) => entry.id)).toEqual(entries.map((entry) => entry.id));
+    }
+
+    const aiResults = selectKnowledgeEntries('東京', { area: '淺草' });
+    expect(aiResults.length).toBeGreaterThanOrEqual(3);
+    expect(aiResults.length).toBeLessThanOrEqual(5);
+    expect(getKnowledgeEntriesByCategory('area').length).toBeGreaterThan(aiResults.length);
+  });
+
+  it('returns no entries for an unknown category without throwing', () => {
+    expect(() => getKnowledgeEntriesByCategory('unknown' as never)).not.toThrow();
+    expect(getKnowledgeEntriesByCategory('unknown' as never)).toEqual([]);
   });
 });

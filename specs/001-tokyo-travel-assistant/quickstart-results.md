@@ -45,3 +45,13 @@
 - 語音或 Clipboard 失敗時保留日文原文、繁中意思與複製路徑的 fallback 由自動測試驗證；不將 Clipboard error fallback 宣稱為 Preview 人工 PASS。
 - T091、T099、T100 維持未完成：仍缺各自要求的專屬測試檔及空結果覆蓋。
 - Production alias、master 與 Production deployment 均未變更。
+
+## 2026-09-17 Final Test Coverage Gate
+
+- commit 前 HEAD：`e5d82bdadfe88cd35d2757722f8391e13f7d0672`
+- scope：僅新增測試與更新 evidence；沒有 production source、JSON 知識資料、部署或 Production alias 變更。
+- `T091`：`src/services/knowledge.test.ts` 驗證六分類完整靜態 catalog、指定分類、穩定順序、未知分類安全性，並確認 AI `selectKnowledgeEntries` 維持 Top 3–5 契約；`src/screens/KnowledgeBrowser.test.tsx` 驗證畫面不發出 request。
+- `T099`：`src/screens/KnowledgeBrowser.test.tsx` 驗證六個繁體中文分類、`aria-pressed`、原生 Enter 操作、完整分類切換及無外部 request。以 Vitest module mock 讓目前分類回傳空陣列，驗證「目前沒有符合內容。」、不渲染卡片或 list、仍可切換分類與返回首頁，且不 crash。
+- `T100`：`src/features/knowledge/KnowledgeCard.test.tsx` 驗證預設摘要、展開/收合、`aria-expanded`、`aria-controls`、optional 欄位、多筆實用日文、Clipboard success/reject/unavailable，以及正常/慢速 AudioPlayer controls 與語音失敗後文字 fallback；所有語音均 mock，未使用真實網路。
+- commands：`npm test -- src/services/knowledge.test.ts src/screens/KnowledgeBrowser.test.tsx src/features/knowledge/KnowledgeCard.test.tsx` PASS（3 files、10/10）；`npm test` PASS（25 files、146/146）；`npm run build` PASS；`git diff --check` PASS。
+- traceability：FR-027～FR-030 依本 Gate 的 encyclopedia card 行為驗證收斂；SC-015 由 T091/T099、SC-016 由 T100、SC-017 由 T099/T100 與既有 T101 Preview evidence 覆蓋。

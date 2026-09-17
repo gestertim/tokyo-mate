@@ -46,3 +46,13 @@
 - regression smoke: PASS；App Console 無 error。Preview/Vercel 輔助資源警告不視為 App error，兩者分開判讀。
 - Production: 未變更 master、Production alias 或 Production deployment。
 - remaining: T091、T099、T100 尚缺指定專屬測試檔與空結果覆蓋，維持未完成。詳見 `specs/001-tokyo-travel-assistant/quickstart-results.md`。
+
+## 2026-09-17 Final Test Coverage Gate
+
+- commit 前 HEAD：`e5d82bdadfe88cd35d2757722f8391e13f7d0672`；branch：`fix/knowledge-card-details`。
+- `T091` PASS：`src/services/knowledge.test.ts` 確認六分類完整靜態資料、分類限定與穩定順序、未知分類安全性，並確認 `selectKnowledgeEntries` AI Top 3–5 契約未改變；`src/screens/KnowledgeBrowser.test.tsx` 確認百科瀏覽無外部 request。
+- `T099` PASS：`src/screens/KnowledgeBrowser.test.tsx` 確認六分類繁中標籤、選取 ARIA、原生鍵盤切換、完整內容與無外部 request。以 Vitest module mock 建立空結果，確認核准空狀態、不渲染卡片/list、分類仍可切換、返回首頁仍可使用且不 crash。
+- `T100` PASS：`src/features/knowledge/KnowledgeCard.test.tsx` 確認摘要、展開/收合、鍵盤與 ARIA、optional content、多筆日文、Clipboard success/reject/unavailable、AudioPlayer 正常/慢速控制，以及 TTS 失敗時文字仍可讀；語音服務均 mock。
+- focused tests：3 files、10/10 PASS；full suite：25 files、146/146 PASS；`npm run build` PASS；`git diff --check` PASS。
+- production boundary：沒有 production source 或 JSON 知識資料變更；未執行 Vercel、未變更 master、保護 tag、Production alias 或 Production deployment。
+- traceability：SC-015（T091/T099）、SC-016（T100）、SC-017（T099/T100 加上既有 T101 Preview evidence）；FR-027～FR-030 由此百科卡片驗證 Gate 收斂。

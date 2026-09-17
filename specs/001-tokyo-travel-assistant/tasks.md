@@ -237,7 +237,7 @@ Tasks Phase 與 Technical Plan Phase 是不同維度；數字不代表一一對�
 
 ### User Story 2 Encyclopedia Card Repair Tasks
 
-- [ ] T091 [US2] 驗證東京百科六分類直接讀取各自完整靜態資料，並與 AI 問東京 Top 3–5 語意檢索分離；補足分類完整性、無 AI／外部 API request 與空結果測試於 src/services/knowledge.test.ts、src/screens/KnowledgeBrowser.test.tsx
+- [X] T091 [US2] 驗證東京百科六分類直接讀取各自完整靜態資料，並與 AI 問東京 Top 3–5 語意檢索分離；補足分類完整性、無 AI／外部 API request 與空結果測試於 src/services/knowledge.test.ts、src/screens/KnowledgeBrowser.test.tsx（2026-09-17：專屬測試 PASS；完整 suite 146/146、build PASS；無 production source 變更）
 - [X] T092 [P] [US2] 建立 KnowledgeCard，支援標題／摘要預設呈現與每張卡片獨立展開狀態於 src/features/knowledge/KnowledgeCard.tsx
 - [X] T093 [P] [US2] 實作卡片展開／收合控制的鍵盤操作、`aria-expanded` 與 `aria-controls`，並避免狀態互相影響於 src/features/knowledge/KnowledgeCard.tsx
 - [X] T094 [P] [US2] 依資料存在性呈現亮點、建議方式、交通提示、必吃必買、建議停留時間、日夜差異、注意事項與實用日文，缺少 optional 欄位不得渲染空標題或空清單於 src/features/knowledge/KnowledgeCard.tsx
@@ -245,8 +245,8 @@ Tasks Phase 與 Technical Plan Phase 是不同維度；數字不代表一一對�
 - [X] T096 [P] [US2] 重用既有 AudioPlayer 與 TTS 能力提供實用日文播放，處理語音失敗且保留文字可讀與可複製於 src/features/knowledge/KnowledgeCard.tsx
 - [X] T097 [P] [US2] 補足 Clipboard API 不可用或拒絕時的 fallback 行為，確保複製失敗仍提供可理解狀態訊息與文字閱讀於 src/features/knowledge/KnowledgeCard.tsx、src/services/
 - [X] T098 [US2] 驗證離線百科文字可讀、離線不承諾語音，及語音失敗後文字／複製 fallback；更新 quickstart Journey 2 與 offline 驗收步驟於 specs/001-tokyo-travel-assistant/quickstart.md（2026-09-17：Preview offline 文字 PASS；語音/Clipboard 失敗 fallback 由自動測試 PASS）
-- [ ] T099 [US2] 撰寫 KnowledgeBrowser 分類切換、完整六分類內容、無 AI／外部 API request 與空結果互動測試於 src/screens/KnowledgeBrowser.test.tsx
-- [ ] T100 [US2] 撰寫 KnowledgeCard 展開／收合、optional 欄位、日文複製、語音失敗 fallback、鍵盤與 ARIA 互動測試於 src/features/knowledge/KnowledgeCard.test.tsx
+- [X] T099 [US2] 撰寫 KnowledgeBrowser 分類切換、完整六分類內容、無 AI／外部 API request 與空結果互動測試於 src/screens/KnowledgeBrowser.test.tsx（2026-09-17：專屬測試 PASS；完整 suite 146/146、build PASS；無 production source 變更）
+- [X] T100 [US2] 撰寫 KnowledgeCard 展開／收合、optional 欄位、日文複製、語音失敗 fallback、鍵盤與 ARIA 互動測試於 src/features/knowledge/KnowledgeCard.test.tsx（2026-09-17：專屬測試 PASS；完整 suite 146/146、build PASS；無 production source 變更）
 - [X] T101 [US2] 執行六分類驗收、離線文字／語音失敗 fallback、FR-025／SC-014 viewport matrix、無障礙與無水平捲動／重疊／裁切檢查，輸出驗收 evidence 於 specs/001-tokyo-travel-assistant/quickstart-results.md 與 docs/verification/journey-report.md（2026-09-17：Preview acceptance PASS；語音/Clipboard 失敗 fallback 由自動測試 PASS）
 
 **Run**：啟動目前版本的旅遊問答、知識庫與離線靜態內容環境。
