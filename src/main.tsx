@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
-import { shouldRegisterServiceWorker } from './service-worker';
+import { shouldRegisterServiceWorker } from './service-worker-registration';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

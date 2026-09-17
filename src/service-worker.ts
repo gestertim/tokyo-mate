@@ -26,10 +26,6 @@ export function isNavigationRequest(request: Request): boolean {
   return request.method === 'GET' && request.mode === 'navigate';
 }
 
-export function shouldRegisterServiceWorker(): boolean {
-  return 'serviceWorker' in navigator && Boolean(import.meta.env.PROD);
-}
-
 declare const self: any;
 
 // `skipWaiting`/`clients` only exist on ServiceWorkerGlobalScope, so this reliably

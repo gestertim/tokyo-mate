@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "test": "vitest run",
+    "test:pwa-red-gate": "playwright test --config=playwright.config.ts",
     "test:watch": "vitest",
     "coverage": "vitest run --coverage"
   },
@@ -19,6 +20,7 @@
     "@testing-library/jest-dom": "latest",
     "@testing-library/react": "latest",
     "@testing-library/user-event": "latest",
+    "@playwright/test": "^1.55.0",
     "@types/node": "latest",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
