@@ -1,5 +1,13 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { APP_SHELL_CACHE, APPROVED_STATIC_PREFIXES, isCacheableRequest, isServiceWorkerRuntime, PRECACHE_URLS } from './service-worker';
+import {
+  APP_SHELL_CACHE,
+  APP_SHELL_CACHE_PREFIX,
+  APPROVED_STATIC_PREFIXES,
+  isCacheableRequest,
+  isSafeAppShellResponse,
+  isServiceWorkerRuntime,
+  PRECACHE_URLS,
+} from './service-worker';
 
 type CacheRecord = Map<string, Response>;
 
@@ -57,6 +65,24 @@ function createNavigationRequest() {
   const request = new Request(`${location.origin}/`);
   Object.defineProperty(request, 'mode', { configurable: true, value: 'navigate' });
   return request;
+}
+
+function createNetworkResponse(
+  body: string,
+  overrides: { ok?: boolean; redirected?: boolean; type?: string; contentType?: string } = {},
+) {
+  const headers = overrides.contentType ? { 'Content-Type': overrides.contentType } : undefined;
+  const response = new Response(body, { headers });
+  if (overrides.ok !== undefined) {
+    Object.defineProperty(response, 'ok', { configurable: true, value: overrides.ok });
+  }
+  if (overrides.redirected !== undefined) {
+    Object.defineProperty(response, 'redirected', { configurable: true, value: overrides.redirected });
+  }
+  if (overrides.type !== undefined) {
+    Object.defineProperty(response, 'type', { configurable: true, value: overrides.type });
+  }
+  return response;
 }
 
 afterEach(() => {
@@ -212,5 +238,153 @@ describe('PWA cache refresh hotfix v2 red tests', () => {
     for (const request of forbidden) {
       expect(isCacheableRequest(request)).toBe(false);
     }
+  });
+});
+
+describe('PWA Hotfix Safety Correction Gate', () => {
+  it('activate 只刪除 Tokyo Mate App Shell namespace 的舊版 cache，保留其他 origin cache', async () => {
+    const runtime = await loadServiceWorkerRuntime([
+      'tokyo-mate-app-shell-v1',
+      'tokyo-mate-app-shell-v2',
+      'another-app-cache-v3',
+      'unrelated-runtime-cache',
+    ]);
+    const waitForActivation: Promise<unknown>[] = [];
+    runtime.listeners.activate[0]?.({ waitUntil: (promise: Promise<unknown>) => waitForActivation.push(promise) });
+    await Promise.all(waitForActivation);
+
+    expect(runtime.cacheApi.delete).toHaveBeenCalledWith('tokyo-mate-app-shell-v1');
+    expect(runtime.cacheApi.delete).not.toHaveBeenCalledWith('another-app-cache-v3');
+    expect(runtime.cacheApi.delete).not.toHaveBeenCalledWith('unrelated-runtime-cache');
+    expect(runtime.cacheRecords.has('tokyo-mate-app-shell-v2')).toBe(true);
+    expect(runtime.cacheRecords.has('another-app-cache-v3')).toBe(true);
+    expect(runtime.cacheRecords.has('unrelated-runtime-cache')).toBe(true);
+    restoreGlobal('self', runtime.originalSelf);
+    restoreGlobal('caches', runtime.originalCaches);
+  });
+
+  it('APP_SHELL_CACHE 必須落在 APP_SHELL_CACHE_PREFIX namespace 之內', () => {
+    expect(APP_SHELL_CACHE.startsWith(APP_SHELL_CACHE_PREFIX)).toBe(true);
+  });
+
+  it('redirected navigation response 可回傳給瀏覽器，但不得寫入 App Shell cache', async () => {
+    const runtime = await loadServiceWorkerRuntime(['tokyo-mate-app-shell-v2']);
+    const networkResponse = createNetworkResponse('redirected body', {
+      ok: true,
+      redirected: true,
+      type: 'basic',
+      contentType: 'text/html',
+    });
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(networkResponse));
+
+    let responsePromise: Promise<Response> | undefined;
+    runtime.listeners.fetch[0]?.({
+      request: createNavigationRequest(),
+      respondWith: (response: Promise<Response>) => {
+        responsePromise = response;
+      },
+    });
+
+    const response = await responsePromise!;
+    expect(await response.text()).toBe('redirected body');
+    await Promise.resolve();
+    expect(runtime.cacheRecords.get('tokyo-mate-app-shell-v2')?.has(new URL('/', location.origin).href)).toBe(false);
+    restoreGlobal('self', runtime.originalSelf);
+    restoreGlobal('caches', runtime.originalCaches);
+  });
+
+  it.each(['opaque', 'error'])('%s response type 不得寫入 App Shell cache', async (unsafeType) => {
+    const runtime = await loadServiceWorkerRuntime(['tokyo-mate-app-shell-v2']);
+    const networkResponse = createNetworkResponse('unsafe body', {
+      ok: true,
+      redirected: false,
+      type: unsafeType,
+      contentType: 'text/html',
+    });
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(networkResponse));
+
+    let responsePromise: Promise<Response> | undefined;
+    runtime.listeners.fetch[0]?.({
+      request: createNavigationRequest(),
+      respondWith: (response: Promise<Response>) => {
+        responsePromise = response;
+      },
+    });
+
+    const response = await responsePromise!;
+    expect(await response.text()).toBe('unsafe body');
+    await Promise.resolve();
+    expect(runtime.cacheRecords.get('tokyo-mate-app-shell-v2')?.has(new URL('/', location.origin).href)).toBe(false);
+    restoreGlobal('self', runtime.originalSelf);
+    restoreGlobal('caches', runtime.originalCaches);
+  });
+
+  it('非 HTML navigation response 依網路語意回傳，但不得成為 App Shell fallback', async () => {
+    const runtime = await loadServiceWorkerRuntime(['tokyo-mate-app-shell-v2']);
+    const networkResponse = createNetworkResponse('{"ok":true}', {
+      ok: true,
+      redirected: false,
+      type: 'basic',
+      contentType: 'application/json',
+    });
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(networkResponse));
+
+    let responsePromise: Promise<Response> | undefined;
+    runtime.listeners.fetch[0]?.({
+      request: createNavigationRequest(),
+      respondWith: (response: Promise<Response>) => {
+        responsePromise = response;
+      },
+    });
+
+    const response = await responsePromise!;
+    expect(await response.text()).toBe('{"ok":true}');
+    await Promise.resolve();
+    expect(runtime.cacheRecords.get('tokyo-mate-app-shell-v2')?.has(new URL('/', location.origin).href)).toBe(false);
+    restoreGlobal('self', runtime.originalSelf);
+    restoreGlobal('caches', runtime.originalCaches);
+  });
+
+  it('安全同源 HTML navigation response 可寫入目前版本 App Shell cache 並回傳原 network response', async () => {
+    const runtime = await loadServiceWorkerRuntime(['tokyo-mate-app-shell-v2']);
+    const networkResponse = createNetworkResponse('<html>fresh shell</html>', {
+      ok: true,
+      redirected: false,
+      type: 'basic',
+      contentType: 'text/html; charset=utf-8',
+    });
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(networkResponse));
+
+    let responsePromise: Promise<Response> | undefined;
+    runtime.listeners.fetch[0]?.({
+      request: createNavigationRequest(),
+      respondWith: (response: Promise<Response>) => {
+        responsePromise = response;
+      },
+    });
+
+    const response = await responsePromise!;
+    expect(await response.text()).toBe('<html>fresh shell</html>');
+    await Promise.resolve();
+    expect(runtime.cacheRecords.get('tokyo-mate-app-shell-v2')?.has(new URL('/', location.origin).href)).toBe(true);
+    restoreGlobal('self', runtime.originalSelf);
+    restoreGlobal('caches', runtime.originalCaches);
+  });
+
+  it('isSafeAppShellResponse 直接單元測試涵蓋所有邊界條件', () => {
+    const safe = createNetworkResponse('ok', { ok: true, redirected: false, type: 'basic', contentType: 'text/html' });
+    expect(isSafeAppShellResponse(safe)).toBe(true);
+
+    const notOk = createNetworkResponse('fail', { ok: false, redirected: false, type: 'basic', contentType: 'text/html' });
+    expect(isSafeAppShellResponse(notOk)).toBe(false);
+
+    const redirected = createNetworkResponse('redirect', { ok: true, redirected: true, type: 'basic', contentType: 'text/html' });
+    expect(isSafeAppShellResponse(redirected)).toBe(false);
+
+    const opaque = createNetworkResponse('opaque', { ok: true, redirected: false, type: 'opaque', contentType: 'text/html' });
+    expect(isSafeAppShellResponse(opaque)).toBe(false);
+
+    const nonHtml = createNetworkResponse('json', { ok: true, redirected: false, type: 'basic', contentType: 'application/json' });
+    expect(isSafeAppShellResponse(nonHtml)).toBe(false);
   });
 });

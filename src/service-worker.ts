@@ -1,6 +1,18 @@
-export const APP_SHELL_CACHE = 'tokyo-mate-app-shell-v2';
+export const APP_SHELL_CACHE_PREFIX = 'tokyo-mate-app-shell-';
+export const APP_SHELL_CACHE = `${APP_SHELL_CACHE_PREFIX}v2`;
 export const APPROVED_STATIC_PREFIXES = ['/assets/', '/src/data/tokyo/', '/icons/'];
 export const PRECACHE_URLS = ['/', '/index.html', '/manifest.webmanifest'];
+
+// Only same-origin, non-redirected, non-opaque HTML responses may become the offline App Shell fallback.
+const SAFE_RESPONSE_TYPES = new Set(['basic', 'default']);
+
+export function isSafeAppShellResponse(response: Response): boolean {
+  if (!response.ok) return false;
+  if (response.redirected) return false;
+  if (!SAFE_RESPONSE_TYPES.has(response.type)) return false;
+  const contentType = response.headers.get('content-type') ?? '';
+  return contentType.toLowerCase().includes('text/html');
+}
 
 export function isCacheableRequest(request: Request): boolean {
   const url = new URL(request.url);
@@ -35,7 +47,13 @@ if (isServiceWorkerRuntime()) {
     event.waitUntil(
       caches
         .keys()
-        .then((keys: string[]) => Promise.all(keys.filter((key) => key !== APP_SHELL_CACHE).map((key) => caches.delete(key))))
+        .then((keys: string[]) =>
+          Promise.all(
+            keys
+              .filter((key) => key.startsWith(APP_SHELL_CACHE_PREFIX) && key !== APP_SHELL_CACHE)
+              .map((key) => caches.delete(key)),
+          ),
+        )
         .then(() => self.clients?.claim?.()),
     );
   });
@@ -70,7 +88,7 @@ if (isServiceWorkerRuntime()) {
 function handleNavigationRequest(request: Request): Promise<Response> {
   return fetch(request)
     .then((response: Response) => {
-      if (response.ok) {
+      if (isSafeAppShellResponse(response)) {
         const copy = response.clone();
         caches.open(APP_SHELL_CACHE).then((cache) => cache.put(request, copy));
       }
