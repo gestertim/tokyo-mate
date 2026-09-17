@@ -8,6 +8,17 @@ import type { KnowledgeCategory, KnowledgeEntry } from '../types/knowledge';
 
 const catalog = [...areas, ...transport, ...food, ...shopping, ...culture, ...emergency] as KnowledgeEntry[];
 
+export const KNOWLEDGE_CATEGORIES = ['area', 'transport', 'food', 'shopping', 'culture', 'emergency'] as const satisfies readonly KnowledgeCategory[];
+
+export const KNOWLEDGE_CATEGORY_LABELS = {
+  area: '區域',
+  transport: '交通',
+  food: '美食',
+  shopping: '購物',
+  culture: '文化',
+  emergency: '緊急',
+} as const satisfies Record<KnowledgeCategory, string>;
+
 export function selectKnowledgeEntries(query: string, context?: { area?: string }): KnowledgeEntry[] {
   const keywords = query.toLowerCase().split(/[\s、，。！？]/).filter(Boolean);
   const areaHint = context?.area?.trim();
@@ -57,5 +68,9 @@ export function serializeKnowledgeContext(entries: KnowledgeEntry[]): string {
 }
 
 export function getKnowledgeCategories(): KnowledgeCategory[] {
-  return ['area', 'transport', 'food', 'shopping', 'culture', 'emergency'];
+  return [...KNOWLEDGE_CATEGORIES];
+}
+
+export function getKnowledgeEntriesByCategory(category: KnowledgeCategory): KnowledgeEntry[] {
+  return catalog.filter((entry) => entry.category === category);
 }

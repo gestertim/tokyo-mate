@@ -230,20 +230,20 @@ Tasks Phase 與 Technical Plan Phase 是不同維度；數字不代表一一對�
 - [X] T051 [P] [US2] 建立旅遊問題 context extraction 與「結論 conclusion、行動 action、可選注意 caution、可選實用日文 phrase（僅在對行動有幫助時提供）」prompt 規則於 api/_lib/prompts/travel.ts
 - [X] T052 [US2] 將知識 context 注入、travel/knowledge intent 與 action_plan／knowledge_summary mapping 整合至 api/assistant.ts
 - [X] T053 [P] [US2] 建立依序呈現結論、步驟、注意事項與可選實用日文的旅遊回答版型於 src/features/travel/TravelAnswer.tsx
-- [ ] T054 [P] [US2] 建立一致順序呈現區域／主題內容的知識條目元件於 src/features/knowledge/KnowledgeCard.tsx（目前檔案不存在，尚未完成）
-- [ ] T055 [P] [US2] 建立六分類 segmented control 與無結果狀態於 src/features/knowledge/CategoryFilter.tsx（Plan 明確要求獨立元件，目前檔案不存在，尚未完成）
+- [X] T054 [P] [US2] 建立一致順序呈現區域／主題內容的知識條目元件於 src/features/knowledge/KnowledgeCard.tsx
+- [X] T055 [P] [US2] 建立六分類 segmented control 與無結果狀態於 src/features/knowledge/CategoryFilter.tsx
 - [ ] T056 [US2] 建立可離線讀取、篩選與展開知識條目的百科畫面（KnowledgeBrowser 僅為東京百科 UI component 識別名稱，見 spec.md Naming Glossary）於 src/screens/KnowledgeBrowser.tsx（目前僅有標題與摘要，尚未完成）
 - [X] T057 [US2] 串接首頁「問東京／東京百科」、AssistantScreen 旅遊回答與本次暫存狀態於 src/App.tsx
 
 ### User Story 2 Encyclopedia Card Repair Tasks
 
 - [ ] T091 [US2] 驗證東京百科六分類直接讀取各自完整靜態資料，並與 AI 問東京 Top 3–5 語意檢索分離；補足分類完整性、無 AI／外部 API request 與空結果測試於 src/services/knowledge.test.ts、src/screens/KnowledgeBrowser.test.tsx
-- [ ] T092 [P] [US2] 建立 KnowledgeCard，支援標題／摘要預設呈現與每張卡片獨立展開狀態於 src/features/knowledge/KnowledgeCard.tsx
-- [ ] T093 [P] [US2] 實作卡片展開／收合控制的鍵盤操作、`aria-expanded` 與 `aria-controls`，並避免狀態互相影響於 src/features/knowledge/KnowledgeCard.tsx
-- [ ] T094 [P] [US2] 依資料存在性呈現亮點、建議方式、交通提示、必吃必買、建議停留時間、日夜差異、注意事項與實用日文，缺少 optional 欄位不得渲染空標題或空清單於 src/features/knowledge/KnowledgeCard.tsx
-- [ ] T095 [P] [US2] 建立實用日文原文／繁中意思的複製互動，提供成功與失敗的可存取狀態訊息於 src/features/knowledge/KnowledgeCard.tsx
-- [ ] T096 [P] [US2] 重用既有 AudioPlayer 與 TTS 能力提供實用日文播放，處理語音失敗且保留文字可讀與可複製於 src/features/knowledge/KnowledgeCard.tsx
-- [ ] T097 [P] [US2] 補足 Clipboard API 不可用或拒絕時的 fallback 行為，確保複製失敗仍提供可理解狀態訊息與文字閱讀於 src/features/knowledge/KnowledgeCard.tsx、src/services/
+- [X] T092 [P] [US2] 建立 KnowledgeCard，支援標題／摘要預設呈現與每張卡片獨立展開狀態於 src/features/knowledge/KnowledgeCard.tsx
+- [X] T093 [P] [US2] 實作卡片展開／收合控制的鍵盤操作、`aria-expanded` 與 `aria-controls`，並避免狀態互相影響於 src/features/knowledge/KnowledgeCard.tsx
+- [X] T094 [P] [US2] 依資料存在性呈現亮點、建議方式、交通提示、必吃必買、建議停留時間、日夜差異、注意事項與實用日文，缺少 optional 欄位不得渲染空標題或空清單於 src/features/knowledge/KnowledgeCard.tsx
+- [X] T095 [P] [US2] 建立實用日文原文／繁中意思的複製互動，提供成功與失敗的可存取狀態訊息於 src/features/knowledge/KnowledgeCard.tsx
+- [X] T096 [P] [US2] 重用既有 AudioPlayer 與 TTS 能力提供實用日文播放，處理語音失敗且保留文字可讀與可複製於 src/features/knowledge/KnowledgeCard.tsx
+- [X] T097 [P] [US2] 補足 Clipboard API 不可用或拒絕時的 fallback 行為，確保複製失敗仍提供可理解狀態訊息與文字閱讀於 src/features/knowledge/KnowledgeCard.tsx、src/services/
 - [ ] T098 [US2] 驗證離線百科文字可讀、離線不承諾語音，及語音失敗後文字／複製 fallback；更新 quickstart Journey 2 與 offline 驗收步驟於 specs/001-tokyo-travel-assistant/quickstart.md
 - [ ] T099 [US2] 撰寫 KnowledgeBrowser 分類切換、完整六分類內容、無 AI／外部 API request 與空結果互動測試於 src/screens/KnowledgeBrowser.test.tsx
 - [ ] T100 [US2] 撰寫 KnowledgeCard 展開／收合、optional 欄位、日文複製、語音失敗 fallback、鍵盤與 ARIA 互動測試於 src/features/knowledge/KnowledgeCard.test.tsx

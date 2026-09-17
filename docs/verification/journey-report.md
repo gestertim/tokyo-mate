@@ -26,3 +26,15 @@
 ## Deferred Issues
 
 - Browser/device manual PWA installation, offline restart, Cache Storage inspection, update timing, and four-viewport standalone matrix remain required under T080/T081/T084/T089.
+
+## 2026-09-17 Knowledge Card Repair Pre-commit Evidence
+
+- branch: `fix/knowledge-card-details`
+- pre-commit HEAD: `036cf28201a0633fd7a3e9f7b3c8d9c1693e8b00`
+- targeted test: `npm test -- src/features/knowledge/KnowledgeJourney.test.tsx` PASS（15/15）
+- full test: `npm test` PASS（23 files、138/138）
+- build: `npm run build` PASS
+- diff hygiene: `git diff --check` PASS
+- local viewport acceptance: 360 x 800、390 x 844、430 x 932、844 x 390 全數 PASS。各尺寸均驗證六分類操作、完整靜態卡片、展開/收合、日文內容、無水平捲動、複製與語音控制無重疊、keyboard focus indicator 與 safe-area；844 x 390 可正常捲動及操作。
+- static catalog/request boundary: 區域 11、交通 2、美食 2、購物 2、文化 1、緊急 1；切換時未觀察到 `/api/*` request。
+- deferred: Preview 驗收、真正 offline reload/語音 fallback，以及真實 TTS 播放均未執行，不宣稱通過。詳見 `specs/001-tokyo-travel-assistant/quickstart-results.md`。
