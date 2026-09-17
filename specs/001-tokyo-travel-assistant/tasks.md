@@ -42,10 +42,10 @@ Tasks Phase 與 Technical Plan Phase 是不同維度；數字不代表一一對�
 | FR-008 | T042, T050, T051, T052 | `api/assistant.travel.test.ts`；`src/services/knowledge.test.ts`；quickstart Journey 2 |
 | FR-009 | T042, T043, T051, T052, T053 | `api/assistant.travel.test.ts`、`src/features/knowledge/KnowledgeJourney.test.tsx`；SC-003 驗收於 T087 項目(3) |
 | FR-010 | T041, T044, T045, T046, T047, T048, T049, T050 | `src/services/knowledge.test.ts`；quickstart Journey 2（六類知識瀏覽） |
-| FR-027 | T041, T050, T091, T099 | `src/services/knowledge.test.ts`（AI Top 3–5 與靜態分類邊界）；KnowledgeBrowser 互動測試；quickstart Journey 2／SC-015 六分類驗收 |
-| FR-028 | T054, T056, T092, T093, T094, T100 | KnowledgeCard／KnowledgeBrowser 元件測試；SC-016 卡片展開驗收 |
-| FR-029 | T029, T032, T036, T095, T096, T098, T101 | AudioPlayer/TTS、複製與 offline／語音失敗 fallback 測試；quickstart Journey 2／SC-017 |
-| FR-030 | T085, T086, T097, T100, T101 | 無障礙、鍵盤、viewport matrix 與複製狀態訊息驗證；SC-017 |
+| FR-027 | T041, T050, T091, T099 | `src/services/knowledge.test.ts`（AI Top 3–5）；`KnowledgeJourney.test.tsx`（六分類完整靜態目錄）；2026-09-17 Preview 六分類驗收 PASS。T091/T099 尚缺指定專屬測試與空結果覆蓋。 |
+| FR-028 | T054, T056, T092, T093, T094, T100 | `KnowledgeJourney.test.tsx`（標題/摘要、獨立展開、optional 欄位、鍵盤及 ARIA）；2026-09-17 Preview 卡片展開驗收 PASS。T100 尚缺指定專屬測試檔。 |
+| FR-029 | T029, T032, T036, T095, T096, T098, T101 | `KnowledgeJourney.test.tsx`（複製成功及拒絕 fallback）；2026-09-17 Preview 正常/慢速 TTS 人工 PASS、`/api/speech` HTTP 200、離線文字 PASS；Clipboard error fallback 僅 automated PASS，Preview 未人工模擬。 |
+| FR-030 | T085, T086, T097, T100, T101 | `KnowledgeJourney.test.tsx`（複製狀態、鍵盤及 ARIA）；2026-09-17 Preview 四種 viewport、無重疊/裁切/水平捲動與 regression smoke PASS。T100 尚缺指定專屬測試檔。 |
 | FR-011 | T039, T040 | quickstart Journey 0／1（首頁共用輸入入口） |
 | FR-012 | T058, T063, T064, T067 | `api/places.test.ts`、`src/services/geolocation.test.ts`；quickstart Journey 3 |
 | FR-013 | T024a, T059, T063 | `src/test/platform-safety-gate.test.ts`、`src/services/geolocation.test.ts`；quickstart Journey 0／3 |
@@ -76,9 +76,9 @@ Tasks Phase 與 Technical Plan Phase 是不同維度；數字不代表一一對�
 | SC-012 | T078, T082 | `src/components/NetworkStatus.test.tsx`；`docs/verification/pwa-report.md` |
 | SC-013 | T077, T083 | `src/components/UpdatePrompt.tsx` 驗證；`docs/verification/pwa-report.md` |
 | SC-014 | T085, T089, T087 | quickstart Journey 0 viewport matrix；T087 項目(8)；`docs/verification/pwa-report.md` |
-| SC-015 | T091, T099 | KnowledgeBrowser 互動測試；六分類手動驗收與 request boundary evidence |
-| SC-016 | T092, T093, T094, T100 | KnowledgeCard／KnowledgeBrowser 測試；六分類卡片驗收 evidence |
-| SC-017 | T095, T096, T097, T098, T101 | 複製、TTS、offline fallback、無障礙與 viewport 驗收 evidence |
+| SC-015 | T091, T099 | `KnowledgeJourney.test.tsx` 分類切換/完整靜態目錄；2026-09-17 Preview 六分類與無 AI/外部 API request PASS。T091/T099 尚缺空結果與指定專屬測試。 |
+| SC-016 | T092, T093, T094, T100 | `KnowledgeJourney.test.tsx` 展開/收合、optional 欄位、鍵盤與 ARIA；2026-09-17 Preview 卡片驗收 PASS。T100 尚缺指定專屬測試檔。 |
+| SC-017 | T095, T096, T097, T098, T101 | `KnowledgeJourney.test.tsx` Clipboard 成功/失敗 fallback；2026-09-17 Preview TTS、offline、viewport、無障礙與 regression smoke PASS。Clipboard error fallback 為 automated PASS，Preview 未人工模擬。 |
 | Session UI State Contract（spec.md） | T021, T023, T024, T024a, T034, T035, T038, T063, T084 | `src/test/platform-safety-gate.test.ts`、`src/service-worker.test.ts`；quickstart 全 Journey 手動檢查；`docs/verification/journey-report.md` |
 
 ## Generated Verification Artifacts
@@ -232,7 +232,7 @@ Tasks Phase 與 Technical Plan Phase 是不同維度；數字不代表一一對�
 - [X] T053 [P] [US2] 建立依序呈現結論、步驟、注意事項與可選實用日文的旅遊回答版型於 src/features/travel/TravelAnswer.tsx
 - [X] T054 [P] [US2] 建立一致順序呈現區域／主題內容的知識條目元件於 src/features/knowledge/KnowledgeCard.tsx
 - [X] T055 [P] [US2] 建立六分類 segmented control 與無結果狀態於 src/features/knowledge/CategoryFilter.tsx
-- [ ] T056 [US2] 建立可離線讀取、篩選與展開知識條目的百科畫面（KnowledgeBrowser 僅為東京百科 UI component 識別名稱，見 spec.md Naming Glossary）於 src/screens/KnowledgeBrowser.tsx（目前僅有標題與摘要，尚未完成）
+- [X] T056 [US2] 建立可離線讀取、篩選與展開知識條目的百科畫面（KnowledgeBrowser 僅為東京百科 UI component 識別名稱，見 spec.md Naming Glossary）於 src/screens/KnowledgeBrowser.tsx（2026-09-17：Preview 六分類完整瀏覽、卡片展開/收合與 offline 文字驗收 PASS）
 - [X] T057 [US2] 串接首頁「問東京／東京百科」、AssistantScreen 旅遊回答與本次暫存狀態於 src/App.tsx
 
 ### User Story 2 Encyclopedia Card Repair Tasks
@@ -244,10 +244,10 @@ Tasks Phase 與 Technical Plan Phase 是不同維度；數字不代表一一對�
 - [X] T095 [P] [US2] 建立實用日文原文／繁中意思的複製互動，提供成功與失敗的可存取狀態訊息於 src/features/knowledge/KnowledgeCard.tsx
 - [X] T096 [P] [US2] 重用既有 AudioPlayer 與 TTS 能力提供實用日文播放，處理語音失敗且保留文字可讀與可複製於 src/features/knowledge/KnowledgeCard.tsx
 - [X] T097 [P] [US2] 補足 Clipboard API 不可用或拒絕時的 fallback 行為，確保複製失敗仍提供可理解狀態訊息與文字閱讀於 src/features/knowledge/KnowledgeCard.tsx、src/services/
-- [ ] T098 [US2] 驗證離線百科文字可讀、離線不承諾語音，及語音失敗後文字／複製 fallback；更新 quickstart Journey 2 與 offline 驗收步驟於 specs/001-tokyo-travel-assistant/quickstart.md
+- [X] T098 [US2] 驗證離線百科文字可讀、離線不承諾語音，及語音失敗後文字／複製 fallback；更新 quickstart Journey 2 與 offline 驗收步驟於 specs/001-tokyo-travel-assistant/quickstart.md（2026-09-17：Preview offline 文字 PASS；語音/Clipboard 失敗 fallback 由自動測試 PASS）
 - [ ] T099 [US2] 撰寫 KnowledgeBrowser 分類切換、完整六分類內容、無 AI／外部 API request 與空結果互動測試於 src/screens/KnowledgeBrowser.test.tsx
 - [ ] T100 [US2] 撰寫 KnowledgeCard 展開／收合、optional 欄位、日文複製、語音失敗 fallback、鍵盤與 ARIA 互動測試於 src/features/knowledge/KnowledgeCard.test.tsx
-- [ ] T101 [US2] 執行六分類驗收、離線文字／語音失敗 fallback、FR-025／SC-014 viewport matrix、無障礙與無水平捲動／重疊／裁切檢查，輸出驗收 evidence 於 specs/001-tokyo-travel-assistant/quickstart-results.md 與 docs/verification/journey-report.md
+- [X] T101 [US2] 執行六分類驗收、離線文字／語音失敗 fallback、FR-025／SC-014 viewport matrix、無障礙與無水平捲動／重疊／裁切檢查，輸出驗收 evidence 於 specs/001-tokyo-travel-assistant/quickstart-results.md 與 docs/verification/journey-report.md（2026-09-17：Preview acceptance PASS；語音/Clipboard 失敗 fallback 由自動測試 PASS）
 
 **Run**：啟動目前版本的旅遊問答、知識庫與離線靜態內容環境。
 **Verify**：執行 US2 automated tests、build/type checks 與 Journey 2 manual checks，並以 SC-003 的區域選擇、交通、美食、雨天活動案例驗證回答順序；確認無網路時可瀏覽六類靜態知識。

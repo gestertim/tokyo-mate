@@ -27,14 +27,22 @@
 
 - Browser/device manual PWA installation, offline restart, Cache Storage inspection, update timing, and four-viewport standalone matrix remain required under T080/T081/T084/T089.
 
-## 2026-09-17 Knowledge Card Repair Pre-commit Evidence
+## 2026-09-17 Knowledge Card Repair Preview Evidence
 
 - branch: `fix/knowledge-card-details`
-- pre-commit HEAD: `036cf28201a0633fd7a3e9f7b3c8d9c1693e8b00`
+- source commit: `7f8298f759ce56a655539ebe58a1f85aa3a4a9c3`
+- Preview: `https://tokyo-mate-f2vnohydr-elonintl21-7498s-projects.vercel.app/`
+- deployment: `dpl_CSH2gewA7owezNs8eYEoaeJtkUXg`（target: preview；status: Ready）
 - targeted test: `npm test -- src/features/knowledge/KnowledgeJourney.test.tsx` PASS（15/15）
 - full test: `npm test` PASS（23 files、138/138）
 - build: `npm run build` PASS
 - diff hygiene: `git diff --check` PASS
-- local viewport acceptance: 360 x 800、390 x 844、430 x 932、844 x 390 全數 PASS。各尺寸均驗證六分類操作、完整靜態卡片、展開/收合、日文內容、無水平捲動、複製與語音控制無重疊、keyboard focus indicator 與 safe-area；844 x 390 可正常捲動及操作。
-- static catalog/request boundary: 區域 11、交通 2、美食 2、購物 2、文化 1、緊急 1；切換時未觀察到 `/api/*` request。
-- deferred: Preview 驗收、真正 offline reload/語音 fallback，以及真實 TTS 播放均未執行，不宣稱通過。詳見 `specs/001-tokyo-travel-assistant/quickstart-results.md`。
+- six-category acceptance: PASS。區域 11、交通 2、美食 2、購物 2、文化 1、緊急 1；切換直接呈現完整靜態資料，未觀察到 AI 或外部 API request，且不影響 AI 問東京 Top 3–5 語意檢索邊界。
+- card acceptance: PASS。標題/摘要預設可見，卡片可各自展開/收合；內容依資料存在性呈現，實用日文同時有原文與繁中意思。
+- Clipboard: Preview 成功 PASS；Clipboard error fallback 為 automated PASS，Preview not manually simulated。
+- TTS: 正常與慢速播放均為人工 PASS；實際聽到音訊，慢速播放確認為較慢日文；`/api/speech` HTTP 200，畫面無錯誤訊息。
+- offline: PASS。離線百科文字可讀，未承諾離線語音；語音失敗時文字/複製 fallback 由自動測試 PASS。
+- viewport acceptance: 360 x 800、390 x 844、430 x 932、844 x 390 全數 PASS。各尺寸均驗證鍵盤與 ARIA、safe-area、無水平捲動、無控制項重疊或內容裁切；844 x 390 可正常捲動及操作。
+- regression smoke: PASS；App Console 無 error。Preview/Vercel 輔助資源警告不視為 App error，兩者分開判讀。
+- Production: 未變更 master、Production alias 或 Production deployment。
+- remaining: T091、T099、T100 尚缺指定專屬測試檔與空結果覆蓋，維持未完成。詳見 `specs/001-tokyo-travel-assistant/quickstart-results.md`。

@@ -1,23 +1,26 @@
 # 東京百科卡片修正驗收紀錄
 
 - date: 2026-09-17
-- environment: local Vite / Playwright browser（Windows）
+- environment: Vercel Preview / browser（Windows）
 - branch: `fix/knowledge-card-details`
-- pre-commit HEAD: `036cf28201a0633fd7a3e9f7b3c8d9c1693e8b00`
-- status: 本機驗收 PASS；Preview、真實 TTS 與真正 offline 驗收尚待執行
+- source commit: `7f8298f759ce56a655539ebe58a1f85aa3a4a9c3`
+- Preview: `https://tokyo-mate-f2vnohydr-elonintl21-7498s-projects.vercel.app/`
+- deployment: `dpl_CSH2gewA7owezNs8eYEoaeJtkUXg`
+- target / status: preview / Ready
+- status: Preview Acceptance Gate PASS；Production 未變更。
 
 ## Automated Checks
 
 | Command | Result |
 |---|---|
 | `git diff --check` | PASS |
-| `npm test -- src/features/knowledge/KnowledgeJourney.test.tsx` | PASS：1 file、15 tests |
-| `npm test` | PASS：23 files、138 tests |
+| `npm test -- src/features/knowledge/KnowledgeJourney.test.tsx` | PASS：1 file、15/15 tests |
+| `npm test` | PASS：23 files、138/138 tests |
 | `npm run build` | PASS：`tsc -b && vite build` |
 
-## Local Encyclopedia Acceptance
+## Preview Encyclopedia Acceptance
 
-六分類均直接呈現靜態內容：區域 11 張、交通 2 張、美食 2 張、購物 2 張、文化 1 張、緊急 1 張。分類切換期間未觀察到 `/api/*` request。
+六分類均直接呈現完整靜態內容：區域 11 張、交通 2 張、美食 2 張、購物 2 張、文化 1 張、緊急 1 張。分類切換期間未觀察到 AI 或外部 API request；AI 問東京的 Top 3–5 語意檢索邊界未受影響。
 
 | CSS viewport | 結果 | 已驗證項目 |
 |---|---|---|
@@ -26,9 +29,19 @@
 | 430 x 932 | PASS | 同上 |
 | 844 x 390 | PASS | 同上；橫向頁面可捲動並可完成分類切換與卡片操作 |
 
+## Interaction And Fallback Evidence
+
+- Clipboard 成功：Preview PASS。
+- Clipboard error fallback：automated PASS；Preview not manually simulated。
+- 正常語音與慢速語音：Preview 人工 PASS；實際聽到音訊，慢速播放確認為較慢的日文。
+- `/api/speech`：HTTP 200；畫面無錯誤訊息，App Console 無 error。
+- Offline：Preview PASS；百科文字可讀，不承諾離線語音。
+- 展開/收合、獨立卡片狀態、optional content、鍵盤與 ARIA：Preview PASS，並由 `KnowledgeJourney.test.tsx` 驗證。
+- Regression smoke：PASS。
+
 ## Evidence Boundaries
 
-- Clipboard 成功與拒絕 fallback、可存取狀態、展開/收合、獨立卡片狀態、optional content、鍵盤與 ARIA 由 `KnowledgeJourney.test.tsx` 驗證。
-- AudioPlayer UI 已存在且語音失敗時日文文字保持可讀/可複製；未在可用 API 環境實際播放 TTS，因此不宣稱真實 TTS 成功。
-- 真正 offline App Shell、離線百科重新載入、離線語音失敗 fallback，以及完整 Preview journey 尚未驗證；T098、T101 維持未完成。
-- T091、T099、T100 仍未完成：尚缺該任務要求的空結果與專屬測試檔覆蓋。
+- Preview 輔助資源/Vercel 警告與 App error 分開判讀；本次無 App Console error。
+- 語音或 Clipboard 失敗時保留日文原文、繁中意思與複製路徑的 fallback 由自動測試驗證；不將 Clipboard error fallback 宣稱為 Preview 人工 PASS。
+- T091、T099、T100 維持未完成：仍缺各自要求的專屬測試檔及空結果覆蓋。
+- Production alias、master 與 Production deployment 均未變更。
