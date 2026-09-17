@@ -58,4 +58,25 @@ describe('UpdatePrompt（FR-024 / SC-013 新版本不強制中斷目前任務）
     await userEvent.click(screen.getByText('稍後更新'));
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
   });
+
+  it('controllerchange 只 reload 一次，且未經使用者操作不會先套用更新', async () => {
+    const waiting = { postMessage: vi.fn() };
+    const { listeners } = mockServiceWorkerContainer(waiting);
+    const reload = vi.fn();
+    const originalLocation = window.location;
+    Object.defineProperty(window, 'location', {
+      configurable: true,
+      value: { ...originalLocation, reload },
+    });
+    render(<UpdatePrompt />);
+
+    await screen.findByRole('status');
+    expect(waiting.postMessage).not.toHaveBeenCalled();
+
+    listeners.controllerchange?.[0]?.();
+    listeners.controllerchange?.[0]?.();
+    expect(reload).toHaveBeenCalledTimes(1);
+    expect(waiting.postMessage).not.toHaveBeenCalled();
+    Object.defineProperty(window, 'location', { configurable: true, value: originalLocation });
+  });
 });
