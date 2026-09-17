@@ -202,3 +202,19 @@ npx vitest run src/services/assistant.test.ts
 - 卡片必須支援獨立展開／收合、標題／摘要預設顯示，以及依資料存在性顯示 optional 欄位。
 - 實用日文必須顯示日文原文與繁中意思，支援複製與線上播放；Clipboard 不可用、離線或 TTS 失敗時仍保留文字閱讀與複製路徑。
 - 於 360 × 800、390 × 844、430 × 932、844 × 390 檢查鍵盤操作、ARIA、safe area、無水平捲動、無控制項重疊與內容裁切。
+
+### PWA Cache Hotfix v2 Preparation Gate
+
+以下流程用於 red tests 與後續 implementation gate；本階段不得修改 production source 或部署：
+
+1. 確認目前 App Shell cache 名稱已由 `tokyo-mate-app-shell-v1` 輪替為新版本識別。
+2. 線上以 navigation request 載入 App，確認回應來自 network；禁止先回傳舊 cache。
+3. 模擬 network failure，確認依序使用 cached `/`、cached `/index.html`；兩者皆不存在時應快速回報失敗。
+4. 建立 v1 與目前版本 cache 後執行 activate，確認只保留目前版本 cache。
+5. 驗證 hashed asset cache hit 不 fetch network，cache miss 才 fetch 並寫入目前版本 cache。
+6. 驗證 `/api/*`、`/api/speech`、Places、非 GET 與使用者資料相關 request 永不進入 cache。
+7. 驗證 waiting worker 顯示 UpdatePrompt；未點擊立即更新前不 postMessage，點擊後才 `SKIP_WAITING`，`controllerchange` 只 reload 一次。
+8. Preview upgrade journey：更新後重新載入並確認新版東京百科；離線 reload 仍可開啟不含 API response 或使用者資料的 App Shell。
+9. Production existing-client upgrade journey：保留既有 client 與既有 worker，確認提示不強制中斷目前工作，使用者主動更新後才套用新版。
+
+Preparation Gate 結果必須記錄 commands、test pass/fail、失敗對應需求與 Task ID；在 T105～T108 完成前，不得將上述 behavior 記錄為 PASS。

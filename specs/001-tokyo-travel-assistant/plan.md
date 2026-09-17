@@ -46,6 +46,18 @@ Tokyo Mate 東京通是專門服務台灣自由行旅客的東京 AI 旅遊助�
 | **PWA Architecture** | Web App Manifest + versioned icons + Service Worker + Cache Storage | 只 precache/cache-first App Shell、版本化 frontend assets、icons 與批准的靜態 Tokyo Knowledge Base；不加入 IndexedDB、background sync、push notifications 或離線模型 |
 | **Cache Boundary** | Cache allowlist + network-only API exclusion | `/api/assistant`、`/api/transcribe`、`/api/speech`、`/api/places` 與其他 user-specific、AI、位置、即時資訊 requests 必須 network-only 或排除 cache |
 
+### PWA Cache Hotfix v2 Strategy
+
+本次為既有 PWA 更新與離線契約的缺陷修復，採 cache version bump，不新增離線資料能力：
+
+- navigation request 採 network-first；network failure 依序回退 cached `/`、`/index.html`，都不存在時回報真實失敗。
+- hashed static assets 維持 cache-first；只有 cache miss 的成功 network response 才寫入目前版本 cache。
+- activate 僅保留目前版本 App Shell cache，刪除舊版本 cache。
+- API、speech、Places、live-data、位置、聊天、翻譯結果、非 GET 與其他 user-specific response 維持 network-only／禁止快取。
+- 新 worker 維持 waiting 與 UpdatePrompt 的使用者主動套用流程，不自動 SKIP_WAITING 或強制 reload。
+
+驗收以 `src/service-worker.test.ts` 與 `src/components/UpdatePrompt.test.tsx` 的 red tests 先行定義；本 Preparation Gate 不實作上述 production behavior。
+
 ---
 
 ## Assistant Orchestration：Emergency + Live-Required 兩階段技術機制

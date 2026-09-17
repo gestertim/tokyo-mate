@@ -259,6 +259,26 @@
 - PWA 的離線能力以「可啟動、可瀏覽已批准的靜態 Tokyo Knowledge Base、可理解地回報限制」為目標，不承諾離線執行 AI、語音、外部地點搜尋或即時資料查詢；不新增離線 AI/語音模型、聊天資料庫、背景同步、推播或未批准的 user-data persistence。
 - 安裝提示是否由瀏覽器顯示、可用的背景更新能力與部分平台行為，會依瀏覽器與作業系統支援程度而不同；不支援安裝的環境仍須保留完整 Web 使用路徑。
 
+## PWA Cache Hotfix Acceptance Supplement
+
+本節補充 FR-022～FR-026 對既有 PWA cache refresh 缺陷修復的可驗收行為，不改變離線能力與隱私邊界：
+
+- **FR-031**：App Shell cache 名稱必須使用新版本識別，不得繼續使用 `tokyo-mate-app-shell-v1`；cache version 必須可輪替。
+- **FR-032**：navigation request 必須採 network-first；network 成功時回傳最新 network response，network 失敗時依序回退 cached `/` 與 cached `/index.html`。兩者皆不存在時必須誠實失敗，不得回傳虛假成功或無限等待。
+- **FR-033**：hashed static assets 必須維持 cache-first；cache miss 才可 fetch network，成功後只能寫入目前版本 cache。
+- **FR-034**：Service Worker activate 必須刪除不屬於目前版本的 App cache，保留目前版本 cache；`/api/*`、speech、Places、live-data、位置、聊天、翻譯結果與其他非 GET 或 user-specific response 不得進入 cache。
+- **FR-035**：新 worker 安裝後仍須維持 waiting／UpdatePrompt 流程，不得自動 `SKIP_WAITING` 或強制 reload；只有使用者選擇立即更新後才可套用更新，`controllerchange` 至多 reload 一次。
+- **FR-036**：更新後重新載入必須可取得新版東京百科；離線 reload 仍須可開啟不含 API response 或使用者資料的 cached App Shell。
+
+**PWA Cache Hotfix Acceptance Scenarios**
+
+1. 線上導覽請求使用 network response，不先回傳舊 cache。
+2. 導覽網路失敗時使用 cached `/`，若不存在則使用 cached `/index.html`。
+3. v1 cache 在 v2 activate 後被刪除，v2 cache 保留。
+4. hashed asset 命中時不呼叫 network，未命中時才 fetch 並寫入 v2 cache。
+5. API、語音、Places、非 GET 與使用者資料相關請求永不進入 cache。
+6. waiting worker 未經使用者操作不執行 `SKIP_WAITING`；立即更新後才 postMessage 並只 reload 一次。
+
 ## Clarifications
 
 ### Session 2026-09-12

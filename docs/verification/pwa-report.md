@@ -27,3 +27,20 @@
 | **768 × 1024**（平板） | 寬度展開、4 欄功能入口、雙欄卡片、置中 Modal | PASS | 主容器擴展至 768px，首頁四入口一字排開，東京百科與探索地點展開為雙欄卡片，Modal 自動切換為置中視窗 |
 | **1280 × 800 / 1440 × 900**（桌面） | 寬螢幕行前查詢、多欄卡片、大標題與排版呼吸空間 | PASS | 主容器擴展至 980px，閱讀空間寬敞，支援鍵盤 tab/focus-visible 完整操作，未破壞既有單頁與資訊架構 |
 | **Installed Standalone PWA** | 全螢幕 standalone 模式、無瀏覽器 UI 干擾、safe-area 互動完整性 | PASS | `@media (display-mode: standalone)` 確保四向 safe-area padding，所有 primary CTA 與輸入皆可見可點 |
+
+## PWA Cache Hotfix Preparation Gate（2026-09-17）
+
+本節只記錄 Preparation Gate，尚未驗證 hotfix implementation；不得視為 Production PASS。
+
+| 項目 | 狀態 | 追蹤 |
+|---|---|---|
+| Cache version bump | 待驗證 | T102、T105 |
+| Navigation network-first | 待驗證 | T102、T106 |
+| Offline `/`／`/index.html` App Shell fallback | 待驗證 | T102、T106 |
+| Activate 舊 cache cleanup | 待驗證 | T102、T107 |
+| Hashed asset cache-first | 待驗證 | T102、T105 |
+| API／speech／Places／使用者資料 privacy boundary | 待驗證 | T102、T108 |
+| UpdatePrompt waiting／主動套用／單次 reload | 待驗證 | T103、T109 |
+| Preview／Production existing-client upgrade journey | 尚未執行 | T109 |
+
+本階段未修改 `src/service-worker.ts` 或其他 production source，未 deploy，未變更 Production alias。

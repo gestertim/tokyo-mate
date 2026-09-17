@@ -319,6 +319,20 @@ Tasks Phase 與 Technical Plan Phase 是不同維度；數字不代表一一對�
 - [X] T089 依 Journey 0–5 執行手機瀏覽器及 installed PWA 完整驗收，並在 FR-025／SC-014 matrix 的每個 viewport 與情境驗證 top/bottom safe area、軟體鍵盤、主要翻譯內容無水平捲動、touch targets 不重疊及 standalone 操作，記錄結果於 specs/001-tokyo-travel-assistant/quickstart-results.md；PWA／viewport 相關結果並輸出至 docs/verification/pwa-report.md（Generated Verification Artifact，執行時產生）
 - [X] T090 [P] 撰寫安裝、環境變數、開發、測試、部署與隱私限制說明於 README.md
 
+## PWA Cache Hotfix v2 Preparation Tasks
+
+以下任務屬於 `hotfix/pwa-cache-v2`，目前僅完成規格同步與 red tests；未完成任務不得標記為完成。
+
+- [ ] T102 撰寫 PWA cache version、navigation network-first、offline fallback、activate cleanup、hashed asset 與 privacy boundary red tests 於 src/service-worker.test.ts
+- [ ] T103 [P] 撰寫 waiting worker、使用者主動 SKIP_WAITING 與 controllerchange 單次 reload regression tests 於 src/components/UpdatePrompt.test.tsx
+- [ ] T104 執行 T102/T103 red tests，確認失敗原因僅為尚未實作的 PWA cache hotfix behavior，排除 mock/import/TypeScript/environment failure
+- [ ] T105 實作新的 APP_SHELL_CACHE version，並維持 hashed static assets cache-first 於 src/service-worker.ts
+- [ ] T106 實作 navigation network-first 與 cached `/`／`/index.html` fallback 於 src/service-worker.ts
+- [ ] T107 實作 activate 舊 App cache cleanup，保留目前版本 cache 於 src/service-worker.ts
+- [ ] T108 執行 API／speech／Places／live-data／位置／聊天／翻譯結果／非 GET privacy regression verification 於 src/service-worker.test.ts
+- [ ] T109 依 quickstart 完成 Preview upgrade journey 與 Production existing-client upgrade journey，確認新版東京百科與 UpdatePrompt 行為
+- [ ] T110 同步 `docs/verification/pwa-report.md`、quickstart evidence 與 hotfix acceptance 結果；Implementation Gate 前不得記錄 PASS
+
 **Run**：啟動目前版本並執行 PWA、responsive、accessibility、privacy 與完整驗收所需環境。
 **Verify**：執行 Phase 6 automated tests、build/type/static checks、PWA install/offline journeys、FR-025／SC-014 matrix 與 quickstart acceptance checks，確認無秘密、精確位置、原始錄音或長期聊天資料被快取或持久化。
 **Fix**：若 Verify 失敗，只修正實際受影響且與 Phase 6 直接相關的 source/test/config，重新 Run / Verify；不得刪除失敗測試、停用測試或降低驗收標準。
