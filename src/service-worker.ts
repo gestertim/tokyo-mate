@@ -44,18 +44,18 @@ if (isServiceWorkerRuntime()) {
   });
 
   self.addEventListener('activate', (event: any) => {
-    event.waitUntil(
-      caches
-        .keys()
-        .then((keys: string[]) =>
-          Promise.all(
-            keys
-              .filter((key) => key.startsWith(APP_SHELL_CACHE_PREFIX) && key !== APP_SHELL_CACHE)
-              .map((key) => caches.delete(key)),
-          ),
-        )
-        .then(() => self.clients?.claim?.()),
-    );
+    // Cleanup and claim start independently so a cleanup rejection never skips clients.claim().
+    const cleanupPromise = caches
+      .keys()
+      .then((keys: string[]) =>
+        Promise.all(
+          keys
+            .filter((key) => key.startsWith(APP_SHELL_CACHE_PREFIX) && key !== APP_SHELL_CACHE)
+            .map((key) => caches.delete(key)),
+        ),
+      );
+    const claimPromise = self.clients.claim();
+    event.waitUntil(Promise.all([cleanupPromise, claimPromise]).then(() => undefined));
   });
 
   // Update prompts request skip-waiting only after the user opts in; never auto-applied.
