@@ -190,8 +190,9 @@ tokyo-mate/
 
 ### Phase 4: Tokyo Knowledge Base & 檢索
 - 建立 `src/data/tokyo/` 6 大結構化 JSON 資料檔 (`areas`, `transport`, `food`, `shopping`, `culture`, `emergency`)。
-- 實作 `src/services/knowledge.ts` 元資料比對檢索，並將 Top 相關條目注入至 `/api/assistant.ts` System Context。
-- 實作 `KnowledgeBrowser` 分類瀏覽器。
+- 實作 `src/services/knowledge.ts` 元資料比對檢索，並將 Top 3–5 相關條目注入至 `/api/assistant.ts` System Context；此 AI 問東京檢索流程不得作為百科分類資料來源。
+- 實作 `KnowledgeBrowser` 分類瀏覽器與獨立 `CategoryFilter`，六個靜態分類直接載入各自完整資料，分類切換不得呼叫 AI 或外部 API。
+- 實作 `KnowledgeCard` 展開／收合、optional 欄位條件呈現、實用日文複製／TTS 與離線／語音失敗 fallback；互動狀態以卡片為單位隔離，並符合鍵盤與 ARIA 要求。
 - 依 Specification FR-009 / SC-003 之首屏內容順序，實作 conclusion/action/caution/phrase 型別化 render 流程。
 
 ### Phase 5: 即時 Web Data 狀態處理
@@ -232,6 +233,9 @@ tokyo-mate/
 | FR-017 / FR-018 | Runtime-only client state（React state/Context）、Service Worker cache allowlist 排除規則、Early Platform Safety Gate（Phase 2）技術檢查點 |
 | FR-019 / FR-020 | Prompt 規則實作、QA fixture 檔案、驗證產出流程 |
 | SC-009 | `docs/verification/privacy-report.md` 驗證產出（LocalStorage/IndexedDB/Cache Storage 檢查） |
+| FR-027 / SC-015 | `KnowledgeBrowser`／`CategoryFilter` 靜態六分類與 AI Top 3–5 request boundary 驗證 |
+| FR-028 / SC-016 | `KnowledgeCard` optional 欄位與獨立展開／收合互動驗證 |
+| FR-029 / FR-030 / SC-017 | 實用日文複製／TTS fallback、ARIA、鍵盤與 viewport 驗證 |
 
 ## Run / Verify / Fix / Evidence Standard
 
