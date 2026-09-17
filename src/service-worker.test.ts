@@ -45,12 +45,14 @@ async function loadServiceWorkerRuntime(cacheNames: string[] = [APP_SHELL_CACHE]
     keys: vi.fn(async () => [...cacheRecords.keys()]),
     delete: vi.fn(async (name: string) => cacheRecords.delete(name)),
   };
+  const claim = vi.fn(async () => undefined);
+  const skipWaiting = vi.fn(async () => undefined);
   const serviceWorkerGlobal = {
     addEventListener: (type: string, handler: (event: any) => void) => {
       listeners[type] = [...(listeners[type] ?? []), handler];
     },
-    clients: { claim: vi.fn(async () => undefined) },
-    skipWaiting: vi.fn(async () => undefined),
+    clients: { claim },
+    skipWaiting,
   };
   const originalSelf = Object.getOwnPropertyDescriptor(globalThis, 'self');
   const originalCaches = Object.getOwnPropertyDescriptor(globalThis, 'caches');
@@ -58,7 +60,16 @@ async function loadServiceWorkerRuntime(cacheNames: string[] = [APP_SHELL_CACHE]
   Object.defineProperty(globalThis, 'caches', { configurable: true, value: cacheApi });
   vi.resetModules();
   const serviceWorker = await import('./service-worker');
-  return { cacheApi, cacheRecords, listeners, originalCaches, originalSelf, serviceWorker };
+  return { cacheApi, cacheRecords, claim, listeners, originalCaches, originalSelf, serviceWorker, skipWaiting };
+}
+
+function dispatchLifecycleEvent(
+  listener: ((event: { waitUntil: (promise: Promise<unknown>) => void }) => void) | undefined,
+) {
+  const waitUntilPromises: Promise<unknown>[] = [];
+  listener?.({ waitUntil: (promise) => waitUntilPromises.push(promise) });
+  expect(waitUntilPromises).toHaveLength(1);
+  return waitUntilPromises[0]!;
 }
 
 function createNavigationRequest() {
@@ -185,12 +196,11 @@ describe('PWA cache refresh hotfix v2 red tests', () => {
 
   it('activate 後刪除 v1 舊 cache，保留目前版本 cache', async () => {
     const runtime = await loadServiceWorkerRuntime(['tokyo-mate-app-shell-v1', 'tokyo-mate-app-shell-v2']);
-    const waitForActivation: Promise<unknown>[] = [];
-    runtime.listeners.activate[0]?.({ waitUntil: (promise: Promise<unknown>) => waitForActivation.push(promise) });
-    await Promise.all(waitForActivation);
+    await dispatchLifecycleEvent(runtime.listeners.activate[0]);
 
     expect(runtime.cacheApi.delete).toHaveBeenCalledWith('tokyo-mate-app-shell-v1');
     expect(runtime.cacheRecords.has('tokyo-mate-app-shell-v2')).toBe(true);
+    expect(runtime.claim).toHaveBeenCalledTimes(1);
     restoreGlobal('self', runtime.originalSelf);
     restoreGlobal('caches', runtime.originalCaches);
   });
@@ -242,6 +252,56 @@ describe('PWA cache refresh hotfix v2 red tests', () => {
 });
 
 describe('PWA Hotfix Safety Correction Gate', () => {
+  it('activate cleanup 成功時完成 waitUntil 並恰好 claim 一次 client ownership', async () => {
+    const runtime = await loadServiceWorkerRuntime(['tokyo-mate-app-shell-v1', APP_SHELL_CACHE]);
+
+    await expect(dispatchLifecycleEvent(runtime.listeners.activate[0])).resolves.toBeUndefined();
+
+    expect(runtime.cacheApi.keys).toHaveBeenCalledTimes(1);
+    expect(runtime.cacheApi.delete).toHaveBeenCalledWith('tokyo-mate-app-shell-v1');
+    expect(runtime.claim).toHaveBeenCalledTimes(1);
+    restoreGlobal('self', runtime.originalSelf);
+    restoreGlobal('caches', runtime.originalCaches);
+  });
+
+  it('cleanup 失敗仍嘗試 claim，並讓 waitUntil 可觀察 cleanup error', async () => {
+    const runtime = await loadServiceWorkerRuntime(['tokyo-mate-app-shell-v1', APP_SHELL_CACHE]);
+    const cleanupError = new Error('cache cleanup failed');
+    runtime.cacheApi.delete.mockRejectedValueOnce(cleanupError);
+
+    await expect(dispatchLifecycleEvent(runtime.listeners.activate[0])).rejects.toBe(cleanupError);
+    expect(runtime.claim).toHaveBeenCalledTimes(1);
+    restoreGlobal('self', runtime.originalSelf);
+    restoreGlobal('caches', runtime.originalCaches);
+  });
+
+  it('claim 失敗時 waitUntil 反映 rejection，不靜默當成成功', async () => {
+    const runtime = await loadServiceWorkerRuntime(['tokyo-mate-app-shell-v1', APP_SHELL_CACHE]);
+    const claimError = new Error('claim failed');
+    runtime.claim.mockRejectedValueOnce(claimError);
+
+    await expect(dispatchLifecycleEvent(runtime.listeners.activate[0])).rejects.toBe(claimError);
+    expect(runtime.cacheApi.delete).toHaveBeenCalledWith('tokyo-mate-app-shell-v1');
+    expect(runtime.claim).toHaveBeenCalledTimes(1);
+    restoreGlobal('self', runtime.originalSelf);
+    restoreGlobal('caches', runtime.originalCaches);
+  });
+
+  it('install 不自行 skipWaiting，僅 SKIP_WAITING message 可觸發', async () => {
+    const runtime = await loadServiceWorkerRuntime();
+
+    await expect(dispatchLifecycleEvent(runtime.listeners.install[0])).resolves.toBeUndefined();
+    expect(runtime.skipWaiting).not.toHaveBeenCalled();
+
+    runtime.listeners.message[0]?.({ data: 'IGNORE' });
+    expect(runtime.skipWaiting).not.toHaveBeenCalled();
+
+    runtime.listeners.message[0]?.({ data: 'SKIP_WAITING' });
+    expect(runtime.skipWaiting).toHaveBeenCalledTimes(1);
+    restoreGlobal('self', runtime.originalSelf);
+    restoreGlobal('caches', runtime.originalCaches);
+  });
+
   it('activate 只刪除 Tokyo Mate App Shell namespace 的舊版 cache，保留其他 origin cache', async () => {
     const runtime = await loadServiceWorkerRuntime([
       'tokyo-mate-app-shell-v1',
