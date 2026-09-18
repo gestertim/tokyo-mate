@@ -183,8 +183,10 @@ Tokyo Mate 目前處於 **MVP validation 階段**。
 
 Tokyo Mate 採用 **specification-driven development** 方法論。
 
-- `specs/` 目錄：完整的產品規格與驗收標準
-- `.specify/` 目錄：Spec Kit 組織與工作流程
-- `.github/skills/` 目錄：Copilot CLI 與 Spec Kit 工具集
+- `specs/` 目錄：完整的產品規格與驗收標準（由 Git 追蹤）
+- `.specify/` 目錄：Spec Kit 組織與工作流程（開發者本機使用工具，不再由 Git 追蹤）
+- `.github/skills/` 目錄：Copilot CLI 與 Spec Kit 工具集（開發者本機使用工具，不再由 Git 追蹤）
 
-詳見 `specs/` 與 `.specify/` 中的規格文件與計畫。
+`.specify/` 與 `.github/skills/` 僅供開發者本機的 GitHub Copilot 與 Spec Kit 使用，為避免將個人開發工具放入公開 repository，已自 Git 追蹤中移除（詳見 `.gitignore`）；此變更不影響 App 的 build、test、runtime、PWA 或 Vercel 部署。
+
+詳見 `specs/` 中的規格文件與計畫。
