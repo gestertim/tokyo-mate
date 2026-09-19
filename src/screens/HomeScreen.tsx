@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { AssistantScreen } from './AssistantScreen';
 import { NearbyScreen } from './NearbyScreen';
+import { PhotoTranslateScreen } from './PhotoTranslateScreen';
 import { VoiceInputModal } from '../features/speech/VoiceInputModal';
 
 interface HomeScreenProps { onOpenKnowledge?: () => void; }
@@ -10,8 +11,10 @@ export function HomeScreen({ onOpenKnowledge }: HomeScreenProps) {
   const [assistantOpen, setAssistantOpen] = useState(false);
   const [nearbyOpen, setNearbyOpen] = useState(false);
   const [voiceOpen, setVoiceOpen] = useState(false);
+  const [photoTranslateOpen, setPhotoTranslateOpen] = useState(false);
   if (assistantOpen) return <AssistantScreen initialText={text} onBack={() => setAssistantOpen(false)} />;
   if (nearbyOpen) return <NearbyScreen onBack={() => setNearbyOpen(false)} />;
+  if (photoTranslateOpen) return <PhotoTranslateScreen onBack={() => setPhotoTranslateOpen(false)} />;
   return <section aria-labelledby="home-heading">
     <h2 id="home-heading">東京旅程，從一句話開始</h2>
     <p>翻譯、問東京、探索附近，或打開東京百科。</p>
@@ -25,6 +28,7 @@ export function HomeScreen({ onOpenKnowledge }: HomeScreenProps) {
       <button type="button" onClick={() => setAssistantOpen(true)}>問東京</button>
       <button type="button" onClick={() => setNearbyOpen(true)}>探索附近</button>
       <button type="button" onClick={onOpenKnowledge}>東京百科</button>
+      <button type="button" onClick={() => setPhotoTranslateOpen(true)} aria-label="拍照翻譯：拍照或選圖翻譯文字">拍照翻譯</button>
     </nav>
     {voiceOpen && <VoiceInputModal onTranscript={(value) => { setText(value); setVoiceOpen(false); }} onClose={() => setVoiceOpen(false)} />}
   </section>;

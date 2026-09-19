@@ -112,8 +112,8 @@ description: "Tokyo Mate 東京通｜Photo Translate 拍照翻譯 實作任務�
 
 **Purpose**: 建立 `PhotoTranslateTaskState` 及子狀態型別（依 `data-model.md`），阻塞所有後續 Phase。
 
-- [ ] T001 [P] 撰寫 `regionVersion` stale 比對與 `selectedTarget`／`displayed.target` 分離不變式之單元測試於 src/types/photoTranslate.test.ts
-- [ ] T002 [P] 依 data-model.md 定義 `PhotoTranslateTaskState`、`PhotoTranslatePhase`、`OcrState`、`TranslationState`、`SpeechState` 型別及 stale-check 純函式於 src/types/photoTranslate.ts
+- [X] T001 [P] 撰寫 `regionVersion` stale 比對與 `selectedTarget`／`displayed.target` 分離不變式之單元測試於 src/types/photoTranslate.test.ts
+- [X] T002 [P] 依 data-model.md 定義 `PhotoTranslateTaskState`、`PhotoTranslatePhase`、`OcrState`、`TranslationState`、`SpeechState` 型別及 stale-check 純函式於 src/types/photoTranslate.ts
 
 **Run**：`npx vitest run src/types/photoTranslate.test.ts`
 **Verify**：確認型別編譯通過、stale-check 純函式測試涵蓋「舊 regionVersion」「相同 regionVersion」「selectedTarget≠displayed.target」情境。
@@ -126,10 +126,10 @@ description: "Tokyo Mate 東京通｜Photo Translate 拍照翻譯 實作任務�
 
 **Goal**: 使用者可主動拍攝或選取照片，且不自動要求任何權限（FR-002／SC-001）。
 
-- [ ] T003 [P] [US1] 撰寫 PhotoAcquisitionPanel 測試：掛載時不觸發任何權限、「拍攝照片」使用 `capture="environment"` file input、「從相簿選擇」使用無 `capture` file input、拍攝/選圖取消停留原狀態不顯示錯誤、相機權限被拒時顯示一般化可恢復訊息（可改用相簿照片）、不支援/無法讀取照片顯示可恢復訊息於 src/features/photo-translate/PhotoAcquisitionPanel.test.tsx
-- [ ] T004 [US1] 實作 PhotoAcquisitionPanel（拍攝照片／從相簿選擇兩個 action，相機被拒／取消／不支援照片狀態）依 ux-ui-design-handoff.md §2 於 src/features/photo-translate/PhotoAcquisitionPanel.tsx
-- [ ] T005 [P] [US1] 撰寫 PhotoTranslateScreen 初始測試：預設 phase 為 `acquisition` 並渲染 PhotoAcquisitionPanel，取得照片後轉為 `region_selection` 於 src/screens/PhotoTranslateScreen.test.tsx
-- [ ] T006 [US1] 建立 PhotoTranslateScreen 初始容器：持有 `PhotoTranslateTaskState`（初始 phase=`acquisition`），渲染 PhotoAcquisitionPanel，取得照片後轉場至 `region_selection` 於 src/screens/PhotoTranslateScreen.tsx
+- [X] T003 [P] [US1] 撰寫 PhotoAcquisitionPanel 測試：掛載時不觸發任何權限、「拍攝照片」使用 `capture="environment"` file input、「從相簿選擇」使用無 `capture` file input、拍攝/選圖取消停留原狀態不顯示錯誤、相機權限被拒時顯示一般化可恢復訊息（可改用相簿照片）、不支援/無法讀取照片顯示可恢復訊息於 src/features/photo-translate/PhotoAcquisitionPanel.test.tsx
+- [X] T004 [US1] 實作 PhotoAcquisitionPanel（拍攝照片／從相簿選擇兩個 action，相機被拒／取消／不支援照片狀態）依 ux-ui-design-handoff.md §2 於 src/features/photo-translate/PhotoAcquisitionPanel.tsx
+- [X] T005 [P] [US1] 撰寫 PhotoTranslateScreen 初始測試：預設 phase 為 `acquisition` 並渲染 PhotoAcquisitionPanel，取得照片後轉為 `region_selection` 於 src/screens/PhotoTranslateScreen.test.tsx
+- [X] T006 [US1] 建立 PhotoTranslateScreen 初始容器：持有 `PhotoTranslateTaskState`（初始 phase=`acquisition`），渲染 PhotoAcquisitionPanel，取得照片後轉場至 `region_selection` 於 src/screens/PhotoTranslateScreen.tsx
 
 **Run**：`npx vitest run src/features/photo-translate/PhotoAcquisitionPanel.test.tsx src/screens/PhotoTranslateScreen.test.tsx`
 **Verify**：確認掛載時無 `getUserMedia`/权限 API 呼叫；取消/不支援照片情境均不顯示技術錯誤字樣。
@@ -142,10 +142,10 @@ description: "Tokyo Mate 東京通｜Photo Translate 拍照翻譯 實作任務�
 
 **Goal**: 使用者必須先框選有效範圍並確認，才可進入 OCR；可在同張照片重新選取（FR-003／FR-008／FR-019／SC-002）。
 
-- [ ] T007 [P] [US1] 撰寫 RegionSelector 測試：Pointer 事件建立/調整矩形選取框、零面積或未拖曳選取時「確認選取區域」保持 disabled、鍵盤方向鍵微調、確認後以 canvas 產生裁切影像於 src/features/photo-translate/RegionSelector.test.tsx
-- [ ] T008 [US1] 實作 RegionSelector：Pointer Events 拖曳/調整控點、鍵盤微調、canvas 裁切輸出、有效選取守門（非零面積才可確認）依 research.md §2／data-model.md 於 src/features/photo-translate/RegionSelector.tsx
-- [ ] T009 [P] [US1] [US2] 延伸 PhotoTranslateScreen 測試：`region_selection` 渲染 RegionSelector、確認選取觸發 `regionVersion++` 並轉場至 `ocr_processing`、無效選取不得觸發轉場、「更換照片」回到 `acquisition` 並清除既有 photo/region/ocr/translation/speech 於 src/screens/PhotoTranslateScreen.test.tsx
-- [ ] T010 [US1] [US2] 延伸 PhotoTranslateScreen：`region_selection` phase 渲染 RegionSelector，確認選取遞增 `regionVersion` 並轉場 `ocr_processing`；「更換照片」action 重置整個 task 於 src/screens/PhotoTranslateScreen.tsx
+- [X] T007 [P] [US1] 撰寫 RegionSelector 測試：Pointer 事件建立/調整矩形選取框、零面積或未拖曳選取時「確認選取區域」保持 disabled、鍵盤方向鍵微調、確認後以 canvas 產生裁切影像於 src/features/photo-translate/RegionSelector.test.tsx
+- [X] T008 [US1] 實作 RegionSelector：Pointer Events 拖曳/調整控點、鍵盤微調、canvas 裁切輸出、有效選取守門（非零面積才可確認）依 research.md §2／data-model.md 於 src/features/photo-translate/RegionSelector.tsx
+- [X] T009 [P] [US1] [US2] 延伸 PhotoTranslateScreen 測試：`region_selection` 渲染 RegionSelector、確認選取觸發 `regionVersion++` 並轉場至 `ocr_processing`、無效選取不得觸發轉場、「更換照片」回到 `acquisition` 並清除既有 photo/region/ocr/translation/speech 於 src/screens/PhotoTranslateScreen.test.tsx
+- [X] T010 [US1] [US2] 延伸 PhotoTranslateScreen：`region_selection` phase 渲染 RegionSelector，確認選取遞增 `regionVersion` 並轉場 `ocr_processing`；「更換照片」action 重置整個 task 於 src/screens/PhotoTranslateScreen.tsx
 
 **Run**：`npx vitest run src/features/photo-translate/RegionSelector.test.tsx src/screens/PhotoTranslateScreen.test.tsx`
 **Verify**：確認未拖曳出有效範圍時無法觸發 OCR（FR-019）；「更換照片」清除先前狀態且不殘留舊選取框。
@@ -158,9 +158,9 @@ description: "Tokyo Mate 東京通｜Photo Translate 拍照翻譯 實作任務�
 
 **Goal**: `POST /api/photo-ocr` 依既有 OpenAI Responses API vision 能力辨識裁切影像，回傳可靠原文或無可靠文字狀態，且不持久化（FR-004／FR-007／FR-015）。
 
-- [ ] T011 [P] [US1] 撰寫 `/api/photo-ocr` contract 測試：MIME 白名單拒絕、超過大小上限拒絕、`regionVersion` 缺漏/型別錯誤拒絕、`reliableTextFound:true` 成功並原樣回傳 `regionVersion`、`reliableTextFound:false` 不含 `sourceText`、provider 失敗回傳一般化 `ProductError`（不含 OpenAI 原始錯誤）、不寫入任何儲存體於 tests/api/photo-ocr.test.ts
-- [ ] T012 [P] [US1] 撰寫 OCR 指令樣板，要求模型只回傳結構化 `{reliableTextFound, sourceText?}` 且明確禁止猜測性內容於 api/_lib/prompts/photo-ocr.ts
-- [ ] T013 [US1] 實作 `POST /api/photo-ocr`：驗證 `imageDataUrl` MIME／大小、`regionVersion` 型別，呼叫既有 `createOpenAIClient`／`getOpenAIModel` 之 `client.responses.create` 搭配 `input_image`，對應 success/failure envelope 於 api/photo-ocr.ts
+- [X] T011 [P] [US1] 撰寫 `/api/photo-ocr` contract 測試：MIME 白名單拒絕、超過大小上限拒絕、`regionVersion` 缺漏/型別錯誤拒絕、`reliableTextFound:true` 成功並原樣回傳 `regionVersion`、`reliableTextFound:false` 不含 `sourceText`、provider 失敗回傳一般化 `ProductError`（不含 OpenAI 原始錯誤）、不寫入任何儲存體於 tests/api/photo-ocr.test.ts
+- [X] T012 [P] [US1] 撰寫 OCR 指令樣板，要求模型只回傳結構化 `{reliableTextFound, sourceText?}` 且明確禁止猜測性內容於 api/_lib/prompts/photo-ocr.ts
+- [X] T013 [US1] 實作 `POST /api/photo-ocr`：驗證 `imageDataUrl` MIME／大小、`regionVersion` 型別，呼叫既有 `createOpenAIClient`／`getOpenAIModel` 之 `client.responses.create` 搭配 `input_image`，對應 success/failure envelope 於 api/photo-ocr.ts
 
 **Run**：`npx vitest run tests/api/photo-ocr.test.ts`
 **Verify**：確認所有 400/500 錯誤訊息為一般化文案、無 OpenAI 原始錯誤外流；確認 `reliableTextFound:false` 時 `sourceText` 欄位不存在。
@@ -173,11 +173,11 @@ description: "Tokyo Mate 東京通｜Photo Translate 拍照翻譯 實作任務�
 
 **Goal**: 前端呼叫 `/api/photo-ocr` 並以三分區其中 A/B 呈現結果，含 stale 保護與無可靠文字恢復路徑（FR-004／FR-006／FR-009／FR-016）。
 
-- [ ] T014 [P] [US1] 撰寫 OcrResultPanel 測試：processing／success／no_reliable_text／failure 四狀態渲染、各狀態對應恢復 action（重新選取區域／重新拍攝／重新選擇照片／重試辨識）於 src/features/photo-translate/OcrResultPanel.test.tsx
-- [ ] T015 [US1] 實作 OcrResultPanel：A（選取影像縮圖）／B（辨識原文）分區與四狀態、恢復 action 依 ux-ui-design-handoff.md §4 於 src/features/photo-translate/OcrResultPanel.tsx
-- [ ] T016 [P] [US1] 於 src/services/api.ts 新增 `requestPhotoOcr(imageDataUrl, regionVersion)` 型別化 fetch wrapper（不修改既有匯出）
-- [ ] T017 [US1] [US2] 延伸 PhotoTranslateScreen 測試：進入 `ocr_processing` 呼叫 `requestPhotoOcr`、依回應設定 OcrState 並渲染 OcrResultPanel、僅顯示 `ocr.forRegionVersion === task.regionVersion` 之結果（stale 保護）、各恢復 action 正確轉場於 src/screens/PhotoTranslateScreen.test.tsx
-- [ ] T018 [US1] [US2] 延伸 PhotoTranslateScreen：呼叫 `requestPhotoOcr`、管理 `OcrState`（含 stale 保護）、渲染 OcrResultPanel、串接恢復 action 於 src/screens/PhotoTranslateScreen.tsx
+- [X] T014 [P] [US1] 撰寫 OcrResultPanel 測試：processing／success／no_reliable_text／failure 四狀態渲染、各狀態對應恢復 action（重新選取區域／重新拍攝／重新選擇照片／重試辨識）於 src/features/photo-translate/OcrResultPanel.test.tsx
+- [X] T015 [US1] 實作 OcrResultPanel：A（選取影像縮圖）／B（辨識原文）分區與四狀態、恢復 action 依 ux-ui-design-handoff.md §4 於 src/features/photo-translate/OcrResultPanel.tsx
+- [X] T016 [P] [US1] 於 src/services/api.ts 新增 `requestPhotoOcr(imageDataUrl, regionVersion)` 型別化 fetch wrapper（不修改既有匯出）
+- [X] T017 [US1] [US2] 延伸 PhotoTranslateScreen 測試：進入 `ocr_processing` 呼叫 `requestPhotoOcr`、依回應設定 OcrState 並渲染 OcrResultPanel、僅顯示 `ocr.forRegionVersion === task.regionVersion` 之結果（stale 保護）、各恢復 action 正確轉場於 src/screens/PhotoTranslateScreen.test.tsx
+- [X] T018 [US1] [US2] 延伸 PhotoTranslateScreen：呼叫 `requestPhotoOcr`、管理 `OcrState`（含 stale 保護）、渲染 OcrResultPanel、串接恢復 action 於 src/screens/PhotoTranslateScreen.tsx
 
 **Run**：`npx vitest run src/features/photo-translate/OcrResultPanel.test.tsx src/screens/PhotoTranslateScreen.test.tsx`
 **Verify**：確認舊 regionVersion 之 OCR 結果不會顯示；無可靠文字時不產生猜測內容且保留照片。
@@ -190,9 +190,9 @@ description: "Tokyo Mate 東京通｜Photo Translate 拍照翻譯 實作任務�
 
 **Goal**: `POST /api/photo-translate` 將既有 OCR 原文譯為使用者選擇之 zh-TW／ja，同語言時不產生假翻譯，且不持久化（FR-005／FR-017／FR-018／FR-020）。
 
-- [ ] T019 [P] [US1] [US3] 撰寫 `/api/photo-translate` contract 測試：`targetLanguage` 僅接受 `zh-TW`／`ja`（其餘拒絕）、`sourceText` 空字串/超長拒絕、`sameLanguage:true` 時不含 `translatedText`、一般翻譯成功回應、provider 失敗回傳一般化 `ProductError`、不寫入任何儲存體於 tests/api/photo-translate.test.ts
-- [ ] T020 [P] [US3] 撰寫翻譯指令樣板，要求判斷同語言並依 Constitution VIII 產出自然繁體中文／日文語氣於 api/_lib/prompts/photo-translate.ts
-- [ ] T021 [US1] [US3] 實作 `POST /api/photo-translate`：驗證 `sourceText`／`targetLanguage`，呼叫既有 OpenAI Responses API，回應 `{sameLanguage, translatedText?, targetLanguage}` 對應 success/failure envelope 於 api/photo-translate.ts
+- [X] T019 [P] [US1] [US3] 撰寫 `/api/photo-translate` contract 測試：`targetLanguage` 僅接受 `zh-TW`／`ja`（其餘拒絕）、`sourceText` 空字串/超長拒絕、`sameLanguage:true` 時不含 `translatedText`、一般翻譯成功回應、provider 失敗回傳一般化 `ProductError`、不寫入任何儲存體於 tests/api/photo-translate.test.ts
+- [X] T020 [P] [US3] 撰寫翻譯指令樣板，要求判斷同語言並依 Constitution VIII 產出自然繁體中文／日文語氣於 api/_lib/prompts/photo-translate.ts
+- [X] T021 [US1] [US3] 實作 `POST /api/photo-translate`：驗證 `sourceText`／`targetLanguage`，呼叫既有 OpenAI Responses API，回應 `{sameLanguage, translatedText?, targetLanguage}` 對應 success/failure envelope 於 api/photo-translate.ts
 
 **Run**：`npx vitest run tests/api/photo-translate.test.ts`
 **Verify**：確認 `targetLanguage` 白名單以外一律 400；`sameLanguage:true` 回應不含 `translatedText`。
@@ -205,11 +205,11 @@ description: "Tokyo Mate 東京通｜Photo Translate 拍照翻譯 實作任務�
 
 **Goal**: 前端管理 target 選擇、同語言提示、切換 target 之重新翻譯與失敗復原，並區分 `selectedTarget` 與 `displayed.target`（FR-005／FR-006／FR-010／FR-017／FR-018／FR-020）。
 
-- [ ] T022 [P] [US3] 撰寫 TranslationPanel 測試：僅提供 zh-TW／ja 兩個 target 按鈕、`same_language` 狀態顯示提示與切換另一目標之 action、失敗狀態保留照片/OCR 原文並提供「重新嘗試翻譯」於 src/features/photo-translate/TranslationPanel.test.tsx
-- [ ] T023 [US1] [US3] 實作 TranslationPanel：target 切換按鈕、translating/success/same_language/failure 狀態，`displayed.target` 與 `selectedTarget` 不一致時之視覺區分依 ux-ui-design-handoff.md §5–6 於 src/features/photo-translate/TranslationPanel.tsx
-- [ ] T024 [P] [US3] 於 src/services/api.ts 新增 `requestPhotoTranslate(sourceText, targetLanguage)` 型別化 fetch wrapper（不修改既有匯出）
-- [ ] T025 [US3] 延伸 PhotoTranslateScreen 測試：切換 target 以既有 OCR 原文重新請求（不沿用舊翻譯）；切換失敗且切換前已有成功結果時，`displayed` 維持切換前最後一次成功結果並可重試；切換失敗且切換前無任何成功結果時，`displayed` 維持 `undefined` 且不顯示任何翻譯內容，僅保留照片/選取區域/OCR 原文並可重試於 src/screens/PhotoTranslateScreen.test.tsx
-- [ ] T026 [US3] 延伸 PhotoTranslateScreen：實作 `TranslationState` 切換規則（target 切換重新請求、失敗回復最後成功結果、無前次成功結果時之失敗狀態）依 data-model.md §3 於 src/screens/PhotoTranslateScreen.tsx
+- [X] T022 [P] [US3] 撰寫 TranslationPanel 測試：僅提供 zh-TW／ja 兩個 target 按鈕、`same_language` 狀態顯示提示與切換另一目標之 action、失敗狀態保留照片/OCR 原文並提供「重新嘗試翻譯」於 src/features/photo-translate/TranslationPanel.test.tsx
+- [X] T023 [US1] [US3] 實作 TranslationPanel：target 切換按鈕、translating/success/same_language/failure 狀態，`displayed.target` 與 `selectedTarget` 不一致時之視覺區分依 ux-ui-design-handoff.md §5–6 於 src/features/photo-translate/TranslationPanel.tsx
+- [X] T024 [P] [US3] 於 src/services/api.ts 新增 `requestPhotoTranslate(sourceText, targetLanguage)` 型別化 fetch wrapper（不修改既有匯出）
+- [X] T025 [US3] 延伸 PhotoTranslateScreen 測試：切換 target 以既有 OCR 原文重新請求（不沿用舊翻譯）；切換失敗且切換前已有成功結果時，`displayed` 維持切換前最後一次成功結果並可重試；切換失敗且切換前無任何成功結果時，`displayed` 維持 `undefined` 且不顯示任何翻譯內容，僅保留照片/選取區域/OCR 原文並可重試於 src/screens/PhotoTranslateScreen.test.tsx
+- [X] T026 [US3] 延伸 PhotoTranslateScreen：實作 `TranslationState` 切換規則（target 切換重新請求、失敗回復最後成功結果、無前次成功結果時之失敗狀態）依 data-model.md §3 於 src/screens/PhotoTranslateScreen.tsx
 
 **Run**：`npx vitest run src/features/photo-translate/TranslationPanel.test.tsx src/screens/PhotoTranslateScreen.test.tsx`
 **Verify**：確認切換 target 一律重新呼叫 `/api/photo-translate`；`selectedTarget` 與 `displayed.target` 不一致時使用者可分辨。
@@ -222,8 +222,8 @@ description: "Tokyo Mate 東京通｜Photo Translate 拍照翻譯 實作任務�
 
 **Goal**: reuse 既有 `/api/speech` 與 `AudioPlayer`，播放語言必須對應 `displayed.target` 而非 `selectedTarget`（FR-011／FR-012／FR-021）。
 
-- [ ] T027 [P] [US3] 延伸 TranslationPanel 測試：語音播放語言恆等於 `translation.displayed.target`（非 `selectedTarget`）；語音失敗保留翻譯結果並可重新嘗試播放（不重新翻譯/不重新 OCR）於 src/features/photo-translate/TranslationPanel.test.tsx
-- [ ] T028 [US3] 於 TranslationPanel 內接入既有 `AudioPlayer`（src/components/AudioPlayer.tsx，不修改），以 `translation.displayed.target` 作為 `language` prop，不新增 speech endpoint 或元件於 src/features/photo-translate/TranslationPanel.tsx
+- [X] T027 [P] [US3] 延伸 TranslationPanel 測試：語音播放語言恆等於 `translation.displayed.target`（非 `selectedTarget`）；語音失敗保留翻譯結果並可重新嘗試播放（不重新翻譯/不重新 OCR）於 src/features/photo-translate/TranslationPanel.test.tsx
+- [X] T028 [US3] 於 TranslationPanel 內接入既有 `AudioPlayer`（src/components/AudioPlayer.tsx，不修改），以 `translation.displayed.target` 作為 `language` prop，不新增 speech endpoint 或元件於 src/features/photo-translate/TranslationPanel.tsx
 
 **Run**：`npx vitest run src/features/photo-translate/TranslationPanel.test.tsx`
 **Verify**：確認切換 target 失敗回復顯示前次結果時，播放語言與畫面實際顯示之翻譯語言一致，不隨 `selectedTarget` 錯置。
@@ -236,8 +236,8 @@ description: "Tokyo Mate 東京通｜Photo Translate 拍照翻譯 實作任務�
 
 **Goal**: 「拍照翻譯」以第五個入口加入既有首頁，不影響既有四個入口（FR-001）。
 
-- [ ] T029 [P] [US1] 撰寫/延伸 HomeScreen 測試：新增「拍照翻譯」入口不自動觸發相機/相簿權限、既有「即時翻譯」「問東京」「探索附近」「東京百科」四個入口與行為不變於 src/screens/HomeScreen.test.tsx
-- [ ] T030 [US1] 於 `nav[aria-label="東京功能入口"]` 新增「拍照翻譯」入口與 `photoTranslateOpen` state，渲染 PhotoTranslateScreen，不變動既有四個入口於 src/screens/HomeScreen.tsx
+- [X] T029 [P] [US1] 撰寫/延伸 HomeScreen 測試：新增「拍照翻譯」入口不自動觸發相機/相簿權限、既有「即時翻譯」「問東京」「探索附近」「東京百科」四個入口與行為不變於 src/screens/HomeScreen.test.tsx
+- [X] T030 [US1] 於 `nav[aria-label="東京功能入口"]` 新增「拍照翻譯」入口與 `photoTranslateOpen` state，渲染 PhotoTranslateScreen，不變動既有四個入口於 src/screens/HomeScreen.tsx
 
 **Run**：`npx vitest run src/screens/HomeScreen.test.tsx`
 **Verify**：確認既有四個入口之既有測試（若有）與行為未受影響。
@@ -250,8 +250,8 @@ description: "Tokyo Mate 東京通｜Photo Translate 拍照翻譯 實作任務�
 
 **Goal**: 更換照片或離開 Photo Translate 立即清除當次 task；重新選取立即隱藏舊結果；所有失敗訊息淨化（FR-013／FR-014／FR-016）。
 
-- [ ] T031 [P] 延伸 PhotoTranslateScreen 測試：「更換照片」清除 photo/region/ocr/translation/speech 並 revoke object URLs；元件卸載（離開功能）觸發相同清除；「重新選取區域」在確認新選取框前立即隱藏舊 ocr/translation（不得殘留顯示）；所有錯誤訊息不含 provider 名稱/stack trace 於 src/screens/PhotoTranslateScreen.test.tsx
-- [ ] T032 強化 PhotoTranslateScreen：`useEffect` cleanup 於卸載與更換照片時 revoke object URLs 並重置 state、重新選取立即標記 stale 並隱藏（不待新選取確認才隱藏）、統一 `ProductError` 淨化呈現於 src/screens/PhotoTranslateScreen.tsx
+- [X] T031 [P] 延伸 PhotoTranslateScreen 測試：「更換照片」清除 photo/region/ocr/translation/speech 並 revoke object URLs；元件卸載（離開功能）觸發相同清除；「重新選取區域」在確認新選取框前立即隱藏舊 ocr/translation（不得殘留顯示）；所有錯誤訊息不含 provider 名稱/stack trace 於 src/screens/PhotoTranslateScreen.test.tsx
+- [X] T032 強化 PhotoTranslateScreen：`useEffect` cleanup 於卸載與更換照片時 revoke object URLs 並重置 state、重新選取立即標記 stale 並隱藏（不待新選取確認才隱藏）、統一 `ProductError` 淨化呈現於 src/screens/PhotoTranslateScreen.tsx
 
 **Run**：`npx vitest run src/screens/PhotoTranslateScreen.test.tsx`
 **Verify**：確認 object URL 於卸載/更換照片後即被 revoke（可用 spy 驗證 `URL.revokeObjectURL` 呼叫次數與時機）；重新選取時舊結果於同一互動內即消失。
@@ -264,14 +264,15 @@ description: "Tokyo Mate 東京通｜Photo Translate 拍照翻譯 實作任務�
 
 **Purpose**: 補齊跨元件端到端情境（對照 quickstart.md 驗證情境），並執行 OCR Guard 要求之代表性旅行圖片實際驗證（不建立 provider benchmark）。
 
-- [ ] T033 撰寫端到端測試：照片→區域選取→OCR 成功→zh-TW 翻譯→ja 翻譯→語音播放（quickstart 情境 4, 6）於 src/screens/PhotoTranslateScreen.test.tsx（延伸；與 T034–T039 修改同一檔案，須依序執行，不得平行）
-- [ ] T034 撰寫端到端測試：無可靠文字→同張照片重新選取重新 OCR（quickstart 情境 5, 10）於 src/screens/PhotoTranslateScreen.test.tsx（延伸；依賴 T033 已完成之擴充，序列執行）
-- [ ] T035 撰寫端到端測試：重新選取立即隱藏舊結果→新選取完成 OCR 才顯示新內容（quickstart 情境 9）於 src/screens/PhotoTranslateScreen.test.tsx（延伸；依賴 T034 已完成之擴充，序列執行）
-- [ ] T036 撰寫端到端測試：同語言不產生假翻譯→切換另一目標取得正常翻譯（quickstart 情境 7）於 src/screens/PhotoTranslateScreen.test.tsx（延伸；依賴 T035 已完成之擴充，序列執行）
-- [ ] T037 撰寫端到端測試：target 切換失敗回復前次成功結果（含播放語言對應）與切換前無前次成功結果之失敗狀態（quickstart 情境 8）於 src/screens/PhotoTranslateScreen.test.tsx（延伸；依賴 T036 已完成之擴充，序列執行）
-- [ ] T038 撰寫端到端測試：OCR／翻譯／語音個別失敗之內容保留與對應重試 action、不顯示技術性錯誤（quickstart 情境 11）於 src/screens/PhotoTranslateScreen.test.tsx（延伸；依賴 T037 已完成之擴充，序列執行）
-- [ ] T039 撰寫端到端測試：更換照片與離開功能之 Photo Lifecycle 清除（quickstart 情境 13）於 src/screens/PhotoTranslateScreen.test.tsx（延伸；依賴 T038 已完成之擴充，序列執行）
-- [ ] T040 執行 OCR 實際能力驗證：以代表性旅行圖片（菜單、招牌、車站資訊、商品標示、小型文字區域、較複雜文字排列、非日文／非繁中來源文字，對應 quickstart 情境 12／SC-008）驗證產品行為與 recovery，不建立 provider-specific benchmark；若實際能力不足須 **STOP** 並標記 **REQUIRES USER APPROVAL**（不得自行加入第二 OCR provider），結果記錄於 docs/verification/photo-translate-ocr-report.md
+- [X] T033 撰寫端到端測試：照片→區域選取→OCR 成功→zh-TW 翻譯→ja 翻譯→語音播放（quickstart 情境 4, 6）於 src/screens/PhotoTranslateScreen.test.tsx（延伸；與 T034–T039 修改同一檔案，須依序執行，不得平行）
+- [X] T034 撰寫端到端測試：無可靠文字→同張照片重新選取重新 OCR（quickstart 情境 5, 10）於 src/screens/PhotoTranslateScreen.test.tsx（延伸；依賴 T033 已完成之擴充，序列執行）
+- [X] T035 撰寫端到端測試：重新選取立即隱藏舊結果→新選取完成 OCR 才顯示新內容（quickstart 情境 9）於 src/screens/PhotoTranslateScreen.test.tsx（延伸；依賴 T034 已完成之擴充，序列執行）
+- [X] T036 撰寫端到端測試：同語言不產生假翻譯→切換另一目標取得正常翻譯（quickstart 情境 7）於 src/screens/PhotoTranslateScreen.test.tsx（延伸；依賴 T035 已完成之擴充，序列執行）
+- [X] T037 撰寫端到端測試：target 切換失敗回復前次成功結果（含播放語言對應）與切換前無前次成功結果之失敗狀態（quickstart 情境 8）於 src/screens/PhotoTranslateScreen.test.tsx（延伸；依賴 T036 已完成之擴充，序列執行）
+- [X] T038 撰寫端到端測試：OCR／翻譯／語音個別失敗之內容保留與對應重試 action、不顯示技術性錯誤（quickstart 情境 11）於 src/screens/PhotoTranslateScreen.test.tsx（延伸；依賴 T037 已完成之擴充，序列執行）
+- [X] T039 撰寫端到端測試：更換照片與離開功能之 Photo Lifecycle 清除（quickstart 情境 13）於 src/screens/PhotoTranslateScreen.test.tsx（延伸；依賴 T038 已完成之擴充，序列執行）
+- [X] T040 執行 OCR 實際能力驗證：以代表性旅行圖片（菜單、招牌、車站資訊、商品標示、小型文字區域、較複雜文字排列、非日文／非繁中來源文字，對應 quickstart 情境 12／SC-008）驗證產品行為與 recovery，不建立 provider-specific benchmark；若實際能力不足須 **STOP** 並標記 **REQUIRES USER APPROVAL**（不得自行加入第二 OCR provider），結果記錄於 docs/verification/photo-translate-ocr-report.md
+  - **2026-09-19 執行結果：T040 PASS**。憑證問題已解除；以直接呼叫產品現有 `api/photo-ocr.ts` POST handler（完整經過 `createOpenAIClient()`／`getOpenAIModel()`／現有 OCR prompt／現有 `parseOcrResult` 解析）方式，對 5 組代表性案例（清楚日文、清楚英文、清楚繁體中文、東京雙語 signage、無可靠文字）呼叫真實 OpenAI Responses API，5/5 PASS，無臆造文字，OCR 結果足以作為 `/api/photo-translate` 之 sourceText。判定 existing OpenAI OCR sufficient，無需第二 provider。詳見 docs/verification/photo-translate-ocr-report.md。
 
 **Run**：`npx vitest run --pool=threads`
 **Verify**：確認 T033–T039 涵蓋 quickstart.md 全部 14 項驗證情境（既有 001 迴歸另於 Phase 13 確認）；T040 依實際圖片驗證結果誠實記錄 PASS/FAIL，不得虛報。
@@ -284,7 +285,8 @@ description: "Tokyo Mate 東京通｜Photo Translate 拍照翻譯 實作任務�
 
 **Purpose**: 依批准 Plan（Pointer Events + Canvas 自建 RegionSelector），在實際 mobile/touch 裝置驗證可用性。
 
-- [ ] T041 執行手機/觸控實機驗證：selection 建立、selection 調整、touch interaction、image scaling／coordinate mapping 準確性、narrow viewport 可用性，涵蓋至少一款代表性窄螢幕手機視角；若自建方案無法以合理複雜度可靠滿足需求，須 **STOP** 並標記 **REQUIRES USER APPROVAL**（不得自行安裝 `react-image-crop` 或其他 dependency），結果記錄於 docs/verification/photo-translate-region-selection-report.md
+- [X] T041 執行手機/觸控實機驗證：selection 建立、selection 調整、touch interaction、image scaling／coordinate mapping 準確性、narrow viewport 可用性，涵蓋至少一款代表性窄螢幕手機視角；若自建方案無法以合理複雜度可靠滿足需求，須 **STOP** 並標記 **REQUIRES USER APPROVAL**（不得自行安裝 `react-image-crop` 或其他 dependency），結果記錄於 docs/verification/photo-translate-region-selection-report.md
+  - **2026-09-19 執行結果：T041 PASS**。以真實 touch 事件（CDP `Input.dispatchTouchEvent`，`pointerType: 'touch'` 已確認，非滑鼠模擬）於 390px 窄螢幕視角驗證 selection 建立、resize handles、座標換算（natural 512×512 vs display 288×288）、有效／無效區域判定、reselection 與 stale 結果抑制、scroll／touch 衝突（`touchAction:'none'` 有效）等 9 項情境，皆為 PASS；僅實體 camera 驗證因沙盒環境限制標記 LIMITED（未虛構 PASS）。判定 Pointer Events + Canvas 自建方案足以支援 MVP，無需 `react-image-crop` 或其他 crop dependency。詳見 docs/verification/photo-translate-region-selection-report.md。
 
 **Run**：於實機或裝置模擬環境操作 RegionSelector。
 **Verify**：確認選取框建立/調整在觸控下可靠、座標換算正確對應原圖像素、窄螢幕下主要 action 仍可觸及。
@@ -297,8 +299,8 @@ description: "Tokyo Mate 東京通｜Photo Translate 拍照翻譯 實作任務�
 
 **Purpose**: 確認 002 變更未影響既有 001 MVP 核心路徑（FR-001）。
 
-- [ ] T042 執行既有完整自動化測試套件確認全數通過：`npx vitest run --pool=threads`
-- [ ] T043 執行 quickstart.md 情境 14 人工迴歸：確認既有「即時翻譯」「問東京」「探索附近」「東京百科」行為未受影響，結果記錄於 docs/verification/photo-translate-mvp-regression-report.md
+- [X] T042 執行既有完整自動化測試套件確認全數通過：`npx vitest run --pool=threads`
+- [X] T043 執行 quickstart.md 情境 14 人工迴歸：確認既有「即時翻譯」「問東京」「探索附近」「東京百科」行為未受影響，結果記錄於 docs/verification/photo-translate-mvp-regression-report.md
 
 **Run**：`npx vitest run --pool=threads`；人工操作既有四個入口。
 **Verify**：既有測試全數 PASS；既有 001 quickstart-results.md 所載行為未劣化。

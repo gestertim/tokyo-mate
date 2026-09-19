@@ -3,6 +3,7 @@ import type { ProductError } from '../types/error';
 import type { AudioTranscriptionResult, SpeechGenerationRequest } from '../types/speech';
 import type { UserRequest } from '../types/request';
 import type { NearbySearchRequest, PlaceResult } from '../types/place';
+import type { PhotoTranslateTargetLanguage } from '../types/photoTranslate';
 
 interface ApiSuccess<T> { success: true; data: T }
 interface ApiFailure { success: false; error: ProductError }
@@ -74,6 +75,37 @@ export function generateSpeech(input: SpeechGenerationRequest): Promise<{ audioU
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(input),
+  });
+}
+
+export interface PhotoOcrResult {
+  reliableTextFound: boolean;
+  sourceText?: string;
+  regionVersion: number;
+}
+
+export function requestPhotoOcr(imageDataUrl: string, regionVersion: number): Promise<PhotoOcrResult> {
+  return request<PhotoOcrResult>('/api/photo-ocr', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ imageDataUrl, regionVersion }),
+  });
+}
+
+export interface PhotoTranslateResult {
+  sameLanguage: boolean;
+  translatedText?: string;
+  targetLanguage: PhotoTranslateTargetLanguage;
+}
+
+export function requestPhotoTranslate(
+  sourceText: string,
+  targetLanguage: PhotoTranslateTargetLanguage,
+): Promise<PhotoTranslateResult> {
+  return request<PhotoTranslateResult>('/api/photo-translate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ sourceText, targetLanguage }),
   });
 }
 
