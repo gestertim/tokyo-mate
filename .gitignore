@@ -17,6 +17,7 @@ Thumbs.db
 
 # Local Spec Kit and Copilot development tools
 .github/skills/
+.github/copilot-instructions.md
 .specify/
 
 # Playwright generated artifacts
