@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { NearbyExplorer } from '../features/nearby/NearbyExplorer';
 import { NearbyResults } from '../features/nearby/NearbyResults';
+import { NearbyMap } from '../features/nearby/NearbyMap';
+import { isMapEligible } from '../features/nearby/mapEligibility';
+import { openNavigationHandoff } from '../features/nearby/navigation';
 import { StatusMessage } from '../components/StatusMessage';
 import { requestGeolocation } from '../services/geolocation';
 import { requestPlaces } from '../services/api';
@@ -13,6 +16,15 @@ export function NearbyScreen({ onBack }: NearbyScreenProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>();
   const [notice, setNotice] = useState<string>();
+  const [selectedPlaceId, setSelectedPlaceId] = useState<string>();
+  const [mapUnavailable, setMapUnavailable] = useState(false);
+  const [navigationNotice, setNavigationNotice] = useState<string>();
+
+  function resetSelection() {
+    setSelectedPlaceId(undefined);
+    setNavigationNotice(undefined);
+    setMapUnavailable(false);
+  }
 
   async function searchByCoordinates(latitude: number, longitude: number, category: PlaceCategory) {
     setLoading(true);
@@ -28,6 +40,7 @@ export function NearbyScreen({ onBack }: NearbyScreenProps) {
   }
 
   async function handleUseMyLocation(category: PlaceCategory) {
+    resetSelection();
     setNotice(undefined);
     try {
       const coordinates = await requestGeolocation();
@@ -38,6 +51,7 @@ export function NearbyScreen({ onBack }: NearbyScreenProps) {
   }
 
   async function handleManualAreaSearch(area: string, category: PlaceCategory) {
+    resetSelection();
     setNotice(undefined);
     setLoading(true);
     setError(undefined);
@@ -51,6 +65,17 @@ export function NearbyScreen({ onBack }: NearbyScreenProps) {
     }
   }
 
+  function handleSelectPlace(id: string) {
+    setSelectedPlaceId(id);
+  }
+
+  function handleNavigate(place: PlaceResult) {
+    const result = openNavigationHandoff(place);
+    setNavigationNotice(result.success ? undefined : '目前無法開啟地圖，請再試一次。');
+  }
+
+  const mapEligiblePlaces = places.filter(isMapEligible);
+
   return (
     <section aria-labelledby="nearby-heading">
       <button type="button" onClick={onBack}>
@@ -62,7 +87,24 @@ export function NearbyScreen({ onBack }: NearbyScreenProps) {
         onManualAreaSearch={(area, category) => void handleManualAreaSearch(area, category)}
       />
       {notice && <StatusMessage>{notice}</StatusMessage>}
-      <NearbyResults places={places} loading={loading} error={error} />
+      {navigationNotice && <StatusMessage>{navigationNotice}</StatusMessage>}
+      {!loading && !error && (
+        <NearbyMap
+          places={mapEligiblePlaces}
+          selectedPlaceId={selectedPlaceId}
+          onSelectPlace={handleSelectPlace}
+          onMapUnavailable={() => setMapUnavailable(true)}
+        />
+      )}
+      {mapUnavailable && <StatusMessage>地圖暫時無法使用，您仍可從下方清單選取地點並前往此地。</StatusMessage>}
+      <NearbyResults
+        places={places}
+        loading={loading}
+        error={error}
+        selectedPlaceId={selectedPlaceId}
+        onSelectPlace={handleSelectPlace}
+        onNavigate={handleNavigate}
+      />
     </section>
   );
 }

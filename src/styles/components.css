@@ -103,3 +103,29 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Feature 003：NearbyMap 容器 responsive 樣式 */
+.nearby-map {
+  width: 100%;
+  height: 260px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--space-2);
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .nearby-map {
+    height: 360px;
+  }
+}
+
+/* Feature 003：地圖上選定 marker 的非純色彩標示（額外圖示徽章，而非僅改變顏色） */
+.nearby-marker--selected .nearby-marker__badge {
+  display: inline-block;
+  padding: 0 var(--space-1);
+  border: 2px solid var(--color-ink);
+  border-radius: var(--space-1);
+  background: var(--color-paper);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
