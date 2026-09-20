@@ -1,192 +1,147 @@
 # Tokyo Mate 東京通
 
-**會說台灣中文的東京私人導遊 × 台日雙語口譯員 × 旅遊知識顧問**
+Tokyo Mate 東京通是一款陪你在東京旅行的中文小幫手：不需要懂日文，也不需要熟悉東京，就能即時翻譯、詢問旅遊問題、拍照翻譯看不懂的文字，以及探索附近的景點、美食與車站，並直接前往目的地。
 
-使用者不需要懂日文，也不需要懂東京，就可以更放心地在東京行動。
+## ✨ 主要功能
 
-## 主要功能
+### 💬 即時翻譯與東京旅遊助手
+- 語音或文字輸入，中日文雙向即時翻譯，並可播放語音
+- 針對東京旅遊情境的智能問答，包含緊急情況協助（遇事、迷路、醫療、交通等）
+- 查詢營業時間、聯絡方式、票價等即時資訊
 
-Tokyo Mate 提供三個核心能力：
+### 📖 東京旅遊知識庫
+- 離線可瀏覽的東京百科知識內容
+- 依類別、距離篩選景點、餐廳、車站與緊急設施
+- 可複製地址、電話，或查看路線
 
-### 1. 台日雙向 AI 即時翻譯
-- 支援語音輸入（中文或日文）
-- 自動語言識別與翻譯
-- 語音播放輸出（日文或中文）
-- 文字版本可複製使用
+### 📷 Photo Translate 拍照翻譯
+- 拍攝新照片或從相簿選擇既有照片（不會主動要求相機權限）
+- 取得照片後，先框選要辨識的文字區域，再進行辨識
+- 辨識出的原文可翻譯成繁體中文或日本語，兩者可清楚分辨並隨時切換
+- 翻譯完成後可播放對應語言的語音
+- 適合菜單、招牌、車站資訊、商品標示等現場文字
+- 離開功能或更換照片時，該次照片、原文與翻譯會立即清除，不建立永久照片或翻譯歷史
 
-### 2. 東京 AI 旅遊助手
-- 針對東京旅遊情境的智能問答
-- 支援緊急情況協助（遇事、迷路、醫療、交通等）
-- 與附近探索、東京百科聯動
-- 即時資訊查詢（營業時間、聯絡方式、票價等）
+### 🗺️ Nearby Map & Navigation 探索附近地圖與導航
+- 使用目前位置，或手動輸入地區（例如淺草、上野、新宿）探索附近
+- 依景點、美食、購物、便利商店、車站等類別篩選
+- 搜尋結果同時以 result cards 與地圖呈現，兩者為同一批結果
+- 在 card 或地圖上選取地點時，另一側會同步標示同一個 Selected Place
+- 對具備可靠位置資訊的地點，可一鍵「前往此地」，交由 Google Maps（HTTPS handoff）接手
 
-### 3. 東京旅遊知識助手
-- 離線可用的東京百科知識庫
-- 探索附近景點、餐廳、車站、緊急設施
-- 支援按類別、按距離篩選
-- 點選地點可複製地址、電話或查看路線
+> Tokyo Mate 不提供 App 內逐步導航、路線繪製或即時交通資訊，「前往此地」之後的導航行為由 Google Maps 與裝置作業系統負責，也不提供 Street View 或社交／即時位置分享功能。
 
-### 輔助功能
-- **PWA 可安裝**：新增至主畫面，離線時仍可訪問
-- **部分離線能力**：App Shell 與靜態知識內容無須網路
-- **隱私友善**：麥克風與定位只在使用者主動授權時啟用
-- **台灣中文**：完整繁體中文介面與對話
+## 🚀 如何使用
 
-## PWA 與離線能力
+1. 打開 Tokyo Mate，在首頁輸入想說的話，或點選「麥克風」以語音輸入
+2. 點選「即時翻譯」或「問東京」，取得翻譯或旅遊建議
+3. 點選「探索附近」，尋找附近的景點、美食或車站，並可前往目的地
+4. 點選「拍照翻譯」，翻譯看不懂的菜單、招牌或標示
+5. 點選「東京百科」，離線瀏覽旅遊知識內容
 
-### 離線可用
-- ✅ App Shell（導覽、基本 UI）
-- ✅ 已核准的靜態東京知識內容與東京百科
-- ✅ PWA 安裝與 standalone mode
+## 🗺️ Nearby Map 使用方式
 
-### 需要網路
-- ❌ Generative AI 翻譯（OpenAI API）
-- ❌ AI 旅遊問答與緊急協助（OpenAI API）
-- ❌ 語音識別 STT（OpenAI Whisper）
-- ❌ 文字轉語音 TTS（OpenAI TTS）
-- ❌ 附近探索（Google Places API）
-- ❌ 即時資訊查詢（Live web search）
+1. 進入「探索附近」，選擇「使用我的位置」或手動輸入地區並選擇類別搜尋
+2. 在下方 result cards 或上方地圖查看搜尋結果
+3. 點選任一張 card 或地圖上的地點，選定同一個地方
+4. 對已選定且具備可靠位置資訊的地點，點選「前往此地」
+5. 系統會開啟 Google Maps 繼續導航
 
-**注意**：Tokyo Mate 不聲稱 AI 可以完整離線執行。所有翻譯、問答、語音皆依賴網路連線。
+若目前位置無法取得或地圖暫時無法載入，仍可直接使用 result cards 完成選取與前往此地。
 
-## 隱私設計
+## 📷 Photo Translate 使用方式
 
-- **麥克風**：只在使用者點選「語音輸入」時才請求權限
-- **定位**：只在使用者選擇「使用我的位置」時才請求權限；可改用手動輸入地區
-- **個人資料**：不建立公開個人資料或用戶帳號
-- **聊天歷史**：v1 不提供長期聊天記錄存儲
-- **Cache Storage**：不儲存 AI 對話、語音檔案、精確位置或使用者旅程資料
-- **API Secrets**：所有 provider credentials 僅存在 server-side environment variables，絕不公開
+1. 進入「拍照翻譯」，選擇「拍攝照片」或「選擇既有照片」
+2. 在照片上框選要辨識的文字範圍並確認
+3. 系統辨識選取範圍內的文字，顯示 OCR 原文
+4. 選擇翻譯目標語言（繁體中文或日本語），查看翻譯結果
+5. 點選播放，聽取與翻譯結果相同語言的語音
+6. 若辨識或翻譯結果不理想，可重新框選範圍再次辨識，不必重新拍照
 
-## Technology Stack
+## 🛡️ Privacy & Safety
 
-- **前端框架**：React 18 + TypeScript
-- **構建工具**：Vite
-- **測試**：Vitest + React Testing Library
-- **PWA**：Web App Manifest + Service Worker + Cache Storage API
-- **地理定位**：Web Geolocation API
-- **AI 與語言**：OpenAI API（GPT、Whisper、TTS）
-- **地點資訊**：Google Places API
-- **部署**：Vercel Serverless Functions + 靜態前端
+- 麥克風只在使用者主動點選「語音輸入」時才請求權限
+- 定位只在使用者選擇「使用我的位置」時才請求權限，也可以改用手動輸入地區
+- 相機只在使用者主動選擇「拍攝照片」時才請求權限
+- 不建立長期聊天記錄、照片歷史或位置歷史，也不做背景定位追蹤
+- 拍照翻譯的照片、原文與翻譯結果只存在於當次任務，離開或更換照片即清除
+- 所有 API 金鑰與服務憑證僅存放於 server-side environment variables，不會出現在前端程式碼中
 
-## 本地開發
+## 🧰 Technology
+
+- React + TypeScript
+- Vite
+- Leaflet（地圖呈現）
+- Geoapify（地圖圖磚）
+- Google Places API（附近地點搜尋）
+- Google Maps HTTPS handoff（前往此地）
+- OpenAI API（翻譯、旅遊問答、OCR、語音）
+- Vercel Serverless Functions（後端 API）
+
+## 💻 Local Development
 
 ### Prerequisites
 
 - Node.js >= 18
 - npm >= 9
-- 開發環境需使用 HTTPS 或 localhost 以支援 Service Worker 與 PWA 驗證
 
-### Installation
+### Install dependencies
 
 ```bash
 npm install
 cp .env.example .env.local
 ```
 
-### Environment Variables
+### Environment variables
 
-在 `.env.local` 設定以下變數（`.env.local` 僅存放於本機，勿提交）：
+依 `.env.example` 在 `.env.local` 設定以下變數名稱（僅本機使用，不會被提交）：
 
 ```env
 OPENAI_API_KEY=
 OPENAI_MODEL=gpt-4o-mini
 GOOGLE_PLACES_API_KEY=
+VITE_GEOAPIFY_API_KEY=
 ```
 
-**重要**：
-- `.env.local` 已納入 `.gitignore`，不會被追蹤或提交
-- `.env.example` 只列出變數名稱與預設值，不包含真實 keys
-- 所有 secret 必須在本機或 Vercel server environment 中配置
+- `OPENAI_API_KEY`、`OPENAI_MODEL`、`GOOGLE_PLACES_API_KEY`：server-side secrets，僅供 `api/` 目錄下的 serverless functions 使用，不會暴露給瀏覽器
+- `VITE_GEOAPIFY_API_KEY`：browser-visible 設定，用於前端載入地圖圖磚
+- 請勿在任何地方填入真實金鑰後提交至版本控制
 
-### Development Server
+### Development server
 
 ```bash
 npm run dev
 ```
 
-開啟 `http://localhost:5173`（或顯示的實際埠號）。
-
-**首頁行為**：
-- 不會主動要求麥克風或定位權限
-- 權限只在使用者選擇對應功能後請求
-- 使用者可隨時在瀏覽器設定中撤銷權限
-
-### Test
-
-```bash
-npm run test
-npm run test:watch
-npm run coverage
-```
-
-Tests 使用 Vitest 與 React Testing Library。
-
-### Production Build
+### Build
 
 ```bash
 npm run build
 ```
 
-輸出位置：`dist/` 目錄
+### Tests
 
-執行 TypeScript 檢查（`tsc -b`）後產出優化的靜態資源。
+```bash
+npm run test
+npm run coverage
+```
 
-## Vercel Deployment
+## 🧪 Verification
 
-Tokyo Mate 可直接部署至 Vercel：
+Tokyo Mate 以 Vitest + React Testing Library 撰寫自動化單元／整合測試，並以 Playwright 進行 PWA 相關驗證，涵蓋主要使用者流程與各功能的成功／失敗情境。詳細驗證紀錄可見於 [docs/verification](docs/verification/)。
 
-1. **前端**：由 Vite 構建，靜態資源由 Vercel CDN 服務
-2. **後端**：`api/` 目錄中的 API routes 作為 serverless functions 執行
+## 📁 Project Structure
 
-### Environment Variables in Vercel
+```
+api/            Vercel serverless functions（翻譯、OCR、語音、地點查詢等後端 API）
+src/screens/    App 的主要畫面（首頁、助手、探索附近、拍照翻譯、知識庫）
+src/features/   各功能的元件與邏輯（emergency、nearby、photo-translate、speech、translation、travel、knowledge）
+src/services/   前端與 API 溝通、定位等共用服務
+src/data/tokyo/ 東京旅遊知識庫內容
+specs/          各功能的規格、計畫與驗收文件
+docs/verification/ 驗證報告
+```
 
-所有 provider secrets 必須在 Vercel 專案設定中配置：
+## 📌 Project Status
 
-- `OPENAI_API_KEY`
-- `OPENAI_MODEL`
-- `GOOGLE_PLACES_API_KEY`
-
-**重點**：secrets 不得放入前端程式碼或公開靜態資產。
-
-### Preview & Production URLs
-
-- **Preview Deployments**：每個 commit/PR 自動生成預覽 URL
-- **Production Deployment**：main branch 自動部署至生產環境
-
-## Testing & Verification Status
-
-Tokyo Mate 目前處於 **MVP validation 階段**。
-
-### 已完成驗證
-- ✅ T080：Specification completeness
-- ✅ T081：Stack & dependencies appropriateness
-- ✅ T084：PWA offline capability
-- ✅ T089：End-to-end user flow
-
-### 待完成驗證
-- ⏳ **T087：Production-like Latency Verification** — 需在 Vercel Preview 或等效 production-like 環境中使用實際 provider 執行量測
-
-### Final MVP Acceptance
-- **Blocking**：若完整結果無法立即顯示，processing/loading 必須在 1 秒內顯示。
-- **Observational baseline**：T087 必須量測完整 AI response latency 的 p50、p95、maximum 與 outliers，作為 Final MVP performance baseline；p95 <= 5.0 秒不是 blocking acceptance criterion。
-
-**注意**：T087 尚未完成，不得宣稱 SC-002 或整體 Final MVP Acceptance 已完成。
-
-## Known Limitations & Next Steps
-
-- Service Worker 與 offline installability 需在 secure context（localhost 或 HTTPS）驗證
-- PWA 安裝、standalone viewport、offline restart 與 Cache Storage privacy 檢驗需依 specification 於支援裝置/瀏覽器手動驗收
-- T087 production-like latency report 需在完整 provider 環境執行；目前已建立量測 dataset，待正式環境驗證
-
-## Repository & Spec-driven Development
-
-Tokyo Mate 採用 **specification-driven development** 方法論。
-
-- `specs/` 目錄：完整的產品規格與驗收標準（由 Git 追蹤）
-- `.specify/` 目錄：Spec Kit 組織與工作流程（開發者本機使用工具，不再由 Git 追蹤）
-- `.github/skills/` 目錄：Copilot CLI 與 Spec Kit 工具集（開發者本機使用工具，不再由 Git 追蹤）
-
-`.specify/` 與 `.github/skills/` 僅供開發者本機的 GitHub Copilot 與 Spec Kit 使用，為避免將個人開發工具放入公開 repository，已自 Git 追蹤中移除（詳見 `.gitignore`）；此變更不影響 App 的 build、test、runtime、PWA 或 Vercel 部署。
-
-詳見 `specs/` 中的規格文件與計畫。
+Tokyo Mate 目前已整合 Original MVP（即時翻譯、AI 旅遊助手、東京百科知識庫）、Photo Translate 拍照翻譯，以及 Nearby Map & Navigation 探索附近地圖與導航三項功能，持續以 specification-driven development 方式維護與擴充。
