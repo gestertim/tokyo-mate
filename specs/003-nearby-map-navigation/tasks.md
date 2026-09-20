@@ -234,7 +234,7 @@ result 啟動「前往此地」。
       並依既有 Playwright regression 設定確認 Feature 001 MVP 與 Feature 002 拍照翻譯既有可觀察行為不變
 - [x] T026 依 [quickstart.md](./quickstart.md) 逐一手動驗證 4 個 User Story 之驗證場景，並確認未修改
       `specs/001-tokyo-travel-assistant/` 或 `specs/002-photo-translate/` 內容
-- [ ] T027 **[Production Release 前必要安全任務]** 正式上線前，於 Geoapify 帳戶將 Feature 003 使用的
+- [x] T027 **[Production Release 前必要安全任務]** 正式上線前，於 Geoapify 帳戶將 Feature 003 使用的
       browser-visible `VITE_GEOAPIFY_API_KEY` 設定 Origin/HTTP Referrer restriction，只允許已批准的
       Tokyo Mate production origin，並記錄可供 Verify 階段確認的完成證據（例如設定畫面截圖或設定摘要，
       存放於 repository 外部或 [docs/verification/](../../docs/verification/) 之非機密紀錄中）；不得將
