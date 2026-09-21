@@ -40,7 +40,7 @@ Re-Review 總結」「二次逐項複查總結（2026-09-21）」與「三次複
 - [x] CHK007 - Spec 與 Plan 之間對「語音播放技術」「收藏保存方式」等留給 Technical Plan 決定的項目，是否在 Plan 中已有唯一且明確的決策（無殘留待決定歧義）？[Consistency, Spec §Assumptions / Plan §八]
 - [x] CHK008 - Key Entities（Phrase／Category／Category Placement／Favorite）定義是否與 data-model.md 的型別／欄位一致，無命名或語意落差？[Consistency, Spec §Key Entities / data-model.md]
 - [x] CHK009 - Edge Cases 章節列出的 5 種情境是否皆能對應到至少一條 FR 或明確的 UI/測試要求，未有僅描述但無對應驗收依據的邊界情況？[Coverage, Spec §Edge Cases]（**PASS**：「正式資料異常導致某情境無法顯示應有內容」邊界情況已於 Plan §十三「Dataset Runtime Anomaly Handling」具體化為 build-time 驗證優先＋runtime graceful-failure 之技術要求，並於 tasks.md 新增 T045 對應測試責任；非新增 Product Requirement，屬既有 graceful-failure／FR-002/FR-003/FR-034 要求之 technical completion）
-- [x] CHK010 - Plan「Remaining Approval Required Items」列出的待批准事項，是否已清楚指出批准對象（Audio Technology Decision、`/speckit.tasks`+`/speckit.implement` 授權），且未與其他章節內容衝突？[Clarity, Plan §Remaining Approval Required Items]
+- [x] CHK010 - Plan「Remaining Approval Required Items」是否已清楚區分 A（已批准、不需再次批准的 Audio Technical Direction）與 B／C（尚未批准的 T055 Audio Production Method、`/speckit.implement`）兩類事項，且未與其他章節內容衝突？[Clarity, Plan §Remaining Approval Required Items]（**2026-09-21 Final Readiness Consistency Correction 更新**：該節已改版為 A／B／C 三分類，Audio Technical Direction 明確標示為已批准、不需再次批准，T055 Production Method 與 `/speckit.implement` 分別列為獨立之尚待批准事項）
 
 ## 2. Dataset Correctness
 
@@ -93,11 +93,11 @@ Re-Review 總結」「二次逐項複查總結（2026-09-21）」與「三次複
 - [x] CHK048 - Speech synthesis 不可用時的 graceful fallback（播放按鈕 disabled + 說明文字，而非隱藏）是否已具體定義，並確保不影響日文文字、繁中、搜尋、分類、收藏？[Completeness, Plan §八 Fallback / Spec §FR-012]
 - [x] CHK049 - Plan 是否已避免宣稱「所有 browser/device 都一定有 Japanese voice」，並以「不保證」用語呈現？[Clarity, Plan §八 比較表]
 - [x] CHK050 - Plan 是否已避免宣稱「audio 一定 offline 可用」，並以條件式敘述（取決於裝置/瀏覽器能力）呈現？[Clarity, Plan §PWA / Offline]
-- [x] CHK051 - Plan 是否明確排除目前導入 OpenAI Cloud TTS、其他 Cloud TTS 或預錄 MP3 的必要性，並記錄與既有 Cloud TTS 能力比較後的理由？[Traceability, Plan §八 決策]
-- [x] CHK052 - **若實際 implementation 過程中發現瀏覽器原生 SpeechSynthesis 無法滿足 Specification（例如日文 voice 覆蓋率過低）**，Plan 是否已明確記錄「必須 STOP 並重新進入 approval，不得自行改為其他語音方案」此一觸發條件？[Gap, Plan §八]（已補強：Plan §九「Audio Strategy Escalation Gate」明確定義觸發條件、STOP 程序與 MUST NOT 清單）
+- [x] CHK051 - Plan 是否明確排除目前導入 OpenAI Cloud TTS 或其他 Cloud TTS 的必要性，並記錄與既有 Cloud TTS 能力比較後的理由？[Traceability, Plan §八 決策]（**2026-09-21 Maintenance Amendment 更新**：Plan §八已改為批准「App-bundled MP3 為 Primary、SpeechSynthesis 為 Fallback」之三層策略，原本「排除預錄 MP3」之敘述已因本次成人教育者批准之 Technical Direction 調整而不再適用；Cloud TTS 仍維持排除）
+- [x] CHK052 - **若實際 implementation 過程中發現已批准的三層語音策略（bundled MP3 + SpeechSynthesis fallback）無法滿足 Specification**，Plan 是否已明確記錄「必須 STOP 並重新進入 approval，不得自行改為其他語音方案」此一觸發條件？[Gap, Plan §八]（已補強：Plan §九「Audio Strategy Escalation Gate」明確定義觸發條件、STOP 程序與 MUST NOT 清單；**2026-09-21 Maintenance Amendment 更新**：§九觸發條件與 MUST NOT 清單已同步改版以反映三層策略，不再以「自行改為預錄 MP3」為禁止項目，改為禁止自行移除或調整既有三層任一層）
 - [x] CHK053 - Audio failure 不影響其餘功能（文字、搜尋、分類、收藏、其他句子播放）的要求（FR-012），是否已於 contracts 明確要求「該卡片文字與收藏按鈕維持可操作，不得整卡 disabled」？[Clarity, contracts §4]
-- [x] CHK054 - 語音技術決策（research.md／Plan §八）是否已完整比較「重用既有 Cloud TTS」與「瀏覽器原生 SpeechSynthesis」兩方案的隱私、成本、離線、可靠性面向，供審查者判斷？[Completeness, research.md §1 / Plan §八]
-- [x] CHK055 - 是否已定義測試環境（jsdom）下如何驗證 SpeechSynthesis 行為（mock 策略），確保「播放狀態」相關需求可被自動化驗證？[Measurability, research.md §6]
+- [x] CHK054 - 語音技術決策（research.md／Plan §八）是否已完整比較「重用既有 Cloud TTS」與現行三層策略（bundled MP3 Primary + SpeechSynthesis Fallback + 文字）的隱私、成本、離線、可靠性面向，供審查者判斷？[Completeness, research.md §1 / Plan §八]（**2026-09-21 Documentation Consistency Sync 更新**：research.md §1 已新增 Maintenance Amendment 說明並引用 Plan §八完整三方比較表格，原「僅比較 Cloud TTS 與 SpeechSynthesis」之敘述已同步為三層策略比較）
+- [x] CHK055 - 是否已定義測試環境（jsdom）下如何驗證 bundled audio 與 SpeechSynthesis 兩層播放行為（mock 策略），確保「播放狀態」相關需求可被自動化驗證？[Measurability, research.md §6]（**2026-09-21 Documentation Consistency Sync 更新**：research.md §6 已擴充為涵蓋 `HTMLMediaElement`／`SpeechSynthesis` 兩層 mock 策略，不再僅描述 SpeechSynthesis 單層）
 - [x] CHK056 - 播放失敗狀態呈現方式是否已排除純顏色作為唯一辨識依據，並要求文字＋語意標記？[Coverage, Plan §Testing Strategy C]
 
 ## 6. Safety / Emergency Behavior
@@ -136,7 +136,7 @@ Re-Review 總結」「二次逐項複查總結（2026-09-21）」與「三次複
 - [x] CHK082 - 搜尋關鍵字僅於 frontend runtime 記憶體使用、不持久化、不上傳的要求，是否已在 Plan 與 research.md 中一致確認？[Consistency, Plan §Privacy / research.md §2]
 - [x] CHK083 - Favorites 僅保存 phrase id（非整筆內容）的隱私邊界，是否已在 data-model.md、contracts 與 Plan 三處一致確認，無任一文件描述為儲存完整句子內容？[Consistency, data-model.md §4 / contracts §2 / Plan §Privacy]
 - [x] CHK084 - Plan 是否已明確確認不新增 secret、不 hard-code API key、不 commit credentials、不將 secret 放入 frontend bundle？[Completeness, Plan §Privacy / Secrets]
-- [x] CHK085 - 語音採瀏覽器原生合成、句子文字不需離開瀏覽器的隱私優勢，是否已與既有 Cloud TTS 的既有行為做出明確區隔（避免誤解為既有 Cloud TTS 隱私狀況也因此改變）？[Clarity, Plan §八 比較表]
+- [x] CHK085 - 語音三層策略（bundled MP3 + SpeechSynthesis + 文字）句子文字不需離開瀏覽器的隱私優勢，是否已與既有 Cloud TTS 的既有行為做出明確區隔（避免誤解為既有 Cloud TTS 隱私狀況也因此改變）？[Clarity, Plan §八 比較表]（**2026-09-21 Documentation Consistency Sync 更新**：Plan §八比較表已同時涵蓋 Primary／Fallback 兩層之隱私敘述，均不需將句子文字傳送至外部服務）
 - [x] CHK086 - 若未來 implementation proposal 需要 external service/API，Plan/Constitution 是否已明確要求此類變更需重新取得 approval（而非默默實作）？[Traceability, Plan §Constitution Check / Constitution §V]
 - [x] CHK087 - Plan 是否已確認本 feature 不蒐集或建立任何長期聊天紀錄、精確位置或其他個資，符合既有 Constitution VI. Privacy & Educational Safety？[Consistency, Plan §Privacy / Constitution §VI]
 
@@ -158,14 +158,14 @@ Re-Review 總結」「二次逐項複查總結（2026-09-21）」與「三次複
 - [x] CHK098 - research.md 是否已針對 IndexedDB 抽象層等候選方案明確記錄「對簡單 id 陣列過度設計」而未被選用？[Completeness, research.md §3]
 - [x] CHK099 - Accessibility 需求（lang 標記、aria-pressed、aria-live、keyboard 操作）是否已確認皆可用既有 HTML/JSX 原生能力達成，不需新增 accessibility framework？[Consistency, Plan §Testing Strategy C]
 - [x] CHK100 - 若 Tasks 階段後續提出任何新 dependency，Plan 是否已建立要求「說明對應 requirement 與現有能力不足原因」的審查機制，否則視為 FAIL？[Gap]（已補強：Plan §十二「Dependency escalation」明確定義審查機制與 FAIL 條件）
-- [x] CHK101 - Plan 是否已確認測試層面（Vitest mock `speechSynthesis`）不需要新增測試 dependency，僅使用既有 `vi.stubGlobal` 等既有工具鏈能力？[Consistency, research.md §6]
+- [x] CHK101 - Plan 是否已確認測試層面（Vitest mock `HTMLMediaElement`／`speechSynthesis`）不需要新增測試 dependency，僅使用既有 `vi.stubGlobal`／`vi.spyOn` 等既有工具鏈能力？[Consistency, research.md §6]（**2026-09-21 Documentation Consistency Sync 更新**：research.md §6 確認 bundled 音檔 mock 策略同樣僅使用既有 Vitest 工具鏈，0 新增測試 dependency）
 
 ## 11. PWA / Offline Implications
 
 - [x] CHK102 - Plan 是否已具體確認新 dataset 路徑（`src/data/tokyo/travel-japanese-phrases.json`）落在既有 `APPROVED_STATIC_PREFIXES` 涵蓋範圍內，並提供對應程式路徑佐證？[Traceability, Plan §0.6]
 - [x] CHK103 - Plan 是否已明確排除「假設一定需要修改 Service Worker」的預設立場，並說明現有 allowlist 已足夠的具體理由？[Clarity, Plan §PWA / Offline]
-- [x] CHK104 - Plan 是否已避免宣稱 SpeechSynthesis audio 一定 offline 可用，並將其列為「取決於裝置／瀏覽器能力」的條件式敘述？[Consistency, Plan §PWA / Offline]
-- [x] CHK105 - Plan 是否已明確排除「為 audio offline guarantee 自動加入 MP3 或 Cloud service」的必要性？[Completeness, Plan §PWA / Offline]
+- [x] CHK104 - Plan 是否已避免宣稱 SpeechSynthesis audio 一定 offline 可用，並將其列為「取決於裝置／瀏覽器能力」的條件式敘述？[Consistency, Plan §PWA / Offline Strategy]（**2026-09-21 Maintenance Amendment 更新**：`SpeechSynthesis` 現為 Fallback 層，敘述仍適用；Primary 層 bundled MP3 的離線可用性另以「首次連線且成功快取後」為條件，兩者皆非無條件保證，見 Plan §PWA / Offline Strategy「語音離線可用性敘述」）
+- [x] CHK105 - Plan 是否已明確排除「為 audio offline guarantee 自動加入 Cloud service」的必要性，並清楚說明 bundled MP3 runtime cache 僅提供漸進式離線可用性（非全部離線保證）？[Completeness, Plan §PWA / Offline Strategy]（**2026-09-21 Maintenance Amendment 更新**：Plan 現已批准 App-bundled MP3 作為 Primary，原本「排除加入 MP3」之敘述已不適用；Plan 新版 PWA / Offline Strategy 已明確排除「宣稱第一次完全離線一定可播放全部 108 句」，並改為 runtime cache-on-first-successful-fetch 之漸進式策略）
 - [x] CHK106 - Category／文字／搜尋／收藏功能不依賴 external API 的離線可用性敘述，是否已具體說明其技術基礎（build-time bundle 進 JS 的靜態 import）？[Clarity, Plan §PWA / Offline]
 
 ## 12. Testing Coverage
@@ -175,7 +175,7 @@ Re-Review 總結」「二次逐項複查總結（2026-09-21）」與「三次複
 - [x] CHK109 - Testing Strategy 是否已涵蓋 accessibility 測試全部項目（lang 語意、favorite accessible state、audio 狀態、safety reminder 語意、keyboard/focus、無純顏色狀態）？[Completeness, Plan §Testing Strategy C]
 - [x] CHK110 - Testing Strategy 是否已明確列出 `HomeScreen.tsx` 新增導覽入口後，既有 `HomeScreen.test.tsx` 需同步更新以涵蓋新入口且不破壞既有 3 個入口斷言？[Gap, Plan §Module Responsibilities]（已補強：Plan Testing Strategy §E「Home Integration Regression Test」明確指出更新 `src/screens/HomeScreen.test.tsx` 並列出至少驗證項目）
 - [x] CHK111 - Dataset validation 測試（Testing Strategy A）是否已具體引用 FR-025 列出的 6 類 safety-critical 句子作為明確斷言依據？[Traceability, Plan §Testing Strategy A]
-- [x] CHK112 - Testing Strategy 是否已定義 Vitest（jsdom）環境下如何 mock `window.speechSynthesis`（含 `onstart`/`onend`/`onerror` 觸發），以驗證播放狀態轉換？[Measurability, research.md §6]
+- [x] CHK112 - Testing Strategy 是否已定義 Vitest（jsdom）環境下如何 mock bundled 音檔播放（`HTMLMediaElement`）與 `window.speechSynthesis`（含各自終止事件觸發），以驗證三層播放狀態轉換？[Measurability, research.md §6 / Plan Testing Strategy §G]（**2026-09-21 Documentation Consistency Sync 更新**：research.md §6 與 Plan Testing Strategy §G 已一致定義兩層 mock 策略）
 - [x] CHK113 - Regression 測試是否已明確要求執行既有全部 Vitest 套件與既有 Playwright regression（`npm run test:pwa-red-gate`），並以「維持通過」為驗收標準？[Measurability, Plan §Testing Strategy D]
 - [x] CHK114 - Testing Strategy 是否已要求執行 `npm run build` 以驗證型別檢查與打包無誤，作為 implementation 完成前的必要步驟？[Completeness, Plan §Testing Strategy D]
 - [x] CHK115 - quickstart.md 列出的驗證場景是否與 spec.md 的 Acceptance Scenarios 逐一對應，無遺漏任一 User Story 的驗證步驟？[Traceability, quickstart.md]
@@ -205,7 +205,7 @@ Re-Review 總結」「二次逐項複查總結（2026-09-21）」與「三次複
 ## 15. Authorization Boundary
 
 - [x] CHK132 - Plan 是否已明確聲明本文件不構成 implementation 授權，且 `src/`、`api/`、`package.json` 均未變更？[Completeness, Plan §Repository Safety Confirmation]
-- [x] CHK133 - Plan 是否已列出仍需經審查者明確批准的項目清單（Audio Technology Decision、`/speckit.tasks` 與 `/speckit.implement` 批准），且未與已完成批准項目混淆？[Clarity, Plan §Remaining Approval Required Items]
+- [x] CHK133 - Plan 是否已列出仍需經審查者明確批准的項目清單（T055 Audio Production Method、`/speckit.implement`），且未與已完成批准之 Audio Technical Direction 混淆？[Clarity, Plan §Remaining Approval Required Items]（**2026-09-21 Final Readiness Consistency Correction 更新**：已批准（Audio Technical Direction）與尚未批准（T055、`/speckit.implement`）事項已明確分離列示，不再合併）
 - [x] CHK134 - Checklist 本身（本文件）是否已明確聲明不構成 implementation 授權，且僅為 requirements-quality review artifact？[Consistency, 本文件標頭]
 - [x] CHK135 - 是否已確認目前尚未安裝任何 dependency、尚未建立 dataset 正式內容檔案之外的程式碼、尚未修改 environment variables？[Completeness, Plan §Constitution Check]
 - [x] CHK136 - 是否已確認 Specify、Clarify、UX/UI、Plan、Checklist、Tasks、Analyze 皆非 implementation 授權，僅 `/speckit-implement` 於 Implementation Readiness Gate PASS 且經明確批准後方可進行？[Consistency, Constitution §XI]
@@ -257,6 +257,28 @@ Re-Review 總結」「二次逐項複查總結（2026-09-21）」與「三次複
 **與原始狀態回報的數量差異說明**：本次審查前的狀態摘要指出「14 項為 Gap／Ambiguity」；實際逐項比對本
 checklist 全文後，明確標記 `[Gap]` 或 `[Ambiguity]` 的項目共 15 項（如上表）。本次已將此 15 項全數
 比對新增之書面依據並關閉，未發現遺漏或無法關閉之項目。
+
+## Maintenance Amendment Review（2026-09-21，語音策略調整｜Documentation-Only）
+
+本輪為 Feature 004 Maintenance 階段的 **Documentation-Only** 更新（僅修改 `plan.md` 與
+`ux-ui-design-handoff.md`，本檔案僅同步更新與該次 Plan 變更直接衝突之項目；`tasks.md`、`src/`、
+`public/`、`package.json`、phrase dataset、audio assets 均未變更）。成人教育者已批准新的語音技術方向：
+App-bundled MP3 為 Primary、瀏覽器原生 `SpeechSynthesis` 為 Fallback、日文文字為 Final fallback，取代
+原始 Plan 單純選用瀏覽器原生 `SpeechSynthesis` 之決策。
+
+| CHK | 原敘述問題 | 處理方式 |
+|-----|------------|----------|
+| CHK051 | 原敘述「Plan 已排除…或預錄 MP3 的必要性」與新批准方向直接衝突 | 已更新為反映 Plan §八 新決策，移除「排除 MP3」敘述 |
+| CHK052 | 原 MUST NOT 清單將「自行改為預錄 MP3」列為禁止項目，與新批准方向衝突 | 已更新為「不得自行移除或調整已批准三層策略任一層」 |
+| CHK104 | 原僅針對 `SpeechSynthesis` 離線可用性敘述 | 已補充 Primary（bundled MP3）與 Fallback 兩層之離線可用性條件式敘述 |
+| CHK105 | 原敘述「已排除加入 MP3」與新批准方向直接衝突 | 已更新為反映 runtime cache-on-first-successful-fetch 漸進式離線策略 |
+
+**尚未逐項更新之相關項目（超出本次 Maintenance 授權範圍，留待下一次正式 Plan/Checklist 維護或
+`/speckit-tasks` 階段擴充）**：CHK054／CHK055／CHK085／CHK101／CHK112 等涉及「`SpeechSynthesis` 測試
+mock 策略」「語音隱私差異」之描述，於三層策略下仍**部分成立**（描述 Fallback 層行為無誤），但未擴充涵蓋
+Primary（bundled `HTMLAudioElement`）層之對應測試/隱私敘述；此為文件完整性的後續加強項目，非本次
+Maintenance 已批准範圍內之必要修正，亦不影響本次 Documentation-Only 更新的正確性。**此 5 項已於下方
+「Documentation Consistency Sync Review（2026-09-21）」章節完成後續同步，不再視為待處理項目。**
 
 **其餘 125 項**（CHK001–CHK140 扣除上述 15 項）原本即標記為「已有明確書面依據」，本輪未變更其內容
 或勾選狀態。
@@ -311,3 +333,52 @@ Product Requirement、未修改 `src/`／`api/`／`package.json`、未安裝 dep
 0 項 `[ ]`），不存在遺留 Gap／Ambiguity／Blocking 項目。
 
 ## Tasks 前 Readiness Review：140/140（0 項待確認，0 Blocking）
+
+---
+
+## Documentation Consistency Sync Review（2026-09-21，三層 Audio 架構文件同步）
+
+本輪為「Maintenance Technical Plan Checkpoint」通過後之 **Documentation Consistency Sync**，範圍僅為
+`research.md`／`data-model.md`／`contracts/travel-japanese-contracts.md`（本檔案僅同步與該次變更直接
+相關之項目）；`tasks.md`、`src/`、`public/`、`package.json`、phrase dataset、audio assets 均未變更，
+`/speckit-tasks`、`/speckit-implement` 均未執行。
+
+**目的**：消除 `research.md`／`data-model.md`／`contracts/` 中仍殘留的「僅瀏覽器原生 `SpeechSynthesis`」
+單層 Technical Truth 描述，使其與 Maintenance Amendment 已批准之三層策略（Primary｜App-bundled MP3 →
+Fallback｜`SpeechSynthesis` → Final fallback｜文字）一致。
+
+| 文件 | 發現的過時描述 | 處理方式 |
+|------|----------------|----------|
+| research.md §1 | Decision 僅記錄「瀏覽器原生 `SpeechSynthesis`」單一方案；「預錄 MP3」被列為「未被選用」，與現行已批准之 Primary 方案直接衝突 | 新增 Maintenance Amendment 說明段落，引用 plan.md §八／§九 為權威來源；保留原始內容作為決策歷史，並標註「預錄 MP3 未被選用」已由本次批准取代 |
+| research.md §6 | 僅涵蓋 `SpeechSynthesis` mock 策略，未涵蓋 bundled audio（`HTMLAudioElement`/`HTMLMediaElement`）測試 mock 策略 | 新增 bundled 音檔 mock 策略段落（`vi.spyOn(HTMLMediaElement.prototype, 'play')` 等），與既有 `SpeechSynthesis` mock 策略並列，皆不需新增測試 dependency |
+| data-model.md §5 狀態轉換：Playback | 僅描述 `speakJapanese`/`cancelSpeech` 單層流程，未反映 bundled Primary 層與 timeout/terminal-state 防護 | 更新為三層狀態轉換（`playBundledAudio` → `speakJapanese` → `failed`），並加註 Maintenance Amendment 說明與 plan.md §八 B 之交互參照 |
+| contracts §3 `phraseAudio.ts` | 僅定義 `isSpeechSynthesisAvailable`/`speakJapanese`/`cancelSpeech`，缺少 `playBundledAudio` 與三層 timeout 契約，函式命名（`cancelSpeech`）與 plan.md Module Responsibilities 表格（`cancelPlayback`）不一致 | 重寫為三層函式簽章契約（`isSpeechSynthesisAvailable`/`playBundledAudio`/`speakJapanese`/`cancelPlayback`），與 plan.md Module Responsibilities 表格一致 |
+| contracts §6 `TravelJapaneseScreen.tsx` | `onPlay`/unmount cleanup 描述僅呼叫 `phraseAudio.speakJapanese`/`cancelSpeech` | 更新為描述三層呼叫順序（先 `playBundledAudio`，失敗才呼叫 `speakJapanese`）與 `cancelPlayback()` |
+| contracts（新增 §7） | 使用者本次要求之「Audio Asset Content Contract」（音檔內容品質契約：發音一致性、無背景音樂、無品牌音效、音量一致、避免過長靜音等）尚無對應書面契約 | 新增 §7 Audio Asset Content Contract，明確定義 `phraseId` → MP3 對應與內容品質 MUST／MUST NOT 清單；**不建立、不下載、不生成任何音檔** |
+
+**未變更之文件／段落（逐項確認無三層 audio 架構衝突，依 smallest sufficient documentation change 原則
+不修改）**：
+
+- research.md §2（搜尋技術）、§3（收藏持久化）、§4（Dataset 結構）、§5（PWA 快取，僅涉及 dataset 文字
+  placement，未曾對音檔快取做任何敘述，無需更正）——皆與語音技術方案無關，維持原狀。
+- data-model.md §1（Phrase 型別，未新增 `audioFile` 欄位，與 plan.md 第八節 C 一致）、§2（Category）、
+  §3（Category Placement）、§4（Favorite）——皆與語音技術方案無關，維持原狀。
+- contracts §1（`travelJapanese.ts`）、§2（`favorites.ts`）、§4（`PhraseCard.tsx`，`audioAvailable`
+  prop 語意本身未預設綁定特定技術層之可用性檢查函式，且 `tasks.md`（凍結、不可修改）既有引用同一 prop
+  語意，本輪判斷不修改以避免與凍結中的 `tasks.md` 產生新的不一致）、§5（`SafetyReminder.tsx`）——逐項
+  確認未包含「僅 `SpeechSynthesis`」或「audio availability 等於 speechSynthesis API existence」等
+  過時敘述，維持原狀。
+
+**Checklist 本身同步**：CHK054、CHK055、CHK085、CHK101、CHK112 已更新引用依據以反映 research.md／
+contracts 現已涵蓋三層策略（詳見各項目內註記），checkbox 狀態維持 `[x]`（原本即為 requirements-quality
+PASS，本輪僅更新其書面依據，非新增或撤銷判斷）。上方「Maintenance Amendment Review」段落中原標註
+「尚未逐項更新」之說明已同步加註本輪已完成同步。
+
+**Specification Sync 確認**：本輪未發現 bundled/runtime-cache architecture 造成任何 spec.md 未容許之
+user-visible requirement change；spec.md FR-008～FR-012 與 Assumptions 對播放狀態與語音技術方案的
+中立敘述，三層策略仍完全符合，**spec.md 未修改**。
+
+**結論**：`research.md`／`data-model.md`／`contracts/travel-japanese-contracts.md` 已與 plan.md／
+ux-ui-design-handoff.md 之已批准三層 audio Technical Truth 完全一致，未發現剩餘矛盾。本輪未修改
+`tasks.md`、`src/`、`public/`、`package.json`，未建立任何音檔，未執行 `/speckit-tasks` 或
+`/speckit-implement`。

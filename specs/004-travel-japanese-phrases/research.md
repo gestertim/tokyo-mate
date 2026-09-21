@@ -4,16 +4,30 @@
 
 ## 1. 語音播放技術
 
-- **Decision**: 瀏覽器原生 `window.speechSynthesis` + `SpeechSynthesisUtterance`（Web Speech API），
-  `utterance.lang = 'ja-JP'`。
+> **Maintenance Amendment（2026-09-21，Documentation Consistency Sync）**：下方原始 Decision／
+> Rationale／Alternatives 為 Clarify 後首版之研究結論（僅選用瀏覽器原生 `SpeechSynthesis` 單一方案），
+> 已由成人教育者批准之 Maintenance Technical Direction 取代。**目前已批准之技術決策**為三層策略：
+> **Primary**｜App-bundled 日文 MP3 音檔（`HTMLAudioElement` 播放，路徑 `/audio/travel-japanese/
+> {phraseId}.mp3`）；**Fallback**｜瀏覽器原生 `SpeechSynthesis`（僅當 Primary 載入或播放失敗時觸發）；
+> **Final fallback**｜日文文字維持可讀。完整決策比較、理由與 timeout/terminal-state 防護見
+> [plan.md](./plan.md) 「八、Audio Technology Decision」與「九、Audio Strategy Escalation Gate」，
+> 兩者為本項目的權威 Technical Truth。下方原始內容保留作為決策歷史紀錄，其中「預錄 MP3」被列為
+> 「未被選用」之敘述**已因本次批准而不再成立**——預錄（bundled）MP3 現為已批准的 Primary 方案。
+
+- **Decision（原始，Clarify 後首版，已由上方 Maintenance Amendment 取代）**: 瀏覽器原生
+  `window.speechSynthesis` + `SpeechSynthesisUtterance`（Web Speech API），`utterance.lang = 'ja-JP'`。
 - **Rationale**: 見 [plan.md](./plan.md) 第八節完整比較；固定 dataset 不需要 Cloud AI 生成語音，原生
   API 零成本、零延遲、無新增 dependency／secret／backend，且更貼近「旅行途中重複使用」情境。
 - **Alternatives considered**:
   - 重用既有 `AudioPlayer.tsx` / `generateSpeech()` Cloud TTS：技術上可行但每次播放皆為一次既有 OpenAI
     TTS 呼叫，100+ 句 × 重複播放會持續累積既有服務用量與延遲，且不可離線；已在 plan.md 記錄比較與決策。
-  - 預錄 MP3：需要额外音檔製作、儲存與授權管理，且 dataset 內容仍在審查/調整階段，維護成本高於
-    Web Speech API；未被選用。
-  - 第三方 TTS npm library：違反「零新增 dependency」目標，未被選用。
+    **此項排除決定不受本次 Maintenance Amendment 影響，仍然成立**。
+  - 預錄 MP3（原始決策時）：需要额外音檔製作、儲存與授權管理，且 dataset 內容仍在審查/調整階段，維護
+    成本高於 Web Speech API；**原標記「未被選用」，已由上方 Maintenance Amendment 取代**——預錄 MP3
+    現為已批准的 Primary 方案，音檔內容製作與品質審查為獨立於本 Plan 的後續 implementation task
+    （見 plan.md 第八節 C. Asset Strategy 與 contracts §7 Audio Asset Content Contract）。
+  - 第三方 TTS npm library：違反「零新增 dependency」目標，未被選用。**此項排除決定不受本次 Maintenance
+    Amendment 影響，仍然成立**（bundled MP3 為 static public asset，非 npm package）。
 
 ## 2. 搜尋技術
 
@@ -58,10 +72,22 @@
 - **Alternatives considered**: 新增獨立資料夾＋修改 `service-worker.ts` allowlist——非必要變更，未被
   選用（prompt 明確指示「不要假設需要修改 Service Worker」）。
 
-## 6. 測試環境對 Web Speech API 的支援
+## 6. 測試環境對語音／音檔播放 API 的支援
 
-- **Decision**: 於 Vitest（jsdom）測試中以 `vi.stubGlobal('speechSynthesis', mockObject)` 或直接於
-  `window` 上賦值 mock 物件（含 `speak`/`cancel`/`getVoices` 與可觸發的 `onstart`/`onend`/`onerror`）
-  模擬瀏覽器行為，比照既有 003 對 `leaflet` 的 `vi.mock` 作法。
-- **Rationale**: jsdom 原生不支援 `SpeechSynthesis`；沿用既有專案「以 mock 驗證呼叫行為」慣例
-  （見 `NearbyMap.test.tsx` 對 leaflet 的處理方式），不依賴真實瀏覽器 TTS engine 執行單元測試。
+> **Maintenance Amendment（2026-09-21，Documentation Consistency Sync）**：本節原僅涵蓋
+> `SpeechSynthesis` mock 策略；三層 audio 策略批准後，Primary 層（bundled MP3 播放）測試需另行 mock
+> `HTMLAudioElement` / `HTMLMediaElement`，補充如下，`SpeechSynthesis` 原有 mock 策略維持不變（現用於
+> 驗證 Fallback 層）。
+
+- **Decision（`SpeechSynthesis` Fallback 層）**: 於 Vitest（jsdom）測試中以
+  `vi.stubGlobal('speechSynthesis', mockObject)` 或直接於 `window` 上賦值 mock 物件（含
+  `speak`/`cancel`/`getVoices` 與可觸發的 `onstart`/`onend`/`onerror`）模擬瀏覽器行為，比照既有 003
+  對 `leaflet` 的 `vi.mock` 作法。
+- **Decision（bundled 音檔 Primary 層，新增）**: 於 Vitest（jsdom）測試中 mock `HTMLMediaElement`
+  的 `play()`（例如 `vi.spyOn(HTMLMediaElement.prototype, 'play')`）並手動觸發 `playing`／`error`
+  事件（`dispatchEvent` 或直接呼叫對應 handler），模擬 bundled asset 載入成功／失敗兩種情境，驗證
+  Primary 失敗時正確 fallback 至 `SpeechSynthesis`。
+- **Rationale**: jsdom 原生不支援 `SpeechSynthesis`，亦不會真正載入／播放 `<audio>` 媒體資源；沿用既有
+  專案「以 mock 驗證呼叫行為」慣例（見 `NearbyMap.test.tsx` 對 leaflet 的處理方式），不依賴真實瀏覽器
+  audio/TTS engine 執行單元測試。兩層 mock 策略皆不需新增測試 dependency，僅使用既有 Vitest
+  （`vi.stubGlobal`／`vi.spyOn`）工具鏈能力。

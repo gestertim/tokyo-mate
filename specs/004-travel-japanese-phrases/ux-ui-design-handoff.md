@@ -9,6 +9,11 @@
 所有會影響產品行為的 requirement 已存在於 `spec.md`；本文件僅為 UX/UI reference，不構成
 implementation 授權（Constitution XI. Authorization Boundary）。
 
+**Maintenance Amendment（2026-09-21，Documentation-Only）**：「Audio（語音播放）」章節已依成人教育者
+批准之 Maintenance Technical Direction 更新為三層 fallback 敘述（App-bundled 音檔 Primary → 瀏覽器原生
+`SpeechSynthesis` Fallback → 日文文字 Final fallback），並新增「PWA Update UX」章節；其餘章節未變更。
+本次更新不新增 `spec.md` 之外的產品行為，不承諾「安裝 PWA 後所有 108 句第一次離線使用時皆可播放」。
+
 ## 核心體驗
 
 旅行情境 → 快速找到一句 → 看繁體中文確認意思 → 看日文 → 必要時播放。
@@ -56,14 +61,35 @@ page」）。
 **不新增 detail page**：使用者可直接在卡片上完成查看、播放、收藏，不需要點擊進入額外的句子詳細頁面
 （對應 spec FR-017，並延伸適用於情境瀏覽與收藏清單，非僅搜尋結果）。
 
-## Audio（語音播放）
+## Audio（語音播放，Maintenance Amendment 更新，2026-09-21）
 
-- 狀態：`idle`／`playing`／`failed`（另有內部 `requested` 過渡狀態，使用者可理解為「已要求播放」）。
-- 同一時間僅一個 active playback；新播放請求取代舊播放。
+**播放流程（三層 fallback）**：
+
+使用者按播放 → `requested`（含優先嘗試 bundled audio 載入）→ 優先嘗試 App-bundled 日文音檔 → 成功則
+`playing` → bundled audio 失敗時自動嘗試瀏覽器原生 `SpeechSynthesis` fallback → fallback 也成功則
+`playing` → fallback 也失敗則 `failed` → 日文文字（`lang="ja"`）與繁中翻譯始終可閱讀與展示，不因語音
+失敗而不可見。
+
+- 狀態：`idle`／`playing`／`failed`（另有內部 `requested` 過渡狀態，涵蓋 bundled asset 載入中，使用者
+  可理解為「已要求播放」）。
+- 同一時間僅一個 active playback；新播放請求取代舊播放（不論舊播放處於 bundled 或 fallback 層）。
 - 播放失敗（`failed`）不影響：該卡片文字、繁中翻譯、收藏按鈕、搜尋、分類瀏覽、其他句子的播放；不得因
   單一句子播放失敗而整卡或整頁 disabled。
-- 語音技術方案（瀏覽器原生 `SpeechSynthesis`）與其 Escalation Gate 條件，見 [plan.md](./plan.md)
-  「九、Audio Strategy Escalation Gate」，本文件不重複定義技術層級細節。
+- **若第一次 bundled audio 尚未被裝置 runtime-cache 且使用者處於離線狀態**：不承諾「一定可播放」；可嘗試
+  `SpeechSynthesis` fallback，若仍不可用則進入 `failed`，日文文字仍保持可讀與可展示。
+- **不要求**使用者進入手機系統設定安裝 voice／語音套件；**不顯示**任何品牌或裝置特定的安裝指示；語音
+  失敗**不阻塞**整個 App 的其餘功能。
+- 語音技術方案（App-bundled MP3 為 Primary、瀏覽器原生 `SpeechSynthesis` 為 Fallback、日文文字為 Final
+  fallback）與其 Escalation Gate 條件，見 [plan.md](./plan.md)「九、Audio Strategy Escalation Gate」，
+  本文件不重複定義技術層級細節（例如 timeout 數值、cache namespace）。
+
+## PWA Update UX
+
+維持現有非阻塞 update notification：偵測到新版本時，以既有 `UpdatePrompt` 呈現不阻擋操作的提示，
+不強制中斷使用者當下操作。使用者需明確按下「立即更新」後，才會啟動 waiting worker 的
+`SKIP_WAITING` 與後續 `controllerchange` reload；**不**改為使用者未操作時自動 reload。App 從背景回到
+前景時可能更即時偵測到新版本（見 [plan.md](./plan.md)「十四、PWA Update Reliability」），但呈現方式
+與使用者互動流程不變，仍以同一個非阻塞 `UpdatePrompt` 呈現。
 
 ## Search（搜尋）
 

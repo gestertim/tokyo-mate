@@ -177,10 +177,24 @@ playback。
       整卡 `disabled`），且使用者仍可對其他句子觸發播放／收藏、仍可切換情境或使用搜尋（不因單一句子
       播放失敗而被阻斷），依 [contracts §4](./contracts/travel-japanese-contracts.md)
 
+> **📜 Historical Baseline 標註**：下方 Checkpoint 屬於 Feature 004 **原始 implementation 歷史紀錄**
+> （US1＋US2 完成當時，僅批准瀏覽器原生 `SpeechSynthesis` 單層語音方案）。其中「不得自行切換為…
+> 預錄 MP3」之敘述，反映的是**當時**尚未批准 bundled MP3 的狀態；此 SpeechSynthesis-only restriction
+> **已被後續 Maintenance Technical Plan supersede**，不代表目前仍有效的 Technical Truth。
+
 **Checkpoint**: User Story 1 + 2 共同構成 P1 MVP（情境瀏覽 + 播放）；**Audio Escalation Gate 檢查點**：
 若驗證過程中發現目標裝置／瀏覽器缺乏可用 Japanese voice、或日文 voice 覆蓋率不足以合理支援目標使用
 情境，MUST 依 [plan.md](./plan.md) 「九、Audio Strategy Escalation Gate」STOP，記錄實際證據並取得使用者
 重新批准，**不得**自行切換為 Cloud TTS、重用既有 `generateSpeech()`、預錄 MP3 或其他 external service
+
+> **✅ 目前正式 Audio Technical Truth（Maintenance Amendment，已批准，非待批准）**：
+>
+> - **Primary**：App-provided static MP3（bundled，`/audio/travel-japanese/{phraseId}.mp3`）
+> - **Fallback**：瀏覽器原生 `SpeechSynthesis`
+> - **Final fallback**：日文文字維持可見
+>
+> 正式 108 個 MP3 之 production（人工錄音 vs. TTS、voice 來源、授權、是否使用第三方工具）仍受
+> tasks.md T055 STOP GATE 約束；coding agent 不得自行選擇 production provider／tool／vendor。
 
 ---
 
@@ -451,3 +465,337 @@ Task: "建立 src/features/travel-japanese/FavoritesList.test.tsx"
 - 避免：模糊任務、同檔案衝突、破壞 Story 獨立性的跨 Story 相依
 - 本 tasks.md 不構成 implementation 授權；須待 `/speckit.analyze` 與使用者明確批准後方可執行
   `/speckit.implement`
+
+---
+
+## Maintenance Phase（2026-09-21｜語音策略調整 + PWA Update Reliability，新增）
+
+**歷史任務澄清（T015–T017，不重編、不刪除、不變更其 `[X]` 狀態）**：T015、T016、T017 為 Feature 004
+原始 implementation 歷史紀錄，記載當時已批准之「僅瀏覽器原生 `SpeechSynthesis`」單層語音方案。本次
+Maintenance 已由成人教育者批准改採三層策略（bundled MP3 Primary → `SpeechSynthesis` Fallback → 文字
+Final fallback，見 [plan.md](./plan.md)「八、Audio Technology Decision」），T015–T017 中對
+「SpeechSynthesis-only」的描述**不再代表目前 Maintenance Technical Truth**。目前 audio Technical
+Truth 一律以 T056–T060（Phase 12：Bundled Audio Playback Implementation）與 plan.md Maintenance
+Amendment 為準；T015–T017 本身作為既有已完成任務之歷史紀錄予以保留，不重編、不刪除。
+
+**依據**：本 Maintenance Phase 之 Technical Truth 為 [plan.md](./plan.md) 已批准之 Maintenance
+Amendment（「八、Audio Technology Decision」「九、Audio Strategy Escalation Gate」「十四、PWA Update
+Reliability」）與同步更新之 [research.md](./research.md)、[data-model.md](./data-model.md)、
+[contracts/travel-japanese-contracts.md](./contracts/travel-japanese-contracts.md)、
+[ux-ui-design-handoff.md](./ux-ui-design-handoff.md)。spec.md 本次**無** Product Truth 變更。
+
+**授權邊界（重申）**：本 Maintenance Phase 之任務**不構成** implementation 授權；下列任務僅為
+`/speckit-tasks` 階段之工作定義，須待 `/speckit.analyze` 與使用者對 `/speckit.implement` 之明確批准後
+方可執行。本階段**不新增**任何 npm dependency（沿用 Plan「新 runtime dependency：0」）。
+
+**既有任務保護**：T001–T045 為既有已完成任務，其編號、內容與完成狀態（`[X]`）維持不變，不因本 Maintenance
+Phase 而被覆寫、重編或移除。以下任務編號（T046 起）為新增，接續既有最大編號 T045。
+
+### Phase 10：Maintenance Preflight（Documentation / Pre-implementation Validation）
+
+**Purpose**：在進入任何 audio／PWA 實作任務前，確認本次 Maintenance 之文件同步與 repository 前置條件皆
+成立；不重複已完成之文件同步工作本身，僅驗證其結果。
+
+- [X] T046 驗證 [spec.md](./spec.md) 本次 Maintenance **無** Product Truth 變更：比對目前
+      working tree（`git diff -- specs/004-travel-japanese-phrases/spec.md`）確認該檔案未被修改，
+      並確認 FR-001~FR-035／SC-001~SC-011 內容與批准前一致
+- [X] T047 驗證 [plan.md](./plan.md)、[research.md](./research.md)、[data-model.md](./data-model.md)、
+      [contracts/travel-japanese-contracts.md](./contracts/travel-japanese-contracts.md)、
+      [ux-ui-design-handoff.md](./ux-ui-design-handoff.md) 五份文件對「三層 audio 策略」
+      （bundled MP3 Primary → `SpeechSynthesis` Fallback → 文字 Final fallback）與「PWA foreground
+      update 節流」之敘述彼此一致，無互相矛盾之技術描述
+- [X] T048 驗證 repository safety：確認目前 branch 為 `master`、working tree（`git status --porcelain`）
+      僅包含本次已批准之 Feature 004 maintenance documentation files，且不包含清單以外之任何檔案：
+      1. `specs/004-travel-japanese-phrases/plan.md`
+      2. `specs/004-travel-japanese-phrases/ux-ui-design-handoff.md`
+      3. `specs/004-travel-japanese-phrases/research.md`
+      4. `specs/004-travel-japanese-phrases/data-model.md`
+      5. `specs/004-travel-japanese-phrases/contracts/travel-japanese-contracts.md`
+      6. `specs/004-travel-japanese-phrases/checklists/implementation-readiness.md`
+      7. `specs/004-travel-japanese-phrases/tasks.md`
+
+      並確認 `004-safe-baseline` 仍固定指向 `ddc73392be88b1bb2e44356a1e4077d96d97bf45` 且未被移動。本
+      任務 MUST 以實際比對上方清單檔名為準，不得因清單項目數量變動（例如未來新增／減少 maintenance
+      文件）而視為驗證失敗；若 working tree 出現清單以外的檔案（尤其 `src/**`、`public/**`、
+      `package.json`、`package-lock.json`），MUST 視為驗證失敗並 STOP。
+- [X] T049 驗證 0 dependency escalation：確認 `package.json`／`package-lock.json` 未變更，且本次
+      Maintenance 已批准之 audio／PWA 技術方向全數僅使用既有瀏覽器原生 API
+      （`HTMLAudioElement`／`SpeechSynthesis`／`localStorage`）與既有 Service Worker 基礎設施，無任何
+      新增 npm dependency 之必要
+
+**Checkpoint**：Maintenance Preflight 全數通過後，方可進入 Audio Asset Gate（Phase 11）
+
+---
+
+### Phase 11：Audio Asset Gate / Production Preparation（含 Approval STOP Gate）
+
+**Purpose**：為未來正式產製 108 個音檔預先定義驗證規格與品質契約，**本階段不產生任何實際 MP3 內容**，
+亦不下載任何音檔；並在進入實際產製前設置明確 STOP Gate。
+
+- [X] T050 [P] 定義 `src/services/travelJapaneseAudioManifest.test.ts`（未來新建立）之測試規格：驗證
+      dataset 中 `tj-001`…`tj-108` 全部 108 個 phrase id 各自對應唯一路徑
+      `` /audio/travel-japanese/{phraseId}.mp3 ``，且不存在重複或遺漏對應（依
+      [contracts §7](./contracts/travel-japanese-contracts.md)）；本任務僅定義測試規格，**不建立**
+      實際音檔或假造 asset
+- [X] T051 [P] 定義 asset 完整性驗證規則：一對一比對 dataset 全部 phrase id 與 expected manifest，MUST
+      同時檢出「missing」（dataset 有 id 但無對應音檔）與「duplicate」（同一 id 對應多個音檔或路徑
+      衝突）兩類異常；執行結果 MUST 記錄於
+      [contracts §7.1](./contracts/travel-japanese-contracts.md#71-asset-manifest--completeness-check-result執行記錄待-tasksmd-t051-實際執行時填寫)
+- [X] T052 定義 spoken content 一致性審查規則：音檔口說內容 MUST 與 dataset 該 phrase 之 `japanese`
+      欄位逐字一致，不得漏字／加字／改變原意，依
+      [contracts §7](./contracts/travel-japanese-contracts.md)「內容品質要求」；執行結果 MUST 記錄於
+      [contracts §7.2](./contracts/travel-japanese-contracts.md#72-spoken-content-consistency-review-record執行記錄待-tasksmd-t052-實際執行時填寫)
+- [X] T053 定義音檔品質審查 checklist（供未來人工／審查階段使用，逐項對應
+      [contracts §7](./contracts/travel-japanese-contracts.md)）：發音自然度、禮貌程度與原 phrase 一致、
+      語速適合旅遊溝通情境（不過快、不過度誇張放慢）、MUST NOT 背景音樂、MUST NOT 品牌提示音／效果音、
+      MUST NOT 不必要語音前後綴、108 個音檔間音量合理一致、避免過長 leading／trailing silence；審查
+      結果 MUST 逐項記錄於
+      [contracts §7.3](./contracts/travel-japanese-contracts.md#73-audio-content-quality-review-checklist執行記錄待-tasksmd-t053-實際執行時填寫)
+- [X] T054 定義 phrase text 變更 → audio consistency review 觸發流程：任何正式 phrase `japanese` 欄位
+      內容變動時，MUST 標記對應音檔需重新審查，審查完成前不得視為與文字一致；每次觸發之審查結果 MUST
+      以新增一列的方式記錄於
+      [contracts §7.2](./contracts/travel-japanese-contracts.md#72-spoken-content-consistency-review-record執行記錄待-tasksmd-t052-實際執行時填寫)
+- [ ] T055 **🛑 STOP GATE｜Audio Production Method Approval**：在建立任何一個實際 MP3 音檔內容前，MUST
+      由成人教育者另行明確批准下列項目，本任務本身即為 blocking gate，不得略過或視為已預設批准：
+      (a) production method（例如人工錄音 vs. 自動化語音合成）、(b) voice source（人聲來源或合成
+      voice 選擇）、(c) licensing／reuse rights（產出內容是否可合法打包為 App static asset 並公開
+      發佈）、(d) 是否使用第三方 TTS／工具及其服務條款。coding agent **不得**自行選擇任何 cloud
+      TTS、AI voice service、API、付費服務、API key 或 vendor；此 gate 通過前，T050–T054
+      所定義之驗證規則**僅為規格**，不得據以實際產製或下載任何音檔。批准狀態 MUST 記錄於
+      [contracts §7.4](./contracts/travel-japanese-contracts.md#74-licensing--production-approval-record執行記錄待-tasksmd-t055-stop-gate-批准後填寫)；
+      批准前該小節 MUST 維持「待批准」狀態，不得標示為已批准
+
+**Checkpoint**：T055 STOP GATE 未經使用者明確批准前，任何實際音檔產製、下載或第三方服務串接 MUST NOT
+發生；Phase 12（Bundled Audio Playback Implementation）之程式碼可先行開發並以 mock／缺檔情境測試，不
+依賴 T055 是否已批准
+
+---
+
+### Phase 12：Bundled Audio Playback Implementation
+
+**Purpose**：實作三層 audio 播放策略（bundled MP3 Primary → `SpeechSynthesis` Fallback → 文字 Final
+fallback），含 timeout／terminal-state 防護與單一 active playback 管理；**本階段不依賴 108 個正式音檔
+已存在**，測試以 mock／模擬 404 情境驗證行為。
+
+- [X] T056 [P] 擴充 `src/features/travel-japanese/phraseAudio.test.ts`：新增案例涵蓋 bundled 播放成功、
+      bundled 失敗→`SpeechSynthesis` 成功、bundled 失敗→`SpeechSynthesis` 亦失敗（`failed`）、
+      bundled／`SpeechSynthesis` 皆無終止事件之 no-event timeout 恢復、缺少對應音檔（模擬 404／
+      `error` 事件）正確 fallback，依 [research.md](./research.md) §6 mock 策略（`HTMLMediaElement`
+      `play()` spy + 手動觸發事件）
+- [X] T057 重構 `src/features/travel-japanese/phraseAudio.ts`：新增 `playBundledAudio(phraseId,
+      handlers)`（Primary，依路徑 `` /audio/travel-japanese/${phraseId}.mp3 `` 建立/重用
+      `HTMLAudioElement`）、保留 `speakJapanese`（Fallback）、將 `cancelSpeech` 更名為
+      `cancelPlayback()`（同時終止 bundled audio 與 `SpeechSynthesis`），並新增 timeout/terminal-state
+      管理（逾時無終止事件時視同該層失敗並依序 fallback），依
+      [contracts §3](./contracts/travel-japanese-contracts.md)
+- [X] T058 擴充 `src/screens/TravelJapaneseScreen.tsx`：`onPlay(phrase)` 改為依序呼叫
+      `playBundledAudio` → （`onError` 時）`speakJapanese`，並依 handlers 更新 `activePhraseId` /
+      `playbackStatus`；`useEffect` cleanup 改呼叫 `cancelPlayback()`（取代 `cancelSpeech()`），依
+      [data-model.md](./data-model.md) §5「狀態轉換：Playback」
+- [X] T059 [P] 擴充 `src/screens/TravelJapaneseScreen.test.tsx`：新增案例驗證第二句播放觸發時終止
+      第一句（含終止任何 pending timeout）、重複播放同一句行為一致且不殘留前次播放狀態、audio
+      任一層失敗皆不影響 favorites／search／categories／文字顯示、component unmount 呼叫
+      `cancelPlayback()`
+- [X] T060 [P] 複查 `src/features/travel-japanese/PhraseCard.tsx` 與其測試：確認既有
+      `playbackStatus`／`isActivePlayback` props 契約與 UI 呈現（文字＋`aria-live`、`failed` 時卡片
+      文字與收藏按鈕仍可操作）於改用三層策略後不需變更即可相容，若發現不相容則列出具體差異供本任務
+      內修正
+
+**Checkpoint**：Phase 12 完成後，三層 audio 策略可在**無正式 108 個 MP3** 的情況下以 mock／404 情境
+通過全部測試（等同驗證 Fallback 與 Final fallback 路徑正確），為後續正式音檔就緒後的無縫接軌做準備
+
+---
+
+### Phase 13：Runtime Audio Cache
+
+**Purpose**：於 `service-worker.ts` 新增最小範圍的音檔 runtime cache 分支，僅在成功取得音檔後才快取，
+不 precache 全部 108 個音檔，且不影響既有 app-shell 行為。
+
+- [X] T061 [P] 擴充 `src/service-worker.test.ts`：新增案例驗證獨立 audio cache namespace／version（例如
+      `travel-japanese-audio-v1`，需與 `APP_SHELL_CACHE` 區隔）、音檔首次成功 fetch 後寫入 audio
+      cache、404／失敗回應**不**寫入 cache、離線時已快取音檔可正常回應、離線時未快取音檔優雅失敗（不
+      拋出未捕捉例外）、`activate` 階段清除舊版本 audio cache、既有 app-shell 測試維持全數通過。
+      **明確完成條件（cache-hit assertion，MUST 通過方可視為完成）**：於可控制的測試情境下（例如以
+      spy／mock 包裝全域 `fetch`），對同一 `phraseId` 音檔第一次成功 fetch 後，MUST 驗證回應已寫入
+      audio cache；針對**同一** audio request 發出第二次請求時，MUST 由 cache 命中直接回應，且 MUST
+      斷言底層 `fetch` spy 於第二次請求時**未被再次呼叫**（即無實際 network request 發出）
+- [X] T062 擴充 `src/service-worker.ts`：新增獨立 audio cache 常數（namespace/version）與最小範圍
+      fetch handler 分支（僅比對 `/audio/travel-japanese/` 路徑前綴），成功回應（2xx）才
+      `cache.put()`，非 2xx 或 fetch 例外**不**快取，依 [plan.md](./plan.md)「PWA / Offline
+      Strategy」D. Phrase Audio Runtime Cache；此分支 MUST NOT 變更既有 `isCacheableRequest`／
+      `handleNavigationRequest`／app-shell fetch 邏輯之既有行為
+- [X] T063 擴充 `src/service-worker.ts` 既有 `activate` handler：於既有 app-shell cache cleanup
+      邏輯之外，新增清除不屬於目前版本 audio cache namespace 的舊 audio cache（比對 cache name 前綴與
+      目前版本號），與既有 app-shell cleanup／`clients.claim()` 平行執行、互不阻塞
+- [X] T064 確認 `PRECACHE_URLS` 與 `APPROVED_STATIC_PREFIXES` 未（且不應）涵蓋全部 108 個音檔路徑：
+      新增測試或檢查斷言，確認 install 階段**不**主動下載全部音檔（僅 runtime
+      cache-on-first-successful-fetch 於實際播放時觸發）
+
+**Checkpoint**：Phase 13 完成後，音檔快取行為僅在「已成功播放過」時才生效，且不影響既有 App Shell
+precache／offline fallback 行為（既有 `service-worker.test.ts` 全數案例維持通過）
+
+---
+
+### Phase 14：PWA Update Reliability
+
+**Purpose**：在既有 waiting worker／`UpdatePrompt`／使用者主動 `SKIP_WAITING`／`controllerchange`
+reload 機制之外，新增 foreground／`visibilitychange` 節流版 `registration.update()`，不自動
+`skipWaiting`、不強制 reload、不做無限制 polling。
+
+- [X] T065 [P] 擴充 `src/components/UpdatePrompt.test.tsx`：新增案例驗證
+      `document.visibilitychange` 且 `document.visibilityState === 'visible'` 時呼叫既有
+      registration 的 `update()`、同一 session 內短時間內重複觸發 foreground 會被節流（不重複呼叫
+      `update()`）、`update()` rejection 被容錯處理且不拋出未捕捉例外、既有 waiting worker 偵測／
+      使用者按下「立即更新」／`controllerchange` 僅 reload 一次等既有案例維持全數通過
+- [X] T066 擴充 `src/components/UpdatePrompt.tsx`（`useServiceWorkerUpdate`）：保留取得的
+      `registration` 參照，新增 `visibilitychange` event listener，於節流條件成立時呼叫
+      `registration.update().catch(() => {})`；不新增任何 polling timer、不在此流程中呼叫
+      `applyUpdate()`／`postMessage('SKIP_WAITING')`，依 [plan.md](./plan.md)「十四、PWA Update
+      Reliability」
+- [X] T067 複查確認：`self.skipWaiting()`（`service-worker.ts`）與 `applyUpdate()`
+      （`UpdatePrompt.tsx`）之既有「僅使用者主動觸發」行為未被本階段變更；`controllerchange` reload
+      仍僅發生一次；本階段新增邏輯未引入任何無節流限制的 interval polling
+
+**Checkpoint**：Phase 14 完成後，App 回到前景可更即時發現新版本，但使用者互動流程（非阻塞提示、手動
+「立即更新」、單次 reload）與既有行為完全一致
+
+---
+
+### Phase 15：Automated Regression
+
+**Purpose**：確認本次 Maintenance 之全部變更（Phase 12–14）未破壞既有 Feature 001–004 自動化測試、PWA
+red-gate 行為與型別／打包正確性，且未引入未經授權之 dependency 或範圍外變更。
+
+- [X] T068 執行 `npx vitest run`：確認 Feature 004 全部測試（含 T056／T059／T061／T065 新增案例）通過，
+      且既有 Feature 001／002／003 自動化測試維持 100% 原有通過狀態；若發現既有測試失敗，依
+      [plan.md](./plan.md)「Regression Failure Handling」視為 regression blocker 並優先處理
+- [X] T069 執行 `npm run build`：確認型別檢查與打包無誤
+- [X] T070 執行 `npm run test:pwa-red-gate`：確認既有 PWA 行為（App Shell、offline fallback、update
+      prompt）與新增音檔 cache 邏輯皆不造成既有 red-gate 案例失敗
+- [X] T071 執行 `git diff` / dependency drift check：確認 `package.json`／`package-lock.json` 無變動、
+      確認本次變更範圍僅限於 Phase 12–14 所列檔案（`src/features/travel-japanese/phraseAudio.ts`、
+      `src/screens/TravelJapaneseScreen.tsx`、`src/service-worker.ts`、
+      `src/components/UpdatePrompt.tsx` 及對應測試檔），未觸及 `public/**`（音檔內容）、
+      `package.json`、既有 001–003 專屬檔案
+
+**Checkpoint**：Phase 15 全數通過後，方可進入 Manual Cross-device Verification（Phase 16）
+
+---
+
+### Phase 16：Manual Cross-device Verification
+
+**Purpose**：以人工走查確認實際裝置／瀏覽器行為符合預期；目標為跨品牌行動裝置可用，**不**將特定品牌
+設定調整列為產品必要步驟。
+
+- [ ] T072 建立並執行跨裝置手動驗證矩陣（至少涵蓋 Windows Chrome、iPhone 瀏覽器、Android Chrome、
+      Android 已安裝 PWA 四種環境），拆分為 A／B 兩部分，記錄各環境走查結果與任何觀察到的差異（不得將
+      任何單一品牌特定設定調整記為產品必要前置步驟）：
+
+      **A. 可在 T055 尚未批准時執行**（不依賴正式 MP3 音檔）：App 顯示為新版本、UI 顯示（category／
+      phrase card／search／favorites 正常渲染）、search 功能正常、category 切換正常、favorites
+      功能正常、text fallback（日文與繁中文字恆可讀）、`SpeechSynthesis` fallback 行為（bundled
+      asset 缺席／404 時之 Fallback 播放路徑）、PWA update prompt 與 foreground update check（Phase
+      14）正常運作、graceful failure（音檔缺席或播放失敗不影響其他功能）。
+
+      **B. 僅限 T055 已批准且正式 MP3 assets 已就緒後才可執行**：bundled MP3 於四種環境之真機
+      playback、cached audio offline replay（已快取音檔離線可正常播放）、uncached offline behavior
+      （未快取音檔離線時之優雅降級）、四種環境之正式 bundled audio 完整驗證。
+
+      **狀態標記規則**：若執行本任務時 T055 尚未經使用者批准，B 部分之全部項目 MUST 明確標記為
+      `BLOCKED`／`PENDING`（並註明原因為「T055 STOP GATE 尚未批准，無正式 MP3 assets」），**不得**
+      標記為 `PASS` 或以 A 部分結果替代 B 部分結論；A 部分可獨立完成並標記為 `PASS`／`FAIL`。
+
+**Checkpoint**：A 部分於四種環境走查結果皆為預期行為（含已知、已批准之 fallback／降級行為）即可進入
+Maintenance Closure（Phase 17）；B 部分若因 T055 尚未批准而標記為 `BLOCKED`／`PENDING`，不視為
+Checkpoint 失敗，但 Maintenance Closure（T073）MUST 如實記錄 B 部分尚未完成之原因，不得假裝已 PASS。
+
+---
+
+### Phase 17：Maintenance Closure
+
+**Purpose**：彙整本次 Maintenance 全部驗證結果，確認既有 Feature 004 歷史任務未被覆寫，確認 repository
+safety 與 授權邊界全數維持。
+
+- [ ] T073 彙整 Maintenance 執行結果並確認：(a) T001–T045 之任務內容與 `[X]` 完成狀態未被覆寫或重編；
+      (b) 本次新增之 T046–T072 依 Phase 10–16 全數完成或明確記錄未完成原因；(c) 0 新增 npm
+      dependency；(d) 未建立任何實際 MP3 音檔（若 T055 STOP GATE 尚未經批准，音檔產製任務保持
+      未執行狀態）；(e) `004-safe-baseline`（`ddc73392be88b1bb2e44356a1e4077d96d97bf45`）未被移動；
+      (f) 無 commit／push／tag 於本次 Maintenance 範圍內發生
+
+**Checkpoint**：Maintenance Phase（T046–T073）全數確認後，本次 Feature 004 Maintenance 之
+`/speckit-tasks` 階段工作完成；仍須待 `/speckit.analyze` 與使用者對 `/speckit.implement` 之明確批准，
+方可開始實際 implementation
+
+---
+
+### Maintenance Phase Dependencies
+
+- **Phase 10（Preflight）**：無相依，可立即開始；**BLOCKS** Phase 11
+- **Phase 11（Audio Asset Gate）**：依賴 Phase 10 完成；T055 STOP GATE **BLOCKS** 任何實際音檔產製
+  （不 BLOCK Phase 12 程式碼開發，因 Phase 12 以 mock／404 情境驗證，不依賴正式音檔已存在）
+- **Phase 12（Bundled Audio Playback）**：依賴 Phase 10 完成；不依賴 Phase 11 T055 是否已批准
+- **Phase 13（Runtime Audio Cache）**：依賴 Phase 12 完成（`playBundledAudio` 需已存在，audio cache
+  fetch handler 才有實際請求可攔截）
+- **Phase 14（PWA Update Reliability）**：依賴 Phase 10 完成；與 Phase 12／13 相互獨立，可平行進行
+- **Phase 15（Automated Regression）**：依賴 Phase 12、13、14 全數完成
+- **Phase 16（Manual Cross-device Verification）**：依賴 Phase 15 全數通過
+- **Phase 17（Maintenance Closure）**：依賴 Phase 16 完成
+
+### Maintenance Phase Notes
+
+- 本 Maintenance Phase 之任務編號（T046–T073）接續既有 T001–T045，不重複、不重編既有任務
+- T055（Audio Production Method Approval STOP GATE）為 Approval Gate，非可自行決定之實作細節；觸發
+  條件出現時 MUST STOP 並取得成人教育者明確批准，coding agent 不得自行選擇任何 cloud TTS／AI voice
+  service／API／付費服務／API key／vendor
+- 本 Maintenance Phase 不修改 `src/**`、`public/**`、`package.json`；不建立任何 MP3；不下載任何音檔；
+  不修改既有 service-worker.ts 以外的 core service-worker lifecycle 行為（`waiting worker`／
+  `clients.claim()`／既有 `APPROVED_STATIC_PREFIXES` 不變）
+- 本 Maintenance Phase 不構成 implementation 授權；須待 `/speckit.analyze` 與使用者明確批准後方可執行
+  `/speckit.implement`
+
+### Maintenance Execution Record（`/speckit.implement` 實際執行結果，2026-09-21）
+
+> 本節記錄本次已獲使用者明確批准之 `/speckit.implement` 執行結果，區別於上方「Maintenance Phase
+> Notes」對 tasks.md **文件產生階段**（不修改 code）之敘述。
+
+- **T046–T049（Preflight）**：於本次 implementation 開始前已逐項確認：`spec.md` 未變更、五份文件對
+  三層 audio 策略／PWA foreground update 節流敘述一致、branch 為 `master`、working tree 僅含批准清單
+  內 7 份 maintenance 文件、`004-safe-baseline`（`ddc73392be88b1bb2e44356a1e4077d96d97bf45`）未被移動、
+  `package.json`／`package-lock.json` 未變更。PASS。
+- **T050–T054（Audio Asset Gate 定義）**：對應驗證規則與品質 checklist 已於本次 Maintenance
+  Documentation Sync 完整記錄於 [contracts §7](./contracts/travel-japanese-contracts.md#7-audio-asset-content-contract正式音檔內容契約maintenance-amendment-新增2026-09-21)
+  （含 §7.1–§7.4 執行記錄位置），本階段**僅為規格定義**，未建立、未下載任何音檔或 manifest 實作檔案，
+  符合「本任務僅定義測試規格」之限制。PASS（規格完整，待 T055 批准後方可據以實作 manifest 與實際音檔）。
+- **T055（STOP GATE）**：**BLOCKED / PENDING USER APPROVAL**。未取得 production method／voice
+  source／licensing／第三方 TTS 使用之明確批准前，未建立、未下載任何 MP3，[contracts §7.4](./contracts/travel-japanese-contracts.md#74-licensing--production-approval-record執行記錄待-tasksmd-t055-stop-gate-批准後填寫)
+  維持「待批准」狀態。
+- **T056–T060（Bundled Audio Playback）**：已實作 `playBundledAudio` / `speakJapanese` /
+  `cancelPlayback`（三層策略＋timeout/terminal-state 防護），`TravelJapaneseScreen.onPlay` 改為
+  bundled → SpeechSynthesis 依序呼叫，`useEffect` cleanup 改呼叫 `cancelPlayback()`；`PhraseCard.tsx`
+  複查後確認既有 props 契約不需變更。對應 Vitest 全數通過（`phraseAudio.test.ts` 14 案例、
+  `TravelJapaneseScreen.test.tsx` 20 案例，含 mock 404／timeout／second-phrase-stops-first 等情境）。
+- **T061–T064（Runtime Audio Cache）**：已於 `service-worker.ts` 新增獨立 `travel-japanese-audio-v1`
+  cache namespace 與 `/audio/travel-japanese/` fetch handler 分支（僅 2xx 才 cache、404 不 cache、
+  `activate` 清除舊版本 audio cache），未變更既有 `PRECACHE_URLS`／`APPROVED_STATIC_PREFIXES`／
+  app-shell 行為。`service-worker.test.ts` 新增 9 案例（含 cache-hit fetch spy 未被再次呼叫之明確斷言）
+  全數通過，既有 24 案例維持通過。
+- **T065–T067（PWA Update Reliability）**：已於 `UpdatePrompt.tsx`（`useServiceWorkerUpdate`）新增
+  `visibilitychange` 觸發 `registration.update()`，60 秒節流、`.catch(() => {})` 容錯；未新增 polling、
+  未自動 `skipWaiting`、`controllerchange` 仍僅 reload 一次。`UpdatePrompt.test.tsx` 新增 5 案例全數
+  通過，既有 4 案例維持通過。
+- **T068–T071（Automated Regression）**：`npx vitest run` 全專案 48 個測試檔、413 個測試全數通過；
+  `npm run build` 成功；`npm run test:pwa-red-gate`（Playwright）4 個既有案例全數通過；
+  `package.json`／`package-lock.json` 無變動；`git diff --check` 無 whitespace 錯誤；本次變更範圍確認
+  僅限 `src/features/travel-japanese/phraseAudio.ts`（含測試）、`src/screens/TravelJapaneseScreen.tsx`
+  （含測試）、`src/service-worker.ts`（含測試）、`src/components/UpdatePrompt.tsx`（含測試），未觸及
+  `public/**`、`package.json` 或既有 001–003 專屬檔案。PASS。
+- **T072（Manual Cross-device Verification）**：**未執行**——coding agent 無法操作實體 Windows
+  Chrome／iPhone／Android Chrome／已安裝 PWA 裝置，此為需要人工於實體裝置執行之任務，**待成人教育者
+  或其他人工測試者實際執行**。A 部分（不依賴正式 MP3）之底層行為已由本次自動化測試等效覆蓋（bundled
+  404 → SpeechSynthesis fallback、timeout 恢復、PWA update prompt、foreground update、graceful
+  failure），但跨裝置人工走查本身尚未執行，不得以自動化測試結果替代標記為 `PASS`。B 部分維持
+  `BLOCKED`／`PENDING`（原因：T055 尚未批准，無正式 MP3 assets）。
+- **T073（Maintenance Closure）**：**PARTIAL**——T001–T045 完成狀態未被覆寫；T046–T054、T056–T071 已
+  完成；T055 維持 BLOCKED／PENDING；T072 人工跨裝置驗證尚未執行；0 新增 npm dependency；未建立任何
+  實際 MP3；`004-safe-baseline` 未被移動；本次 Maintenance 範圍內無 commit／push／tag。因 T055 與
+  T072 尚未完成，**不得宣稱整個 Maintenance fully complete**。

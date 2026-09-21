@@ -5,12 +5,23 @@ import { SearchBar } from '../features/travel-japanese/SearchBar';
 import { FavoritesList } from '../features/travel-japanese/FavoritesList';
 import { SafetyReminder } from '../features/travel-japanese/SafetyReminder';
 import { loadFavoriteIds, persistFavoriteIds } from '../features/travel-japanese/favorites';
-import { cancelSpeech, isSpeechSynthesisAvailable, speakJapanese } from '../features/travel-japanese/phraseAudio';
+import { cancelPlayback, isSpeechSynthesisAvailable, playBundledAudio, speakJapanese } from '../features/travel-japanese/phraseAudio';
 import type { PlaybackStatus } from '../features/travel-japanese/phraseAudio';
+import { playTestTone } from '../features/travel-japanese/audioDiagnostic';
+import type { DiagnosticStatus } from '../features/travel-japanese/audioDiagnostic';
 import { getAllPhrases, getPhrasesByCategory, searchPhrases, TRAVEL_JAPANESE_CATEGORY_LABELS } from '../services/travelJapanese';
 import type { TravelJapaneseCategory, TravelJapanesePhrase } from '../types/travelJapanese';
 
 type TravelJapaneseView = 'categories' | 'category-detail' | 'search' | 'favorites';
+
+// T055 STOP GATE 仍為 BLOCKED：以下狀態標籤僅供 Android PWA static audio engineering diagnostic 使用，非正式產品文案。
+const DIAGNOSTIC_STATUS_LABEL: Record<DiagnosticStatus, string> = {
+  idle: '',
+  requested: '準備播放',
+  playing: '播放中',
+  success: '播放成功',
+  failed: '播放失敗',
+};
 
 interface TravelJapaneseScreenProps {
   onBack: () => void;
@@ -28,13 +39,15 @@ export function TravelJapaneseScreen({ onBack }: TravelJapaneseScreenProps) {
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(() => new Set(loadFavoriteIds()));
   const [activePhraseId, setActivePhraseId] = useState<string | undefined>(undefined);
   const [playbackStatus, setPlaybackStatus] = useState<PlaybackStatus>('idle');
+  const [diagnosticStatus, setDiagnosticStatus] = useState<DiagnosticStatus>('idle');
+  const [diagnosticMessage, setDiagnosticMessage] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     persistFavoriteIds(Array.from(favoriteIds));
   }, [favoriteIds]);
 
   useEffect(() => {
-    return () => cancelSpeech();
+    return () => cancelPlayback();
   }, []);
 
   const audioAvailable = isSpeechSynthesisAvailable();
@@ -51,19 +64,44 @@ export function TravelJapaneseScreen({ onBack }: TravelJapaneseScreenProps) {
   function handlePlay(phrase: TravelJapanesePhrase) {
     setActivePhraseId(phrase.id);
     setPlaybackStatus('requested');
-    speakJapanese(phrase.japanese, {
-      onStart: () => setPlaybackStatus('playing'),
-      onEnd: () => {
+    playBundledAudio(phrase.id, {
+      onPlaying: () => setPlaybackStatus('playing'),
+      onEnded: () => {
         setActivePhraseId(undefined);
         setPlaybackStatus('idle');
       },
-      onError: () => setPlaybackStatus('failed'),
+      onError: () => {
+        // Primary（bundled MP3）失敗才進入 Fallback（SpeechSynthesis）。
+        speakJapanese(phrase.japanese, {
+          onStart: () => setPlaybackStatus('playing'),
+          onEnd: () => {
+            setActivePhraseId(undefined);
+            setPlaybackStatus('idle');
+          },
+          onError: () => setPlaybackStatus('failed'),
+        });
+      },
     });
   }
 
   function handleSelectCategory(category: TravelJapaneseCategory) {
     setSelectedCategory(category);
     setView('category-detail');
+  }
+
+  // Engineering diagnostic only（T055 STOP GATE 仍 BLOCKED，非正式功能）：驗證 static test-tone.wav
+  // 是否能透過 HTMLAudioElement 在 Android installed PWA 上播放，與正式 phrase 音檔／SpeechSynthesis 無關。
+  function handleTestTone() {
+    setDiagnosticMessage(undefined);
+    playTestTone({
+      onRequested: () => setDiagnosticStatus('requested'),
+      onPlaying: () => setDiagnosticStatus('playing'),
+      onSuccess: () => setDiagnosticStatus('success'),
+      onError: (message) => {
+        setDiagnosticStatus('failed');
+        setDiagnosticMessage(message);
+      },
+    });
   }
 
   function renderPhraseCards(phrases: TravelJapanesePhrase[]) {
@@ -146,6 +184,12 @@ export function TravelJapaneseScreen({ onBack }: TravelJapaneseScreenProps) {
         <button type="button" onClick={() => setView('favorites')}>我的常用句</button>
       </div>
       <CategoryList onSelectCategory={handleSelectCategory} />
+      <div aria-label="音訊播放診斷（暫時測試用，非正式功能）">
+        <p>診斷用：測試音訊（非正式功能，用於確認裝置可播放 App 提供的音檔）</p>
+        <button type="button" onClick={handleTestTone}>測試音訊</button>
+        {diagnosticStatus !== 'idle' && <p role="status">{DIAGNOSTIC_STATUS_LABEL[diagnosticStatus]}</p>}
+        {diagnosticStatus === 'failed' && diagnosticMessage && <p>{diagnosticMessage}</p>}
+      </div>
     </section>
   );
 }

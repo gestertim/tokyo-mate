@@ -3,6 +3,9 @@ import {
   APP_SHELL_CACHE,
   APP_SHELL_CACHE_PREFIX,
   APPROVED_STATIC_PREFIXES,
+  AUDIO_CACHE,
+  AUDIO_CACHE_PREFIX,
+  isAudioAssetRequest,
   isCacheableRequest,
   isSafeAppShellResponse,
   isServiceWorkerRuntime,
@@ -76,6 +79,10 @@ function createNavigationRequest() {
   const request = new Request(`${location.origin}/`);
   Object.defineProperty(request, 'mode', { configurable: true, value: 'navigate' });
   return request;
+}
+
+function createAudioRequest(phraseId = 'tj-001') {
+  return new Request(`${location.origin}/audio/travel-japanese/${phraseId}.mp3`);
 }
 
 function createNetworkResponse(
@@ -446,5 +453,153 @@ describe('PWA Hotfix Safety Correction Gate', () => {
 
     const nonHtml = createNetworkResponse('json', { ok: true, redirected: false, type: 'basic', contentType: 'application/json' });
     expect(isSafeAppShellResponse(nonHtml)).toBe(false);
+  });
+});
+
+describe('Travel Japanese Phrase Audio Runtime Cache（Feature 004 Maintenance Phase 13）', () => {
+  it('audio cache namespace/version 與 App Shell cache 區隔', () => {
+    expect(AUDIO_CACHE.startsWith(AUDIO_CACHE_PREFIX)).toBe(true);
+    expect(AUDIO_CACHE).not.toBe(APP_SHELL_CACHE);
+    expect(AUDIO_CACHE_PREFIX).not.toBe(APP_SHELL_CACHE_PREFIX);
+  });
+
+  it('isAudioAssetRequest 僅比對 /audio/travel-japanese/ 路徑前綴且限 GET', () => {
+    expect(isAudioAssetRequest(createAudioRequest('tj-001'))).toBe(true);
+    expect(isAudioAssetRequest(new Request(`${location.origin}/assets/main.js`))).toBe(false);
+    expect(isAudioAssetRequest(new Request(`${location.origin}/api/speech`))).toBe(false);
+    expect(isAudioAssetRequest(new Request(`${location.origin}/audio/travel-japanese/tj-001.mp3`, { method: 'POST' }))).toBe(false);
+  });
+
+  it('PRECACHE_URLS 與 APPROVED_STATIC_PREFIXES 不涵蓋音檔路徑（install 階段不主動下載全部音檔）', () => {
+    for (const url of PRECACHE_URLS) {
+      expect(url.startsWith('/audio/travel-japanese/')).toBe(false);
+    }
+    for (const prefix of APPROVED_STATIC_PREFIXES) {
+      expect(prefix.startsWith('/audio/travel-japanese/')).toBe(false);
+    }
+  });
+
+  it('音檔首次成功 fetch（2xx）後寫入 audio cache，第二次同一 request 由 cache 命中且 fetch 不再被呼叫', async () => {
+    const runtime = await loadServiceWorkerRuntime([APP_SHELL_CACHE, AUDIO_CACHE]);
+    const networkResponse = new Response('audio-bytes', { status: 200 });
+    const fetchSpy = vi.fn().mockResolvedValue(networkResponse);
+    vi.stubGlobal('fetch', fetchSpy);
+
+    const request = createAudioRequest('tj-001');
+    let firstResponsePromise: Promise<Response> | undefined;
+    runtime.listeners.fetch[0]?.({
+      request,
+      respondWith: (response: Promise<Response>) => {
+        firstResponsePromise = response;
+      },
+    });
+    await firstResponsePromise;
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
+    expect(runtime.cacheRecords.get(AUDIO_CACHE)?.has(request.url)).toBe(true);
+
+    let secondResponsePromise: Promise<Response> | undefined;
+    runtime.listeners.fetch[0]?.({
+      request: createAudioRequest('tj-001'),
+      respondWith: (response: Promise<Response>) => {
+        secondResponsePromise = response;
+      },
+    });
+    await secondResponsePromise;
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
+    restoreGlobal('self', runtime.originalSelf);
+    restoreGlobal('caches', runtime.originalCaches);
+  });
+
+  it('404／失敗回應不寫入 audio cache', async () => {
+    const runtime = await loadServiceWorkerRuntime([APP_SHELL_CACHE, AUDIO_CACHE]);
+    const notFoundResponse = new Response('not found', { status: 404 });
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(notFoundResponse));
+
+    const request = createAudioRequest('tj-999');
+    let responsePromise: Promise<Response> | undefined;
+    runtime.listeners.fetch[0]?.({
+      request,
+      respondWith: (response: Promise<Response>) => {
+        responsePromise = response;
+      },
+    });
+    const response = await responsePromise!;
+    expect(response.status).toBe(404);
+    expect(runtime.cacheRecords.get(AUDIO_CACHE)?.has(request.url)).toBe(false);
+    restoreGlobal('self', runtime.originalSelf);
+    restoreGlobal('caches', runtime.originalCaches);
+  });
+
+  it('離線時已快取音檔可正常回應（不觸發 network）', async () => {
+    const runtime = await loadServiceWorkerRuntime([APP_SHELL_CACHE, AUDIO_CACHE]);
+    const request = createAudioRequest('tj-001');
+    runtime.cacheRecords.get(AUDIO_CACHE)?.set(request.url, new Response('cached-audio-bytes'));
+    const fetchSpy = vi.fn().mockRejectedValue(new Error('offline'));
+    vi.stubGlobal('fetch', fetchSpy);
+
+    let responsePromise: Promise<Response> | undefined;
+    runtime.listeners.fetch[0]?.({
+      request,
+      respondWith: (response: Promise<Response>) => {
+        responsePromise = response;
+      },
+    });
+    expect(await responsePromise!.then((response) => response.text())).toBe('cached-audio-bytes');
+    expect(fetchSpy).not.toHaveBeenCalled();
+    restoreGlobal('self', runtime.originalSelf);
+    restoreGlobal('caches', runtime.originalCaches);
+  });
+
+  it('離線時未快取音檔優雅失敗（respondWith promise 被 reject，但不拋出未捕捉例外）', async () => {
+    const runtime = await loadServiceWorkerRuntime([APP_SHELL_CACHE, AUDIO_CACHE]);
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('offline')));
+
+    const request = createAudioRequest('tj-002');
+    let responsePromise: Promise<Response> | undefined;
+    expect(() => {
+      runtime.listeners.fetch[0]?.({
+        request,
+        respondWith: (response: Promise<Response>) => {
+          responsePromise = response;
+        },
+      });
+    }).not.toThrow();
+
+    await expect(responsePromise!).rejects.toThrow('offline');
+    restoreGlobal('self', runtime.originalSelf);
+    restoreGlobal('caches', runtime.originalCaches);
+  });
+
+  it('activate 階段清除舊版本 audio cache，保留目前版本與其他 cache', async () => {
+    const runtime = await loadServiceWorkerRuntime([
+      'travel-japanese-audio-v0',
+      AUDIO_CACHE,
+      APP_SHELL_CACHE,
+      'unrelated-runtime-cache',
+    ]);
+    await dispatchLifecycleEvent(runtime.listeners.activate[0]);
+
+    expect(runtime.cacheApi.delete).toHaveBeenCalledWith('travel-japanese-audio-v0');
+    expect(runtime.cacheRecords.has(AUDIO_CACHE)).toBe(true);
+    expect(runtime.cacheRecords.has(APP_SHELL_CACHE)).toBe(true);
+    expect(runtime.cacheRecords.has('unrelated-runtime-cache')).toBe(true);
+    restoreGlobal('self', runtime.originalSelf);
+    restoreGlobal('caches', runtime.originalCaches);
+  });
+
+  it('音檔 fetch handler 不影響既有 app-shell hashed asset cache-first 行為', async () => {
+    const runtime = await loadServiceWorkerRuntime([APP_SHELL_CACHE, AUDIO_CACHE]);
+    const request = new Request(`${location.origin}/assets/main-hash.js`);
+    const cachedResponse = new Response('cached asset');
+    runtime.cacheRecords.get(APP_SHELL_CACHE)?.set(request.url, cachedResponse);
+    const network = vi.fn();
+    vi.stubGlobal('fetch', network);
+
+    let responsePromise: Promise<Response> | undefined;
+    runtime.listeners.fetch[0]?.({ request, respondWith: (response: Promise<Response>) => { responsePromise = response; } });
+    expect(await responsePromise!.then((response) => response.text())).toBe('cached asset');
+    expect(network).not.toHaveBeenCalled();
+    restoreGlobal('self', runtime.originalSelf);
+    restoreGlobal('caches', runtime.originalCaches);
   });
 });
