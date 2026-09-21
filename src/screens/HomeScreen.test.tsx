@@ -8,6 +8,39 @@ afterEach(() => {
 });
 
 describe('HomeScreen（Phase 9 Homepage Integration, FR-001）', () => {
+  it('保留既有五個入口並新增「旅遊日文」第六個入口', () => {
+    render(<HomeScreen />);
+    const nav = screen.getByRole('navigation', { name: '東京功能入口' });
+    expect(screen.getByRole('button', { name: '即時翻譯' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '問東京' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '探索附近' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '東京百科' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /拍照翻譯/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '旅遊日文' })).toBeInTheDocument();
+    expect(nav.querySelectorAll('button')).toHaveLength(6);
+  });
+
+  it('點擊「旅遊日文」進入 TravelJapaneseScreen，原有入口不受影響', async () => {
+    const user = userEvent.setup();
+    render(<HomeScreen />);
+    await user.click(screen.getByRole('button', { name: '旅遊日文' }));
+    expect(screen.getByRole('heading', { name: '旅遊日文' })).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: '返回首頁' }));
+    const nav = screen.getByRole('navigation', { name: '東京功能入口' });
+    expect(nav.querySelectorAll('button')).toHaveLength(6);
+  });
+
+  it('「旅遊日文」入口可用鍵盤（Tab + Enter）觸發', async () => {
+    const user = userEvent.setup();
+    render(<HomeScreen />);
+    const entry = screen.getByRole('button', { name: '旅遊日文' });
+    entry.focus();
+    expect(entry).toHaveFocus();
+    await user.keyboard('{Enter}');
+    expect(screen.getByRole('heading', { name: '旅遊日文' })).toBeInTheDocument();
+  });
+
   it('保留既有四個入口並新增「拍照翻譯」第五個入口', () => {
     render(<HomeScreen />);
     const nav = screen.getByRole('navigation', { name: '東京功能入口' });
@@ -16,7 +49,7 @@ describe('HomeScreen（Phase 9 Homepage Integration, FR-001）', () => {
     expect(screen.getByRole('button', { name: '探索附近' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '東京百科' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /拍照翻譯/ })).toBeInTheDocument();
-    expect(nav.querySelectorAll('button')).toHaveLength(5);
+    expect(nav.querySelectorAll('button')).toHaveLength(6);
   });
 
   it('點擊「拍照翻譯」進入 PhotoTranslateScreen 且不自動觸發相機/相簿權限', async () => {
@@ -49,7 +82,7 @@ describe('HomeScreen（Phase 9 Homepage Integration, FR-001）', () => {
     expect(screen.getByRole('button', { name: '探索附近' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '東京百科' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /拍照翻譯/ })).toBeInTheDocument();
-    expect(nav.querySelectorAll('button')).toHaveLength(5);
+    expect(nav.querySelectorAll('button')).toHaveLength(6);
   });
 
   it('「拍照翻譯」入口可用鍵盤（Tab + Enter）觸發', async () => {
