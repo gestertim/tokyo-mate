@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { TravelJapaneseScreen } from './TravelJapaneseScreen';
@@ -406,5 +406,67 @@ describe('TravelJapaneseScreen — Android PWA Static Audio Engineering Diagnost
     await waitFor(() => {
       expect(screen.getByRole('status')).toHaveTextContent('播放失敗');
     });
+  });
+});
+
+// Single-Phrase Audio Proof-of-Concept Preparation（tj-097「お願いします。」）：僅驗證既有正式
+// Maintenance playback architecture 對 tj-097 的路徑推導與行為，不建立正式 audio fixture、不呼叫
+// Cloud TTS、不解除 T055 STOP GATE。
+describe('TravelJapaneseScreen — tj-097 Single-Phrase POC Preparation（T055 仍 BLOCKED）', () => {
+  function getTj097Card() {
+    const japaneseText = screen.getByText('お願いします。');
+    const article = japaneseText.closest('article');
+    expect(article).not.toBeNull();
+    return article as HTMLElement;
+  }
+
+  it('tj-097「お願いします。」card bundled 成功播放時 src 指向 /audio/travel-japanese/tj-097.mp3，且不呼叫 SpeechSynthesis', async () => {
+    const play = vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(function (this: HTMLAudioElement) {
+      queueMicrotask(() => this.dispatchEvent(new Event('playing')));
+      return Promise.resolve();
+    });
+    vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {});
+    const { speak } = stubSpeechSynthesis();
+
+    const user = userEvent.setup();
+    render(<TravelJapaneseScreen onBack={vi.fn()} />);
+    await user.click(screen.getByRole('button', { name: '日常溝通' }));
+
+    const card = getTj097Card();
+    const playButton = within(card).getByRole('button', { name: '播放' });
+    await user.click(playButton);
+
+    expect(play).toHaveBeenCalledTimes(1);
+    const audio = play.mock.instances[0] as HTMLAudioElement;
+    expect(audio.src).toContain('/audio/travel-japanese/tj-097.mp3');
+    await within(card).findByText('播放中');
+    expect(speak).not.toHaveBeenCalled();
+    expect(screen.getByText('麻煩您了。')).toBeInTheDocument();
+  });
+
+  it('tj-097 bundled 失敗時才 fallback 至 SpeechSynthesis，日文文字始終可見', async () => {
+    vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(function (this: HTMLAudioElement) {
+      queueMicrotask(() => this.dispatchEvent(new Event('error')));
+      return Promise.resolve();
+    });
+    vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {});
+    const { speak } = stubSpeechSynthesis();
+
+    const user = userEvent.setup();
+    render(<TravelJapaneseScreen onBack={vi.fn()} />);
+    await user.click(screen.getByRole('button', { name: '日常溝通' }));
+
+    const card = getTj097Card();
+    const playButton = within(card).getByRole('button', { name: '播放' });
+    await user.click(playButton);
+
+    await waitFor(() => expect(speak).toHaveBeenCalledTimes(1));
+    const utterance = speak.mock.calls[0][0] as SpeechSynthesisUtterance;
+    expect(utterance.text).toBe('お願いします。');
+    utterance.onstart?.({} as SpeechSynthesisEvent);
+    await within(card).findByText('播放中');
+
+    expect(screen.getByText('お願いします。')).toBeInTheDocument();
+    expect(screen.getByText('麻煩您了。')).toBeInTheDocument();
   });
 });

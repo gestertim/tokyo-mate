@@ -116,6 +116,22 @@ describe('phraseAudio（Maintenance：playBundledAudio Primary 層 + timeout/ter
     expect(capturedSrc).toContain('/audio/travel-japanese/tj-001.mp3');
   });
 
+  // Single-Phrase Audio POC Preparation（tj-097「お願いします。」）：僅驗證路徑推導，不建立正式 audio fixture。
+  it('bundled 音檔以 phraseId tj-097 推導路徑 /audio/travel-japanese/tj-097.mp3', async () => {
+    let capturedSrc = '';
+    vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(function (this: HTMLAudioElement) {
+      capturedSrc = this.src;
+      queueMicrotask(() => this.dispatchEvent(new Event('playing')));
+      return Promise.resolve();
+    });
+
+    const onPlaying = vi.fn();
+    playBundledAudio('tj-097', { onPlaying });
+
+    await vi.waitFor(() => expect(onPlaying).toHaveBeenCalledTimes(1));
+    expect(capturedSrc).toContain('/audio/travel-japanese/tj-097.mp3');
+  });
+
   it('bundled 音檔載入失敗（error 事件）時呼叫 onError，不拋出例外', async () => {
     vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(function (this: HTMLAudioElement) {
       queueMicrotask(() => this.dispatchEvent(new Event('error')));
