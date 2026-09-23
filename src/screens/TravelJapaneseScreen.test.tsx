@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { TravelJapaneseScreen } from './TravelJapaneseScreen';
@@ -23,6 +23,21 @@ function stubSpeechSynthesis() {
   return { cancel, speak, utterances };
 }
 
+// Bundled MP3 是三層策略之 Primary 層；jsdom 不支援真正的媒體播放，故 mock HTMLMediaElement.play()
+// 並手動觸發 playing/error 事件，模擬 asset 成功／失敗兩種情境（見 research.md §6）。
+function stubBundledAudio(mode: 'success' | 'error' | 'no-event' = 'error') {
+  vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {});
+  const play = vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(function (this: HTMLAudioElement) {
+    if (mode === 'success') {
+      queueMicrotask(() => this.dispatchEvent(new Event('playing')));
+    } else if (mode === 'error') {
+      queueMicrotask(() => this.dispatchEvent(new Event('error')));
+    }
+    return Promise.resolve();
+  });
+  return { play };
+}
+
 beforeEach(() => {
   window.localStorage.clear();
 });
@@ -44,6 +59,12 @@ describe('TravelJapaneseScreen — Phase 3 US1（情境瀏覽 + Phrase Card）',
     expect(screen.getByRole('button', { name: '交通' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '求助／緊急狀況' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '日常溝通' })).toBeInTheDocument();
+  });
+
+  it('主畫面顯示 VOICEVOX Nemo attribution', () => {
+    stubSpeechSynthesis();
+    render(<TravelJapaneseScreen onBack={vi.fn()} />);
+    expect(screen.getByText('日文語音由 VOICEVOX Nemo 製作')).toBeInTheDocument();
   });
 
   it('選擇任一情境顯示 >= 20 筆句子卡且每張同時顯示日文與繁中', async () => {
@@ -76,8 +97,23 @@ describe('TravelJapaneseScreen — Phase 3 US1（情境瀏覽 + Phrase Card）',
   });
 });
 
-describe('TravelJapaneseScreen — Phase 4 US2（語音播放）', () => {
-  it('播放狀態轉換可觀察：requested -> playing -> idle', async () => {
+describe('TravelJapaneseScreen — Phase 4 + Maintenance US2（三層語音播放策略）', () => {
+  it('bundled 音檔成功播放時直接進入 playing，不呼叫 SpeechSynthesis（Primary 正常路徑）', async () => {
+    const { play } = stubBundledAudio('success');
+    const { speak } = stubSpeechSynthesis();
+    const user = userEvent.setup();
+    render(<TravelJapaneseScreen onBack={vi.fn()} />);
+    await user.click(screen.getByRole('button', { name: '日常溝通' }));
+
+    const [firstPlayButton] = screen.getAllByRole('button', { name: '播放' });
+    await user.click(firstPlayButton);
+    expect(await screen.findByText('播放中')).toBeInTheDocument();
+    expect(play).toHaveBeenCalled();
+    expect(speak).not.toHaveBeenCalled();
+  });
+
+  it('bundled 失敗時 fallback 至 SpeechSynthesis：requested -> playing -> idle', async () => {
+    stubBundledAudio('error');
     const { speak } = stubSpeechSynthesis();
     const user = userEvent.setup();
     render(<TravelJapaneseScreen onBack={vi.fn()} />);
@@ -87,6 +123,7 @@ describe('TravelJapaneseScreen — Phase 4 US2（語音播放）', () => {
     await user.click(firstPlayButton);
     expect(screen.getByText('已要求播放')).toBeInTheDocument();
 
+    await waitFor(() => expect(speak).toHaveBeenCalledTimes(1));
     const utterance = speak.mock.calls[0][0] as SpeechSynthesisUtterance;
     utterance.onstart?.({} as SpeechSynthesisEvent);
     expect(await screen.findByText('播放中')).toBeInTheDocument();
@@ -98,7 +135,24 @@ describe('TravelJapaneseScreen — Phase 4 US2（語音播放）', () => {
     });
   });
 
+  it('bundled 與 SpeechSynthesis 皆失敗時進入 failed，文字仍可讀', async () => {
+    stubBundledAudio('error');
+    const { speak } = stubSpeechSynthesis();
+    const user = userEvent.setup();
+    render(<TravelJapaneseScreen onBack={vi.fn()} />);
+    await user.click(screen.getByRole('button', { name: '日常溝通' }));
+
+    const [firstPlayButton] = screen.getAllByRole('button', { name: '播放' });
+    await user.click(firstPlayButton);
+    await waitFor(() => expect(speak).toHaveBeenCalledTimes(1));
+    const utterance = speak.mock.calls[0][0] as SpeechSynthesisUtterance;
+    utterance.onerror?.({} as SpeechSynthesisErrorEvent);
+
+    expect(await screen.findByText('播放失敗')).toBeInTheDocument();
+  });
+
   it('句子 A 播放中觸發句子 B 播放時，A 的狀態被 B 取代（同一時間僅一個 active playback）', async () => {
+    stubBundledAudio('error');
     const { speak, cancel } = stubSpeechSynthesis();
     const user = userEvent.setup();
     render(<TravelJapaneseScreen onBack={vi.fn()} />);
@@ -106,18 +160,20 @@ describe('TravelJapaneseScreen — Phase 4 US2（語音播放）', () => {
 
     const playButtons = screen.getAllByRole('button', { name: '播放' });
     await user.click(playButtons[0]);
+    await waitFor(() => expect(speak).toHaveBeenCalledTimes(1));
     const firstUtterance = speak.mock.calls[0][0] as SpeechSynthesisUtterance;
     firstUtterance.onstart?.({} as SpeechSynthesisEvent);
     expect(await screen.findByText('播放中')).toBeInTheDocument();
 
     await user.click(playButtons[1]);
+    await waitFor(() => expect(speak).toHaveBeenCalledTimes(2));
     expect(cancel).toHaveBeenCalled();
-    expect(speak).toHaveBeenCalledTimes(2);
     const activeLabels = [...screen.queryAllByText('播放中'), ...screen.queryAllByText('已要求播放')];
     expect(activeLabels.length).toBe(1);
   });
 
   it('speechSynthesis 不可用時播放按鈕 disabled，但文字／搜尋／分類／收藏不受影響', async () => {
+    stubBundledAudio('error');
     vi.stubGlobal('speechSynthesis', undefined);
     const user = userEvent.setup();
     render(<TravelJapaneseScreen onBack={vi.fn()} />);
@@ -132,6 +188,7 @@ describe('TravelJapaneseScreen — Phase 4 US2（語音播放）', () => {
   });
 
   it('播放失敗時，該卡片文字與收藏按鈕仍可操作，其他句子與導覽不受影響', async () => {
+    stubBundledAudio('error');
     const { speak } = stubSpeechSynthesis();
     const user = userEvent.setup();
     render(<TravelJapaneseScreen onBack={vi.fn()} />);
@@ -139,6 +196,7 @@ describe('TravelJapaneseScreen — Phase 4 US2（語音播放）', () => {
 
     const playButtons = screen.getAllByRole('button', { name: '播放' });
     await user.click(playButtons[0]);
+    await waitFor(() => expect(speak).toHaveBeenCalledTimes(1));
     const utterance = speak.mock.calls[0][0] as SpeechSynthesisUtterance;
     utterance.onerror?.({} as SpeechSynthesisErrorEvent);
 
@@ -149,14 +207,31 @@ describe('TravelJapaneseScreen — Phase 4 US2（語音播放）', () => {
     expect(favoriteButtons[0]).toHaveAttribute('aria-pressed', 'true');
 
     await user.click(playButtons[1]);
-    expect(speak).toHaveBeenCalledTimes(2);
+    await waitFor(() => expect(speak).toHaveBeenCalledTimes(2));
 
     await user.click(screen.getByRole('button', { name: '返回情境清單' }));
     await user.click(screen.getByRole('button', { name: '機場' }));
     expect(screen.getAllByRole('button', { name: '播放' }).length).toBeGreaterThan(0);
   });
 
-  it('component unmount 時呼叫 cancelSpeech()（speechSynthesis.cancel）', () => {
+  it('重複播放同一句（多次觸發）行為一致，不殘留前次播放狀態', async () => {
+    stubBundledAudio('success');
+    stubSpeechSynthesis();
+    const user = userEvent.setup();
+    render(<TravelJapaneseScreen onBack={vi.fn()} />);
+    await user.click(screen.getByRole('button', { name: '日常溝通' }));
+    const [firstPlayButton] = screen.getAllByRole('button', { name: '播放' });
+
+    await user.click(firstPlayButton);
+    expect(await screen.findByText('播放中')).toBeInTheDocument();
+
+    await user.click(firstPlayButton);
+    expect(await screen.findByText('播放中')).toBeInTheDocument();
+    expect(screen.getAllByText('播放中').length).toBe(1);
+  });
+
+  it('component unmount 時呼叫 cancelPlayback()（bundled audio 與 speechSynthesis.cancel 皆終止）', () => {
+    stubBundledAudio('success');
     const { cancel } = stubSpeechSynthesis();
     const { unmount } = render(<TravelJapaneseScreen onBack={vi.fn()} />);
     unmount();
@@ -300,5 +375,67 @@ describe('TravelJapaneseScreen — Dataset Runtime Anomaly（T045，Graceful Fai
     expect(screen.getAllByRole('button', { name: '播放' }).length).toBeGreaterThan(0);
 
     spy.mockRestore();
+  });
+});
+
+// Single-Phrase Audio Proof-of-Concept Preparation（tj-097「お願いします。」）：僅驗證既有正式
+// Maintenance playback architecture 對 tj-097 的路徑推導與行為，不建立正式 audio fixture、不呼叫
+// Cloud TTS、不解除 T055 STOP GATE。
+describe('TravelJapaneseScreen — tj-097 Single-Phrase POC Preparation（T055 仍 BLOCKED）', () => {
+  function getTj097Card() {
+    const japaneseText = screen.getByText('お願いします。');
+    const article = japaneseText.closest('article');
+    expect(article).not.toBeNull();
+    return article as HTMLElement;
+  }
+
+  it('tj-097「お願いします。」card bundled 成功播放時 src 指向 /audio/travel-japanese/tj-097.mp3，且不呼叫 SpeechSynthesis', async () => {
+    const play = vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(function (this: HTMLAudioElement) {
+      queueMicrotask(() => this.dispatchEvent(new Event('playing')));
+      return Promise.resolve();
+    });
+    vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {});
+    const { speak } = stubSpeechSynthesis();
+
+    const user = userEvent.setup();
+    render(<TravelJapaneseScreen onBack={vi.fn()} />);
+    await user.click(screen.getByRole('button', { name: '日常溝通' }));
+
+    const card = getTj097Card();
+    const playButton = within(card).getByRole('button', { name: '播放' });
+    await user.click(playButton);
+
+    expect(play).toHaveBeenCalledTimes(1);
+    const audio = play.mock.instances[0] as HTMLAudioElement;
+    expect(audio.src).toContain('/audio/travel-japanese/tj-097.mp3');
+    await within(card).findByText('播放中');
+    expect(speak).not.toHaveBeenCalled();
+    expect(screen.getByText('麻煩您了。')).toBeInTheDocument();
+  });
+
+  it('tj-097 bundled 失敗時才 fallback 至 SpeechSynthesis，日文文字始終可見', async () => {
+    vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(function (this: HTMLAudioElement) {
+      queueMicrotask(() => this.dispatchEvent(new Event('error')));
+      return Promise.resolve();
+    });
+    vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {});
+    const { speak } = stubSpeechSynthesis();
+
+    const user = userEvent.setup();
+    render(<TravelJapaneseScreen onBack={vi.fn()} />);
+    await user.click(screen.getByRole('button', { name: '日常溝通' }));
+
+    const card = getTj097Card();
+    const playButton = within(card).getByRole('button', { name: '播放' });
+    await user.click(playButton);
+
+    await waitFor(() => expect(speak).toHaveBeenCalledTimes(1));
+    const utterance = speak.mock.calls[0][0] as SpeechSynthesisUtterance;
+    expect(utterance.text).toBe('お願いします。');
+    utterance.onstart?.({} as SpeechSynthesisEvent);
+    await within(card).findByText('播放中');
+
+    expect(screen.getByText('お願いします。')).toBeInTheDocument();
+    expect(screen.getByText('麻煩您了。')).toBeInTheDocument();
   });
 });

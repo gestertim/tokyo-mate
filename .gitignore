@@ -23,3 +23,6 @@ Thumbs.db
 # Playwright generated artifacts
 test-results/
 playwright-report/
+
+# External production WAV masters (retained locally; not Git delivery assets)
+production/audio/travel-japanese/wav/

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Travel Japanese Audio QA</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="qa-shell">
+      <aside class="phrase-list-panel" aria-label="108 句清單">
+        <div class="panel-heading">
+          <h1>Travel Japanese Audio QA</h1>
+          <p id="source-note">載入中...</p>
+        </div>
+        <div class="status-grid" aria-label="QA 統計">
+          <div><span id="reviewed-count">0 / 108</span><small>Reviewed</small></div>
+          <div><span id="pass-count">0</span><small>PASS</small></div>
+          <div><span id="fail-count">0</span><small>FAIL</small></div>
+          <div><span id="pending-count">108</span><small>PENDING</small></div>
+        </div>
+        <p id="completion-message" class="completion pending">人工聽檢尚未完成</p>
+        <div id="phrase-list" class="phrase-list" role="listbox" aria-label="Phrase IDs"></div>
+      </aside>
+
+      <section class="review-panel" aria-live="polite">
+        <div id="warning" class="warning" hidden></div>
+
+        <div class="review-header">
+          <div>
+            <p class="eyebrow">Phrase ID</p>
+            <h2 id="phrase-id">tj-001</h2>
+          </div>
+          <span id="phrase-status" class="status-pill pending">PENDING</span>
+        </div>
+
+        <dl class="phrase-details">
+          <div>
+            <dt>Category</dt>
+            <dd id="phrase-category"></dd>
+          </div>
+          <div>
+            <dt>WAV</dt>
+            <dd id="wav-path"></dd>
+          </div>
+        </dl>
+
+        <article class="phrase-copy">
+          <p class="eyebrow">日文</p>
+          <p id="japanese" class="japanese"></p>
+          <p class="eyebrow">繁體中文</p>
+          <p id="traditional-chinese" class="traditional-chinese"></p>
+        </article>
+
+        <audio id="audio" preload="none"></audio>
+        <p id="audio-error" class="audio-error" hidden>音檔無法播放</p>
+
+        <div class="button-row" aria-label="Audio controls">
+          <button id="play-pause" type="button">播放</button>
+          <button id="restart" type="button">從頭播放</button>
+        </div>
+
+        <div class="button-row result-row" aria-label="Result controls">
+          <button id="pass" type="button" class="pass-button">PASS</button>
+          <button id="fail" type="button" class="fail-button">FAIL</button>
+        </div>
+
+        <label class="note-field" for="note">
+          備註
+          <textarea id="note" rows="5" placeholder="若標示 FAIL，建議記錄原因。"></textarea>
+        </label>
+
+        <div class="button-row navigation-row" aria-label="Navigation">
+          <button id="previous" type="button">上一句</button>
+          <button id="next" type="button">下一句</button>
+        </div>
+
+        <div class="button-row export-row">
+          <button id="export" type="button">匯出 QA 結果</button>
+          <span id="save-status" role="status"></span>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

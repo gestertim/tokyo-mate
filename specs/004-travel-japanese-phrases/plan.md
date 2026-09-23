@@ -8,6 +8,48 @@
 
 **Note**: 本文件僅為 Technical Plan。不構成 implementation 授權（Constitution XI. Authorization Boundary）。
 
+## Maintenance Amendment（2026-09-21｜語音策略調整，Documentation-Only）
+
+本次為 Feature 004 Maintenance 階段的 **Documentation-Only** 更新（`src/`／`public/`／既有
+service-worker implementation／`package.json` 均未變更，未新增任何 dependency，未建立任何音檔）。
+本次更新已由成人教育者批准以下 Technical Direction，取代原「八、Audio Technology Decision」單純
+瀏覽器原生 `SpeechSynthesis` 之選擇：
+
+- **Primary**：App-bundled 日文 MP3 音檔（`HTMLAudioElement` 播放）。
+- **Fallback**：瀏覽器原生 `SpeechSynthesis`（Web Speech API）。
+- **Final fallback**：日文文字維持可見、可直接展示，不強制要求任何一種語音方式必須成功。
+
+**事實與推定原因之區分（重要）**：Maintenance Audit 曾針對 Android／PWA 環境提出可能的 root cause
+分析，但尚未經實機 instrumentation 完整證實。本文件後續內容嚴格區分：
+
+1. **Repository 已確認的 implementation facts**：例如目前程式碼中語音播放僅呼叫瀏覽器原生
+   `SpeechSynthesis`、無任何 bundled audio 機制、`service-worker.ts` 目前未針對音檔設計 runtime
+   cache 規則——這些是可直接從既有程式碼與既有測試中確認的事實。
+2. **高可能性的 device/runtime explanation（非已證實事實）**：例如「部分 Android 瀏覽器的
+   `SpeechSynthesis` 可能在特定情境下不觸發 `onend`／`onerror` 事件而導致狀態卡住」「部分裝置可能缺乏
+   穩定的 `ja-JP` voice」等，均為**推定的合理解釋**，用以佐證本次改採 bundled audio 為 Primary、並新增
+   timeout/terminal-state 防護的理由，但不得被引用為「已於本機或實機證實」的結論。
+
+下方「八、Audio Technology Decision」「九、Audio Strategy Escalation Gate」「PWA / Offline」「PWA
+Update Reliability」與「Testing Strategy」章節已依此 Maintenance Amendment 更新。
+
+**Maintenance documentation 同步狀態（實際狀態，非固定數量）**：本次 Maintenance 已同步更新之
+documentation 包含：
+
+- [plan.md](./plan.md)（本文件）
+- [ux-ui-design-handoff.md](./ux-ui-design-handoff.md)
+- [research.md](./research.md)
+- [data-model.md](./data-model.md)
+- [contracts/travel-japanese-contracts.md](./contracts/travel-japanese-contracts.md)
+- [checklists/implementation-readiness.md](./checklists/implementation-readiness.md)
+- [tasks.md](./tasks.md)
+
+上述文件已同步反映三層語音策略（bundled MP3 Primary + `SpeechSynthesis` Fallback + 文字 Final
+fallback）與 PWA foreground update 最小改善之 Maintenance Technical Direction，取代舊有「僅瀏覽器
+原生 `SpeechSynthesis`」之描述。實際已同步文件清單請以本節列出之文件名稱為準，不以任何固定數量文字
+描述為 Technical Truth（避免日後文件清單增減時產生數量文字與實際不符的失真）。`src/`／`public/`／
+既有 service-worker implementation／`package.json`／phrase dataset／audio assets 均未變更。
+
 ## 0. Repository Inspection Summary
 
 實際 inspect 現有 repository 後確認：
@@ -32,9 +74,9 @@
    `generateSpeech()` 呼叫既有 `api/speech.ts`（server-side OpenAI `gpt-4o-mini-tts`，`OPENAI_API_KEY`
    為 server-only secret），已在 Feature 001（`AssistantScreen`）用於日文語音播放。此為既有、已批准、正在
    production 使用的 Cloud TTS 能力。**本 Plan 在下方「八、Audio Technology Decision」中明確記錄此發現，
-   並說明為何 Feature 004 選擇瀏覽器原生 `SpeechSynthesis` 而非重用此既有 Cloud TTS 流程**，此為需要
-   Technical Plan Conformance Check 時明確確認的決策點，但不構成 STOP（未新增 dependency／secret／
-   backend／AI service，且符合 Simplest Sufficient Technology）。
+   並說明為何 Feature 004 選擇「App-bundled MP3 為 Primary、瀏覽器原生 `SpeechSynthesis` 為 Fallback」，
+   而非重用此既有 Cloud TTS 流程**，此為需要 Technical Plan Conformance Check 時明確確認的決策點，但不
+   構成 STOP（未新增 dependency／secret／backend／AI service，且符合 Simplest Sufficient Technology）。
 6. **既有 PWA 快取 allowlist**：`src/service-worker.ts` 的 `APPROVED_STATIC_PREFIXES` 已包含
    `/src/data/tokyo/`。將新 dataset 放在此既有前綴下，可沿用既有 allowlist，**不需修改
    `service-worker.ts`**。
@@ -65,18 +107,24 @@ Feature 004 以「情境瀏覽 → 句子卡（日文＋繁中＋語音）→ �
   fuzzy-search dependency、無 Backend、無 AI。
 - **收藏**：`localStorage` 保存 phrase id 陣列（非整份 phrase 內容），screen 層以單一 `Set<string>`
   狀態達成跨情境／搜尋結果一致性；讀寫失敗時安全降級為空收藏，不影響其餘功能。
-- **語音**：瀏覽器原生 `SpeechSynthesis`（Web Speech API），非既有 Cloud TTS。單一 active playback 由
-  `TravelJapaneseScreen` 集中管理（`activePhraseId` + `playbackStatus`）。
+- **語音**：三層 fallback，非既有 Cloud TTS。Primary 為 App-bundled 日文 MP3（`HTMLAudioElement`），
+  bundled 播放失敗時 fallback 至瀏覽器原生 `SpeechSynthesis`（Web Speech API），兩者皆失敗時 final
+  fallback 為日文文字持續可見。單一 active playback 由 `TravelJapaneseScreen` 集中管理
+  （`activePhraseId` + `playbackStatus`），並具備 timeout/terminal-state 防護避免永久卡在
+  `requested`／`playing`。
 
 ## Technical Context
 
 **Language/Version**: TypeScript 5.6（既有 `tsconfig.json`），React 18.3
 
-**Primary Dependencies**: React、Vite（既有）；**不新增任何 npm dependency**。語音使用瀏覽器原生
-`window.speechSynthesis` / `SpeechSynthesisUtterance`（Web Speech API，非 npm package）；收藏使用瀏覽器
-原生 `window.localStorage`。
+**Primary Dependencies**: React、Vite（既有）；**不新增任何 npm dependency**。語音播放採三層既有瀏覽器
+原生能力：Primary 為 `HTMLAudioElement` 播放 App-bundled MP3（`public/audio/travel-japanese/
+{phraseId}.mp3`），Fallback 為 `window.speechSynthesis` / `SpeechSynthesisUtterance`（Web Speech
+API），均非 npm package；收藏使用瀏覽器原生 `window.localStorage`。
 
-**Storage**: 瀏覽器 `localStorage`（僅 favorite phrase id 陣列，無資料庫、無 Cloud）
+**Storage**: 瀏覽器 `localStorage`（僅 favorite phrase id 陣列，無資料庫、無 Cloud）；日文 MP3 音檔作為
+靜態 public asset 隨 App 發佈，並透過既有 Service Worker runtime cache-on-first-successful-fetch
+机制在首次成功取得後可從 cache 播放（規格見下方 PWA / Offline 章節）。
 
 **Testing**: Vitest + React Testing Library（沿用既有 `vitest.config.ts` / `src/test/setup.ts`），必要時
 沿用既有 Playwright regression 套件
@@ -91,7 +139,8 @@ functions）；本 feature **不新增任何 `/api/*` endpoint**。
 
 **Constraints**: 零新增 runtime dependency；零新增 `/api/*` endpoint；零新增 secret；localStorage 讀寫
 MUST 容錯（malformed/unavailable 時安全降級，不得 crash）；同一時間最多一個 active playback；safety
-reminder 不得只依賴顏色。
+reminder 不得只依賴顏色；語音播放 MUST 定義 timeout/terminal-state，避免裝置/瀏覽器 API 靜默無
+事件時永久卡在 `requested`／`playing`；不得宣稱音檔於首次完全離線時一定可播放全部 108 句。
 
 **Scale/Scope**: 1 個新 screen、約 4–6 個新 feature-local module、1 份新 dataset（unique phrase >= 100，
 category placements >= 140，每類 >= 20）、不新增 backend、不新增資料庫。
@@ -105,7 +154,7 @@ category placements >= 140，每類 >= 20）、不新增 backend、不新增資�
 | I. Specification Before Implementation | 通過 | 本 Plan 完全依 Clarify 後 spec.md（FR-001–FR-035）展開，未新增或縮減產品行為；使用 Clarify 後 unique phrase >= 100、safety reminder MUST 顯示等最新條款。 |
 | II. Simplest Sufficient Technology | 通過 | 搜尋採 array filter；語音採瀏覽器原生 API；收藏採 `localStorage`；皆為零新增 dependency 的最簡方案。 |
 | III. A/B/C Complexity Discipline | 通過 | 未新增 Cloud 基礎設施、multi-user、Authentication、Backend 權限架構；亦未新增 Generative AI 核心能力（見下方 Audio Decision，明確選擇非 AI 生成語音）。維持 A｜Frontend-first。 |
-| IV. Incremental Enhancement | **有條件通過（需 Conformance Check 確認）** | 畫面導覽、feature 資料夾、dataset+service 層 pattern 完全延伸既有慣例。**唯一例外**：語音播放**不**重用既有 `AudioPlayer`/`generateSpeech` Cloud TTS 流程，改用瀏覽器原生 `SpeechSynthesis`，理由詳見下方「八、Audio Technology Decision」。此為 repository inspection 後發現的既有可重用能力，故明確記錄於此供作者確認，而非默默略過。 |
+| IV. Incremental Enhancement | **有條件通過（需 Conformance Check 確認）** | 畫面導覽、feature 資料夾、dataset+service 層 pattern 完全延伸既有慣例。**唯一例外**：語音播放**不**重用既有 `AudioPlayer`/`generateSpeech` Cloud TTS 流程，改用 App-bundled MP3（`HTMLAudioElement`）為 Primary、瀏覽器原生 `SpeechSynthesis` 為 Fallback，理由詳見下方「八、Audio Technology Decision」。此為 repository inspection 後發現的既有可重用能力，故明確記錄於此供作者確認，而非默默略過。 |
 | V. Technology Stack Stability | 通過 | 未替換 framework／AI provider／deployment／secret handling model；`SpeechSynthesis` 與 `localStorage` 為既有瀏覽器原生能力，非新 stack 元件。 |
 | VI. Privacy & Educational Safety | 通過 | 僅新增「使用者主動收藏的 phrase id」此一最小必要資料，無帳號、無位置、無麥克風、無 shaming/dark pattern。 |
 | VII. Testability | 通過 | 見下方 Testing Strategy，涵蓋 dataset 驗證、正常流程、failure/recovery（語音失敗、localStorage 失敗、無搜尋結果）與 regression。 |
@@ -141,7 +190,7 @@ src/
 │   └── tokyo/
 │       └── travel-japanese-phrases.json   # 新增；正式 dataset（沿用既有 SW allowlist 前綴，不需改 service-worker.ts）
 ├── types/
-│   └── travelJapanese.ts                  # 新增；TravelJapaneseCategory / TravelJapanesePhrase 型別
+│   └── travelJapanese.ts                  # 新增；TravelJapaneseCategory / TravelJapanesePhrase 型別（不新增 audioFile 欄位）
 ├── services/
 │   └── travelJapanese.ts                  # 新增；catalog 載入、category 分組、search、dataset 驗證輔助函式
 ├── features/
@@ -152,12 +201,19 @@ src/
 │       ├── FavoritesList.tsx              # 新增；我的常用句（含空狀態）
 │       ├── SafetyReminder.tsx             # 新增；Help & Emergency 情境安全提醒（明確可見、非 modal）
 │       ├── favorites.ts                   # 新增；localStorage 讀寫（容錯）
-│       └── phraseAudio.ts                 # 新增；SpeechSynthesis 封裝（單一 active playback）
+│       └── phraseAudio.ts                 # 新增；bundled MP3 Primary + SpeechSynthesis Fallback + timeout/
+│                                          #        terminal-state 管理（單一 active playback）
 ├── screens/
 │   └── TravelJapaneseScreen.tsx           # 新增；state owner（view／selectedCategory／searchQuery／
 │                                          # favoriteIds／activePhraseId／playbackStatus），onBack 返回首頁
 └── App.tsx / screens/HomeScreen.tsx        # 擴充；HomeScreen 新增一個導覽入口按鈕開啟 TravelJapaneseScreen
                                             # （沿用既有 nearbyOpen/photoTranslateOpen 相同 boolean state pattern）
+
+public/
+└── audio/
+    └── travel-japanese/
+        └── {phraseId}.mp3                  # 新增（未來 implementation task）；phraseId 沿用既有穩定 ID
+                                            # （tj-001…tj-108），單一正式格式 MP3；本 Plan 不產生音檔內容
 
 tests/
 └── (unit) src/services/travelJapanese.test.ts        # 新增；dataset 驗證（7 類、>=100 unique、>=140 placements、每類>=20…）
@@ -171,83 +227,140 @@ tests/
 `src/data/tokyo/` 下新增純前端檔案，**不新增 `api/` 路由**，`HomeScreen.tsx` 僅新增一個導覽按鈕與一個
 boolean state（沿用既有 `nearbyOpen`／`photoTranslateOpen` 相同的 boolean state 擴充方式）。
 
-## 八、Audio Technology Decision（含既有 Cloud TTS 比較）
+## 八、Audio Technology Decision（Maintenance Amendment：三層 fallback，2026-09-21 更新）
 
-### 既有可重用能力（inspection 發現）
+> 本節已依成人教育者批准之 Maintenance Technical Direction 更新。原始 Plan（Clarify 後首版）僅選用
+> 「B｜瀏覽器原生 `SpeechSynthesis`」單一方案；本次 Maintenance **不推翻**該原始比較（見下方「A.
+> 既有比較（保留）」），而是在其基礎上新增「App-bundled MP3」作為更高優先序的 Primary 層，
+> `SpeechSynthesis` 改列為 Fallback，日文文字始終為 Final fallback。此為 Documentation-Only 的
+> architecture 決策更新，**不構成 implementation 授權**。
 
-`AudioPlayer.tsx` + `generateSpeech()` + `api/speech.ts` 已提供日文語音（OpenAI `gpt-4o-mini-tts`，
-server-side secret）。技術上可直接重用於 Feature 004。
+### A. Audio Technology Decision
 
-### 比較
+**既有可重用能力（inspection 發現，維持不變）**：`AudioPlayer.tsx` + `generateSpeech()` +
+`api/speech.ts` 已提供日文語音（OpenAI `gpt-4o-mini-tts`，server-side secret）。技術上可直接重用於
+Feature 004，但本 Plan 仍不選用此路徑（理由同下）。
 
-| 項目 | A. 重用既有 Cloud TTS（`generateSpeech`） | B. 瀏覽器原生 `SpeechSynthesis`（**本 Plan 選擇**） |
+**三層策略（本次 Maintenance 批准）**：
+
+1. **Primary｜App-bundled 日文音檔**：`HTMLAudioElement` / 瀏覽器原生 audio playback，播放 App
+   bundled MP3 asset。路徑 convention：`/audio/travel-japanese/{phraseId}.mp3`；`phraseId` 使用既有
+   穩定 ID `tj-001`…`tj-108`（**不**為此新增 dataset `audioFile` 欄位，路徑由 `phraseId` 直接推導）。
+2. **Fallback｜`SpeechSynthesis`**：僅當 bundled asset 載入或播放**失敗**時才觸發（並非 bundled 尚未
+   `cache` 時就預設略過 bundled，見下方 B. Playback lifecycle）。
+3. **Final fallback｜既有日文文字 UI**：Primary 與 Fallback 皆失敗時，日文文字（`lang="ja"`）與繁中翻譯
+   仍維持可讀、可展示給對方看；不因語音失敗阻塞搜尋、分類、收藏或整體 App（FR-012 沿用不變）。
+
+**A. 既有比較（保留，Cloud TTS vs. 瀏覽器原生能力）**：
+
+| 項目 | 重用既有 Cloud TTS（`generateSpeech`） | 本 Plan 三層策略（bundled MP3 + `SpeechSynthesis` + 文字） |
 |------|------------------------------------------|------------------------------------------------------|
-| Support | 依賴 server 可用性＋網路 | 依裝置／瀏覽器內建 TTS engine，不保證所有裝置皆有日文 voice |
-| Japanese voice reliability | 一致（同一 OpenAI voice） | 不一致，需 runtime 偵測＋fallback；spec 已明確允許「voice 不可用時文字仍可用」 |
-| Offline behavior | 不可離線（需呼叫 `/api/speech`） | 頁面已載入且裝置已安裝日文 voice 時可離線播放，貼近「旅行前收藏、途中使用」情境 |
-| Bundle size | 無新增（沿用既有元件） | 無新增（原生瀏覽器 API，無 npm 套件） |
-| Licensing | 既有 OpenAI 條款 | 無 |
-| Privacy | 句子文字會傳送至 server／OpenAI（現況既有行為，非新增風險，但屬既有事實） | 依裝置本機 TTS engine，句子文字不需離開瀏覽器 |
-| Failure behavior | 既有 `error` 狀態＋文字仍可讀 | 需自行實作 idle/requested/playing/failed（spec 要求），一致性由本 feature 負責 |
-| Deployment complexity | 無新增（沿用既有 endpoint） | 無新增 |
-| API key / Cost | 沿用既有 `OPENAI_API_KEY`；**每次播放**皆為一次 OpenAI TTS 呼叫，100+ 句 × 多次重複播放（旅行途中重複使用為已批准情境）會持續累積既有服務用量與延遲 | 無 API key、無邊際成本、無延遲（本機合成） |
-| A/B/C complexity impact | 不變（沿用既有 C 前既有能力） | 不變，且更貼近 A｜Frontend-first、Simplest Sufficient Technology |
+| Support | 依賴 server 可用性＋網路 | Primary 為靜態 asset（build-time 已知內容），Fallback 依裝置／瀏覽器內建 TTS engine |
+| Japanese voice reliability | 一致（同一 OpenAI voice） | Primary 內容一致（同一組正式錄音／合成音檔）；Fallback 才有裝置差異，且僅在 Primary 失敗時才會使用 |
+| Offline behavior | 不可離線（需呼叫 `/api/speech`） | Primary 於**已成功快取過一次**後可離線播放；未快取且離線時降級至 Fallback／文字，不宣稱一定可離線（見下方 D） |
+| Bundle size | 無新增（沿用既有元件） | 音檔為 public static asset（不進 JS bundle），不新增 npm 套件 |
+| Licensing | 既有 OpenAI 條款 | 音檔內容製作需獨立品質審查（見 C），非本 Plan 產生 |
+| Privacy | 句子文字會傳送至 server／OpenAI（既有事實，非新增風險） | Primary／Fallback 播放皆不需將句子文字傳送至外部服務 |
+| Failure behavior | 既有 `error` 狀態＋文字仍可讀 | 三層 fallback 自身即為 failure handling 設計，見下方 B |
+| API key / Cost | 沿用既有 `OPENAI_API_KEY`；重複播放持續累積既有服務用量與延遲 | 無 API key、無邊際成本；音檔為一次性 build/發布內容 |
+| A/B/C complexity impact | 不變（沿用既有 C 前既有能力） | 不變，仍為 A｜Frontend-first、Simplest Sufficient Technology |
 
-### 決策
+**決策**：維持**不**重用既有 Cloud TTS，改採「bundled MP3 Primary + `SpeechSynthesis` Fallback + 文字
+Final fallback」三層策略，理由：
 
-選擇 **B｜瀏覽器原生 `SpeechSynthesis`**，理由：
-
-1. Feature 004 的 dataset 是固定、不變的正式句子（非即時 AI 生成內容），不需要每次播放都呼叫 Cloud AI
-   服務；持續依賴既有 Cloud TTS 會讓「一句固定短句的重複播放」持續產生非必要的既有 AI 服務用量與延遲，
-   不符合 II. Simplest Sufficient Technology。
-2. 「旅行前收藏、途中使用」是 spec 已批准的情境（FR-023 assumption），旅途中網路品質不穩定時，瀏覽器
-   原生語音仍可能可用，Cloud TTS 則完全依賴網路。
-3. 不新增 dependency／secret／backend，維持 A｜Frontend-first，且與本次 prompt 明確方向一致。
-4. Spec 本身已允許「Japanese voice 不可用時，文字仍可讀、其餘功能不受影響」，故不論選 A 或 B 都需要
-   graceful fallback；選 B 不會降低使用者可用性下限，但可避免既有服務的邊際成本與離線限制。
+1. Feature 004 dataset 為固定、不變的正式句子（非即時 AI 生成內容），不需要每次播放都呼叫 Cloud AI
+   服務，持續依賴既有 Cloud TTS 不符合 II. Simplest Sufficient Technology（與原始決策理由一致）。
+2. 純 `SpeechSynthesis` 方案在部分裝置／瀏覽器（尤其 Android）上，日文 voice 覆蓋率與事件觸發可靠度
+   可能不一致；新增固定內容的 bundled 音檔作為 Primary，可讓「同一句子在不同裝置上聽到的內容一致」，
+   並降低對裝置端 TTS engine 可用性的依賴。**此為高可能性的裝置/執行環境解釋，尚未經實機
+   instrumentation 完整證實，不視為已證實 root cause**；`SpeechSynthesis` 作為 Fallback 保留，確保即
+   使 bundled asset 因故無法取得時仍有次要語音路徑。
+3. 不新增 dependency／secret／backend／API key／外部 TTS 服務，維持 A｜Frontend-first、Simplest
+   Sufficient Technology；bundled 音檔為靜態 public asset，非 Generative AI 或 Cloud service。
+4. 「旅行前收藏、途中使用」（FR-023 assumption）情境下，一旦 Primary 音檔於任一次連線時成功快取過，
+   之後可離線播放；此為漸進式離線可用性改善，而非「保證第一次離線一定可播放全部 108 句」（見 D）。
 
 **此為 Plan 決策，非 STOP 案例**（未違反任何 Approval Gate 條件：無新增 dependency、無新增 secret、無
 Backend 升級、無 Authentication、無 privacy 惡化、無 Generative AI 升級）。既有 `AudioPlayer.tsx` /
 `api/speech.ts` **完全不變更**，繼續服務 Feature 001。
 
-### Fallback 行為
+### B. Playback Lifecycle（含 timeout / terminal-state 策略）
 
-- 若 `typeof window.speechSynthesis === 'undefined'` 或裝置無任何 `ja-JP`／`ja` voice：`audioAvailable =
-  false`，Phrase Card 不顯示可用的播放按鈕為啟用狀態（顯示為 disabled 並附文字說明，非隱藏，維持
-  Accessibility 可理解性），日文文字、繁中、搜尋、分類、收藏皆不受影響（FR-012）。
-- 播放中 component unmount 或使用者離開 Feature：`TravelJapaneseScreen` 於 `useEffect` cleanup 呼叫
-  `window.speechSynthesis.cancel()`，避免殘留播放。
-- 新播放請求觸發時，一律先呼叫 `cancel()` 再 `speak()`，確保同一時間最多一個 active playback（FR-010/011）。
+狀態維持 spec 既有四態，語意重新定義以涵蓋三層策略：
 
-## 九、Audio Strategy Escalation Gate（Approval Gate，非新 Product Requirement）
+- **idle**：尚未觸發播放。
+- **requested**：使用者已觸發播放，**包含 bundled asset 載入中**（`HTMLAudioElement` 載入／
+  buffering，尚未進入實際播放）。
+- **playing**：以**實際 audio playback 事件**為準（bundled 的 `playing`/`timeupdate` 事件，或
+  `SpeechSynthesisUtterance` 的 `onstart`），而非以「已呼叫播放 API」為準。
+- **failed**：Primary（bundled）與 Fallback（`SpeechSynthesis`）**皆**失敗，或皆逾時無終止事件時進入；
+  日文文字與繁中翻譯仍維持可讀。
 
-Feature 004 已批准瀏覽器原生 `SpeechSynthesis` 作為語音首選方案（見上方第八節決策）。此為 architecture /
-implementation authorization gate，**不是新的 Product Requirement**，spec.md 對語音技術方案本身維持
-中立（Assumptions 章節）。
+**轉換規則**：
+
+1. 觸發播放 → `requested`，先嘗試 bundled asset（`new Audio(src)` 載入＋播放）。
+2. Bundled 播放成功開始（`playing`/`canplay`＋實際播放事件）→ `playing`。
+3. Bundled 發生錯誤（`error` 事件、載入失敗、逾時無事件）→ **才**嘗試 `SpeechSynthesis` fallback，
+   狀態暫留 `requested`（對使用者而言仍是「已要求播放」，不需呈現為單獨的中間狀態）。
+4. `SpeechSynthesis` 播放成功開始（`onstart`）→ `playing`。
+5. `SpeechSynthesis` 亦失敗或不可用（`onerror`／`typeof window.speechSynthesis === 'undefined'`）→
+   `failed`。
+6. **Timeout / terminal-state 防護（新增，對應 Android/瀏覽器 API 可能靜默無事件之風險）**：bundled 與
+   `SpeechSynthesis` 各自進入 `requested` 後，MUST 設定合理逾時（例如以句子預期音檔長度為基準的上限
+   秒數）；逾時仍未收到任何終止事件（`playing`／`ended`／`error`／`onstart`／`onend`／`onerror`）時，
+   視同該層失敗並依序 fallback 至下一層，最終仍無法終止時進入 `failed`，**不得**無限期停留於
+   `requested`／`playing`。
+7. 同一時間僅允許一個 active playback：新播放請求觸發時，一律先終止（bundled `pause()`+重置 /
+   `speechSynthesis.cancel()`）任何進行中的播放與 pending timeout，再開始新的三層流程（FR-010/011）。
+8. 播放中 component unmount 或使用者離開 Feature：`TravelJapaneseScreen` 於 `useEffect` cleanup 終止
+   bundled audio 與呼叫 `window.speechSynthesis.cancel()`，並清除 pending timeout，避免殘留播放。
+
+### C. Asset Strategy
+
+- 建議路徑：`public/audio/travel-japanese/{phraseId}.mp3`。
+- MP3 為**單一正式格式**，不同時支援多格式（例如不額外提供 OGG/WAV），降低維運複雜度。
+- `phraseId` 沿用既有穩定 ID（`tj-001`…`tj-108`），**不**為此在 dataset 型別新增 `audioFile` 欄位；
+  播放邏輯以 `` `/audio/travel-japanese/${phraseId}.mp3` `` 直接推導路徑。
+- **本 Plan 不負責產生 108 個音檔**；音檔內容製作與品質審查（例如錄音／TTS 產出品質、發音自然度、
+  音量一致性）MUST 為獨立於本 Plan 的 implementation task，待後續正式 Tasks 階段規劃。
+- 音檔內容 MUST 與正式 phrase 日文文字（`japanese` 欄位）一致；任何 phrase 文字修改，MUST 觸發對應
+  音檔的 consistency review（避免文字與音檔不同步）。
+
+## 九、Audio Strategy Escalation Gate（Approval Gate，非新 Product Requirement，Maintenance 更新）
+
+Feature 004 已批准「App-bundled MP3 為 Primary、瀏覽器原生 `SpeechSynthesis` 為 Fallback、日文文字為
+Final fallback」之三層語音策略（見上方第八節決策）。此為 architecture / implementation authorization
+gate，**不是新的 Product Requirement**，spec.md 對語音技術方案本身維持中立（Assumptions 章節）。
 
 **觸發 STOP 的條件**（於 implementation 或 verification 階段發現任一項）：
 
-- 目標 browser / device 缺乏可用的 Japanese voice。
-- 日文 voice availability 低到無法合理支援目標使用情境（例如多數目標裝置皆無 `ja-JP`／`ja` voice）。
+- Bundled MP3 asset 與 `SpeechSynthesis` fallback **兩者**皆無法合理支援目標使用情境（例如絕大多數
+  目標裝置對兩者皆持續失敗）。
 - 實際行為無法滿足已批准的 audio acceptance criteria（spec FR-008~FR-012、SC-002/SC-005）。
+- Timeout / terminal-state 防護無法在合理時間內讓卡住的 `requested`／`playing` 狀態收斂至
+  `playing` 或 `failed`。
+- 音檔內容與正式 phrase 日文文字（`japanese` 欄位）不一致，且無法透過既有 consistency review 流程
+  即時修正。
 
 **發現上述任一條件時，MUST**：
 
-1. STOP，不得自行切換語音技術方案。
-2. 記錄實際證據（例如測試裝置／瀏覽器清單、voice 偵測結果、失敗率）。
+1. STOP，不得自行切換或簡化已批准的三層策略。
+2. 記錄實際證據（例如測試裝置／瀏覽器清單、逾時發生率、失敗率）。
 3. 報告對 spec.md／plan.md 已批准 acceptance criteria 的 impact。
-4. 比較 alternatives（例如重用既有 Cloud TTS、其他方案）之技術與治理影響。
+4. 比較 alternatives（例如重用既有 Cloud TTS、調整 asset 格式或 timeout 數值）之技術與治理影響。
 5. 等待作者對新方案的明確重新 approval，方可變更。
 
 **MUST NOT**（未取得新的明確批准前）：
 
 - 自行改為 OpenAI TTS 或重用既有 `generateSpeech()` Cloud TTS 流程。
-- 自行改為其他 Cloud TTS 服務。
-- 自行改為預錄 MP3。
+- 自行改為其他 Cloud TTS 服務或第三方 audio hosting/CDN。
+- 自行移除 Primary（bundled MP3）或 Fallback（`SpeechSynthesis`）任一層，或改變其優先順序。
+- 自行將 MP3 改為其他音檔格式，或同時新增多重格式。
 - 自行新增任何 external service 或 npm dependency 以替代語音方案。
+- 自行宣稱「第一次完全離線時一定可播放全部 108 句」（見下方 PWA / Offline 章節）。
 
-此 Escalation Gate 為第八節 Audio Technology Decision 的必要配套，確保「選擇 B 方案」不會在
-implementation 階段被默默變更為未經批准的技術升級（對應 Constitution V. Technology Stack Stability、
+此 Escalation Gate 為第八節 Audio Technology Decision 的必要配套，確保三層策略不會在 implementation
+階段被默默變更為未經批准的技術升級或簡化（對應 Constitution V. Technology Stack Stability、
 Approval Gates）。
 
 ## 十、Safety Reminder Escalation Constraint（MUST NOT Become Blocking UX）
@@ -263,6 +376,7 @@ reminder。此要求**不得**在 implementation 階段被自行升級為以下�
 - 任何阻止使用者先看到或播放緊急 phrase 的流程。
 
 因此 safety reminder 的呈現方式 MUST：
+
 
 - 明確可見（直接呈現於句子清單上方，非需額外互動才出現）。
 - 非 hidden help（非收合在「更多資訊」之類的區塊內）。
@@ -354,6 +468,34 @@ validation 要求（FR-002/FR-003/FR-034）的 technical completion：
 planning-level 技術落地；對應之未來 testing responsibility 已納入下方 Testing Strategy 「F. Dataset
 runtime anomaly」與 tasks.md 新增之驗證任務。
 
+## 十四、PWA Update Reliability（Maintenance Amendment 新增，2026-09-21）
+
+**現況（repository 已確認事實）**：`src/service-worker-registration.ts` 與 `src/components/
+UpdatePrompt.tsx` 已實作 waiting worker 偵測、使用者主動觸發 `SKIP_WAITING`、`controllerchange` 後
+reload、`clients.claim()` 既有 lifecycle；本次 Maintenance **保留**此既有機制，不變更其核心行為。
+
+**最小改善（本次批准，屬未來 implementation 範圍，本 Plan 僅記錄技術方向）**：App 從 background 回到
+foreground 時（`document.visibilitychange` 且 `document.visibilityState === 'visible'`），在合理節流
+條件下呼叫既有 Service Worker registration 的 `registration.update()`，讓 App 更即時發現新版本，而非
+僅依賴既有的頁面載入時機。
+
+**MUST**：
+
+- 以 `visibilitychange` 事件偵測「回到前景」，而非新增輪詢（polling）計時器。
+- Throttling：同一次 App session 內，`registration.update()` 呼叫需有基本節流（例如與上次呼叫間隔
+  低於門檻時間則略過），避免使用者頻繁切換前景/背景時重複呼叫。
+- `registration.update()` 失敗（例如離線、network error）MUST 被容錯處理，不得拋出未捕捉例外、不得
+  影響 App 其餘功能可用性。
+
+**MUST NOT**：
+
+- 新增無節流限制的 polling（例如固定 interval 持續呼叫 `update()`）。
+- 自動呼叫 `SKIP_WAITING`（仍 MUST 由使用者於 `UpdatePrompt` 主動按下「立即更新」後才觸發）。
+- 自動強制 reload（`controllerchange` 後 reload 仍僅在使用者觸發更新流程後才發生一次）。
+
+此為既有 PWA update 機制之最小、範圍受限的補強，**不新增**新的 Service Worker 生命週期概念，亦不修改
+既有 `waiting worker` / `UpdatePrompt` / 使用者主動觸發 / `controllerchange` reload 既有流程本身。
+
 ## Complexity Tracking
 
 > **Fill ONLY if Constitution Check has violations that must be justified**
@@ -379,7 +521,8 @@ Check 結果與 Phase 0 一致，**通過**，Audio Technology Decision 記錄�
 | `src/types/travelJapanese.ts` | `TravelJapaneseCategory` / `TravelJapanesePhrase` 型別 | 新增 |
 | `src/services/travelJapanese.ts` | catalog 載入、`getPhrasesByCategory`、`searchPhrases`、`getCategoryPlacementCounts`、`validateTravelJapaneseDataset`（供測試使用） | 新增 |
 | `src/features/travel-japanese/favorites.ts` | `loadFavoriteIds` / `persistFavoriteIds`（localStorage 容錯讀寫） | 新增 |
-| `src/features/travel-japanese/phraseAudio.ts` | `isSpeechSynthesisAvailable` / `speakJapanese` / `cancelSpeech` | 新增 |
+| `src/features/travel-japanese/phraseAudio.ts` | `playBundledAudio` / `isSpeechSynthesisAvailable` / `speakJapanese` / `cancelPlayback`（bundled MP3 Primary → SpeechSynthesis Fallback，含 timeout/terminal-state 管理） | 新增 |
+| `public/audio/travel-japanese/{phraseId}.mp3` | 正式音檔資產（`tj-001`…`tj-108`）；本 Plan 不產生內容，見第八節 C. Asset Strategy | 未來新增（獨立 implementation task） |
 | `src/features/travel-japanese/CategoryList.tsx` | 7 情境清單呈現（tablist pattern） | 新增 |
 | `src/features/travel-japanese/PhraseCard.tsx` | 日文／繁中／播放／收藏 UI 與狀態呈現 | 新增 |
 | `src/features/travel-japanese/SearchBar.tsx` | 搜尋輸入（label、accessible） | 新增 |
@@ -390,31 +533,78 @@ Check 結果與 Phase 0 一致，**通過**，Audio Technology Decision 記錄�
 
 ## Dependencies
 
-**新 runtime dependency：0**。語音（`SpeechSynthesis`）與持久化（`localStorage`）皆為瀏覽器原生 API，非
-npm package，不需 `npm install`。
+**新 runtime dependency：0**。語音 Primary（`HTMLAudioElement`）與 Fallback
+（`SpeechSynthesis`）、持久化（`localStorage`）均為瀏覽器原生 API，非 npm package，不需
+`npm install`。音檔本身為 static public asset（MP3），也非 npm dependency。
+
+**F. Dependency Review（Maintenance Amendment 確認，2026-09-21）**：本次 Maintenance 確認仍可
+以 **0 新 runtime dependency** 完成所有變更（bundled audio 播放、SpeechSynthesis fallback、
+音檔 runtime cache、PWA foreground update 均仅使用瀏覽器原生 API 與既有 Service Worker
+基礎設施），正式記錄于此。本次 Maintenance **不**新增 router、global state 套件、backend、
+API、cloud service 或任何其他 architecture layer。
 
 ## Privacy / Secrets
 
 - 不新增 secret／API key。
-- 不新增 microphone／camera／location／帳號蒐集面。
+- 不新增 microphone／camera／location／帳號薒集面。
 - Favorites 僅保存使用者主動標記的 phrase id 陣列於裝置本機 `localStorage`；不複製整份 phrase 內容、不
   上傳、不做 cloud sync。
 - 搜尋關鍵字僅在 frontend runtime 記憶體中使用，不持久化、不上傳。
-- 語音採瀏覽器原生合成，句子文字不需離開瀏覽器（優於既有 Cloud TTS 的既有既定行為）。
+- 語音 Primary（bundled MP3）與 Fallback（`SpeechSynthesis`）播放均不需將句子文字傳送至任何外部
+  服務（優於既有 Cloud TTS 的既有既定行為）。
 
-## PWA / Offline
+## PWA / Offline Strategy（Maintenance Amendment 更新，2026-09-21）
+
+### D. App Shell / Dataset（既有，不變）
 
 - Dataset 放置於既有 `src/service-worker.ts` `APPROVED_STATIC_PREFIXES` 已涵蓋的 `/src/data/tokyo/`
-  前綴下，**不需修改 `service-worker.ts`**；文字內容（分類／日文／繁中／搜尋／收藏）本質上為建置時
-  bundle 進 JS 的靜態內容，不依賴 `/api/*`。
-- 語音的離線可用性**取決於裝置／瀏覽器實際 Speech Synthesis 能力**，不預設保證可離線；不符合條件時
-  文字與其餘功能仍可正常使用。
+  前綴下，文字內容（分類／日文／繁中／搜尋／收藏）本質上為建置時 bundle 進 JS 的靜態內容，不依賴
+  `/api/*`；App shell precache 機制維持不變。
+
+### D. Phrase Audio Runtime Cache（新增，Documentation-Only；實際 Service Worker 程式碼變更屬未來
+implementation 範圍，本次 Maintenance 不修改 `service-worker.ts`）
+
+**MUST NOT**：
+
+- **不 precache 全部 108 個音檔**；不得在 App 安裝／首次載入時強制下載所有音檔。
+- **不宣稱**「第一次完全離線時一定可播放全部 108 句」；此為本次 Maintenance 明確澄清事項（回應
+  Maintenance Audit 對過往措辭的疑慮）。
+
+**MUST（未來 implementation 需落實的技術方向）**：
+
+- **Runtime cache-on-first-successful-fetch**：當某 `phraseId` 的音檔於任一次連線時被成功取得
+  （HTTP 200 且可播放），MUST 寫入專屬 audio cache，供後續（含離線時）直接從 cache 讀取播放。
+- **Cache namespace/version**：音檔快取 MUST 使用與既有 app-shell cache 不同的獨立 cache
+  namespace（例如 `travel-japanese-audio-v1`），版本號隨格式或路徑慣例變更而遞增。
+- **Cache invalidation strategy**：Service Worker `activate` 階段 MUST 清除不屬於目前版本
+  namespace 的舊 audio cache（例如比對 cache name 前綴與目前版本號，刪除不符者），避免累積過期
+  音檔佔用裝置儲存空間。
+- **失敗／404 不快取**：若音檔請求回傳非 2xx（例如 404、5xx）或 fetch 拋出例外，MUST NOT 將該回應
+  寫入 cache，避免將失敗結果誤植為「已快取成功」。
+- **不得破壞 app shell**：音檔 cache 邏輯 MUST 為既有 `service-worker.ts` 的**最小範圍**新增（例如
+  新增一個獨立 fetch handler 分支，僅比對 `/audio/travel-japanese/` 路徑前綴），不得變更既有
+  app-shell fetch／cache 邏輯的既有行為；此為未來 implementation 階段對 `service-worker.ts` 的
+  **唯一**預期擴充點，其餘既有 Service Worker 行為（`waiting worker`、`clients.claim()`、既有
+  `APPROVED_STATIC_PREFIXES`）不受影響。
+
+### 語音離線可用性敘述（澄清）
+
+- Primary（bundled MP3）：**首次連線且成功快取後**，該句子後續可離線播放；**首次即離線**且尚未快取
+  過的句子，MUST NOT 承諾可播放。
+- Fallback（`SpeechSynthesis`）：離線時仍可嘗試，其可用性**取決於裝置／瀏覽器實際 Speech Synthesis
+  能力**，不預設保證可離線。
+- Final fallback（文字）：不論是否離線、是否已快取，日文文字與繁中翻譯恆可讀。
 
 ## Regression 保護
 
 - 不修改 `AssistantScreen.tsx`／`AudioPlayer.tsx`／`api/speech.ts`／`NearbyScreen.tsx`／
-  `PhotoTranslateScreen.tsx`／`KnowledgeBrowser.tsx`／既有 `/api/*` endpoint／既有 PWA
-  `service-worker.ts`。
+  `PhotoTranslateScreen.tsx`／`KnowledgeBrowser.tsx`／既有 `/api/*` endpoint。
+- **`service-worker.ts`（更新說明）**：本次 Maintenance **不修改** `service-worker.ts`（Documentation-
+  Only）。原始 Plan 曾記錄「不需修改 `service-worker.ts`」，該敘述於**文字／dataset 部分**仍然成立
+  （沿用既有 `APPROVED_STATIC_PREFIXES`）；但新增的 phrase audio runtime cache（見上方「PWA / Offline
+  Strategy」）在**未來 implementation 階段**將需要對 `service-worker.ts` 新增一個範圍受限的 fetch
+  handler 分支，此為經本次 Maintenance 明確記錄、待正式 Tasks／Implementation 批准後才執行的變更，
+  **非本次 Maintenance 執行內容**。
 - `HomeScreen.tsx` 僅新增一個導覽按鈕與一個 boolean state，比照既有 5 個入口的擴充方式，既有 5 個入口
   行為與既有測試不受影響。
 - 既有 001／002／003 自動化測試（Vitest + Playwright）預期於 implementation 階段全數維持通過。
@@ -469,9 +659,12 @@ map／Geoapify tiles／Selected Place／Google Maps handoff）、既有 `/api/*`
 - 同一 phrase 跨情境／搜尋結果收藏狀態一致（`TravelJapaneseScreen.test.tsx`，以共用 `Set<string>` 驗證）。
 - Favorites 持久化：模擬重新掛載 screen，確認先前收藏仍存在。
 - Favorites malformed persistence（例如 localStorage 內容非合法 JSON）→ 安全降級為空收藏，不 crash。
-- `phraseAudio` 不可用（mock `speechSynthesis` 為 `undefined`）→ 播放按鈕停用但文字／搜尋／分類／收藏不受影響。
+- `phraseAudio` bundled asset 載入失敗（mock `HTMLMediaElement` 觸發 `error`）→ 自動 fallback 至
+  `SpeechSynthesis`；若 `SpeechSynthesis` 也不可用（mock 為 `undefined`）→ 進入 `failed`，但文字／
+  搜尋／分類／收藏不受影響。
 - 播放中（`playing`）／失敗（`failed`）狀態可理解呈現。
-- 新播放請求取代前一個 active playback（mock `speechSynthesis.speak`/`cancel` 驗證呼叫順序）。
+- 新播放請求取代前一個 active playback（mock bundled audio `pause`/`reset` 與
+  `speechSynthesis.speak`/`cancel` 驗證呼叫順序）。
 - Help & Emergency 情境：safety-critical 句子具較高呈現優先序（例如排序至清單前段）。
 - Help & Emergency 情境：`SafetyReminder` 在進入該情境時即直接可見（非需額外點擊展開）。
 - 播放失敗（`failed`）時，**該卡片自身**的日文文字、繁中文字與收藏按鈕仍可操作（不得整卡 `disabled`）；
@@ -524,6 +717,40 @@ map／Geoapify tiles／Selected Place／Google Maps handoff）、既有 `/api/*`
   - 新增入口不破壞既有 Home layout／interaction contract（例如既有 `nav[aria-label="東京功能入口"]`
     結構與既有入口的互動方式）。
 
+### G. Audio 三層策略 與 PWA Update Reliability 測試（Maintenance Amendment 新增，2026-09-21）
+
+**Audio（對應第八節三層策略與 timeout 防護）**：
+
+- Bundled audio 成功播放（Primary 正常路徑）。
+- Bundled 失敗 → `SpeechSynthesis` 成功（Fallback 生效）。
+- Bundled 失敗 → `SpeechSynthesis` 亦失敗（進入 `failed`，文字仍可讀）。
+- Silent/no-event timeout 恢復：bundled 或 `SpeechSynthesis` 皆未觸發任何終止事件時，逾時後正確 fallback
+  或進入 `failed`，不永久卡在 `requested`／`playing`。
+- 第二句播放停止第一句（同一時間僅一個 active playback）。
+- 語音（任一層）失敗不影響收藏／搜尋／分類瀏覽。
+- 缺少對應 phrase 音檔（asset 404／不存在）→ 正確 fallback 至 `SpeechSynthesis`，不視為未預期例外。
+- 重複播放同一句（多次觸發）行為一致，不殘留前次播放或 timeout。
+
+**PWA（對應第十四節 PWA Update Reliability 與音檔 runtime cache）**：
+
+- 偵測到新版本（update found）。
+- 顯示 waiting prompt（`UpdatePrompt`）。
+- 使用者選擇更新（按下「立即更新」）。
+- `controllerchange` reload 僅發生一次。
+- App 回到前景（`visibilitychange`）觸發 `registration.update()`。
+- `registration.update()` 失敗時 App 其餘功能不受影響（graceful）。
+- 音檔 runtime cache 首次成功 fetch 後寫入 cache。
+- 音檔 cache hit（第二次播放同一句直接從 cache 讀取，不再發出 network request）。
+- 離線時已快取音檔可正常播放。
+- 離線時未快取音檔優雅失敗（fallback 至 `SpeechSynthesis` 或 `failed`，不拋出未捕捉例外）。
+- 舊版本 audio cache 於新版本 `activate` 後正確清除（cache invalidation）。
+
+**Regression（沿用既有規模，重申涵蓋範圍）**：
+
+- Feature 001–004 既有自動化測試（Vitest）維持通過。
+- 既有 PWA red-gate 測試（`npm run test:pwa-red-gate`）維持通過。
+- `npm run build` 型別檢查與打包無誤。
+
 ## Setup Requirements（implementation 階段參考，本 Plan 不執行）
 
 - 無需 `npm install`（零新增 dependency）。
@@ -549,20 +776,48 @@ map／Geoapify tiles／Selected Place／Google Maps handoff）、既有 `/api/*`
 - **是否新增 Backend**：否。
 - **是否新增 Cloud DB**：否。
 - **是否新增 Authentication**：否。
-- **是否新增 AI service**：否（語音改用瀏覽器原生 API，非新增 AI service；既有 Cloud TTS 不變更、不擴大
-  使用範圍）。
+- **是否新增 AI service**：否（語音 Primary 為 bundled MP3 static asset、Fallback 為瀏覽器原生 API，
+  均非新增 AI service；既有 Cloud TTS 不變更、不擴大使用範圍）。
 - **是否新增 routing**：否。
 - **是否新增 global state**：否（feature-local state，`localStorage` 僅供 favorites 持久化，非 state
   管理套件）。
 - **是否新增 secret**：否。
 - **是否存在 stack drift**：否。
 - **是否存在需要作者批准的重大 deviation**：無 STOP 等級項目；唯一需 Conformance Check 明確確認的是
-  「Audio 選擇瀏覽器原生 SpeechSynthesis、不重用既有 Cloud TTS」的決策（詳見第八節），性質為 Plan 決策
-  說明，非 stack escalation 或新增 dependency/secret/backend。
+  「Audio 採 bundled MP3 Primary + SpeechSynthesis Fallback、不重用既有 Cloud TTS」的三層策略決策
+  （Maintenance Amendment，詳見第八、九節），性質為 Plan 決策說明，非 stack escalation 或新增
+  dependency/secret/backend。
 
 ## Remaining Approval Required Items
 
-1. **Audio Technology Decision 確認**：請確認同意「瀏覽器原生 SpeechSynthesis」而非「重用既有 Cloud
-   TTS」作為 Feature 004 語音方案（見第八節）。
-2. **`/speckit.tasks` 與 `/speckit.implement` 批准**：本 Plan 完成後仍須經使用者明確批准才可進入
-   `/speckit.implement`（Constitution XI. Authorization Boundary）。
+本節依批准狀態明確分為三類，避免將「已批准」事項誤讀為仍待重新批准，或將兩項不同的「尚未批准」事項
+混為一談。
+
+### A. 已批准（不需再次批准）：Audio Technical Direction + Formal Production Baseline
+
+成人教育者已正式批准下列 production baseline，並記錄為 Technical Truth（2026-09-23）：
+
+- Provider：`VOICEVOX Nemo`
+- Voice：男声1（ノーマル）／CV レナード・ジン
+- Fixed parameters：Speed 0.80、Pitch 0.00、Intonation 1.00、Volume 1.00、Pause length 1.00、
+  Start silence 0.10、End silence 0.10
+- Production master：WAV
+- App delivery asset：MP3
+- Runtime architecture：static MP3 Primary → `SpeechSynthesis` fallback → text fallback
+- Runtime MUST NOT depend on：VOICEVOX engine / Nemo engine / OpenAI TTS / Cloud TTS API / API key
+- QA：108 unique phrases 全量人工聽檢
+- Credit：正式公開／merge 前，必須依 VOICEVOX Nemo 官方規約加入可見 attribution
+- OpenAI：不作為 108 句正式 production provider
+
+此外，成人教育者已批准「App-bundled MP3 為 Primary、瀏覽器原生 `SpeechSynthesis` 為 Fallback、日文文字為
+Final fallback」之三層 Technical Direction（見第八、九節），取代原「重用既有 Cloud TTS」方案。此
+Technical Direction 本身**不需再次批准**；本文件與 tasks.md 之後續內容一律以此為現行 Audio Technical
+Truth。T055 之 approval 已完成，後續仍須遵守「108 句 production 未完成」的明確限制，且不得因 approval
+而視為 108 個正式音檔已完成。
+
+### B. 尚未批准：`/speckit.implement`
+
+即使本 Plan 與 tasks.md 已準備就緒，仍須經使用者明確批准進入 `/speckit.implement`
+（Constitution XI. Authorization Boundary）後，方可開始修改 application code；音檔內容製作（108 個
+MP3）與 `service-worker.ts` 音檔 runtime cache 擴充均待此批准後方可執行。此階段仍不產生任何正式
+MP3 asset；T055 之正式批准僅為 production baseline approval，不構成 implementation 授權。

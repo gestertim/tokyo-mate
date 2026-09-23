@@ -50,7 +50,7 @@
 - **日文＋繁體中文 Phrase Card**：一張卡片同時看到日文與自然的繁中翻譯
 - **快速搜尋**：輸入部分繁中或日文關鍵字，直接找到對應句子
 - **收藏「我的常用句」**：把常用的句子收藏起來，重複行程不必重新尋找
-- **日文語音播放**：支援瀏覽器日文語音播放；實際可用語音依裝置與瀏覽器而異
+- **日文語音播放**：108 句正式日語語音以 static bundled MP3 為優先播放來源；無法播放時依序降級為瀏覽器原生 `SpeechSynthesis` 與可見日文文字
 - **求助／緊急狀況安全提醒**：緊急與求助用語附有安全提醒，內容作為溝通輔助，不取代警察、醫療或其他正式協助
 
 內建超過 100 句實用旅遊日文（108 個 unique phrases），依 7 大旅行情境整理，共 148 個情境分類收錄。
@@ -92,6 +92,13 @@
 3. 點選播放，讓手機直接播放日文語音給對方聽
 4. 點選收藏，把常用的句子加入「我的常用句」，下次不必重新尋找
 5. 進入「求助／緊急狀況」情境時，安全提醒會直接顯示在畫面上
+
+### 語音與離線行為
+
+- 旅遊日文的 108 句正式日語語音以 static bundled MP3 作為 primary；日文語音由 VOICEVOX Nemo 製作。
+- 搜尋與收藏採 local-first：搜尋僅比對內建正式 dataset，收藏只儲存於目前裝置的 `localStorage`。
+- PWA 對旅遊日文音檔採 runtime cache-on-first-successful-fetch；已成功快取的音檔可離線重新播放。
+- 尚未快取的音檔在離線時可能無法播放；此時依序嘗試 `SpeechSynthesis`，並保留可直接展示的日文文字。
 
 ## 🛡️ Privacy & Safety
 
@@ -186,7 +193,7 @@ specs/          各功能的規格、計畫與驗收文件
 docs/verification/ 驗證報告
 ```
 
-旅遊日文延續 Tokyo Mate 既有架構風格：frontend-first、內建本地 dataset、本地搜尋，語音播放使用瀏覽器原生 `SpeechSynthesis`，收藏使用 `localStorage`，未新增後端服務或資料庫。
+旅遊日文延續 Tokyo Mate 既有架構風格：frontend-first、內建本地 dataset、本地搜尋，static bundled MP3 為語音 primary，`SpeechSynthesis` 與可見日文文字為 runtime fallback；收藏使用 `localStorage`，未新增後端服務或資料庫。
 
 ## 📌 Project Status
 

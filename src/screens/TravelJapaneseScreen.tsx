@@ -5,7 +5,7 @@ import { SearchBar } from '../features/travel-japanese/SearchBar';
 import { FavoritesList } from '../features/travel-japanese/FavoritesList';
 import { SafetyReminder } from '../features/travel-japanese/SafetyReminder';
 import { loadFavoriteIds, persistFavoriteIds } from '../features/travel-japanese/favorites';
-import { cancelSpeech, isSpeechSynthesisAvailable, speakJapanese } from '../features/travel-japanese/phraseAudio';
+import { cancelPlayback, isSpeechSynthesisAvailable, playBundledAudio, speakJapanese } from '../features/travel-japanese/phraseAudio';
 import type { PlaybackStatus } from '../features/travel-japanese/phraseAudio';
 import { getAllPhrases, getPhrasesByCategory, searchPhrases, TRAVEL_JAPANESE_CATEGORY_LABELS } from '../services/travelJapanese';
 import type { TravelJapaneseCategory, TravelJapanesePhrase } from '../types/travelJapanese';
@@ -34,7 +34,7 @@ export function TravelJapaneseScreen({ onBack }: TravelJapaneseScreenProps) {
   }, [favoriteIds]);
 
   useEffect(() => {
-    return () => cancelSpeech();
+    return () => cancelPlayback();
   }, []);
 
   const audioAvailable = isSpeechSynthesisAvailable();
@@ -51,13 +51,23 @@ export function TravelJapaneseScreen({ onBack }: TravelJapaneseScreenProps) {
   function handlePlay(phrase: TravelJapanesePhrase) {
     setActivePhraseId(phrase.id);
     setPlaybackStatus('requested');
-    speakJapanese(phrase.japanese, {
-      onStart: () => setPlaybackStatus('playing'),
-      onEnd: () => {
+    playBundledAudio(phrase.id, {
+      onPlaying: () => setPlaybackStatus('playing'),
+      onEnded: () => {
         setActivePhraseId(undefined);
         setPlaybackStatus('idle');
       },
-      onError: () => setPlaybackStatus('failed'),
+      onError: () => {
+        // Primary（bundled MP3）失敗才進入 Fallback（SpeechSynthesis）。
+        speakJapanese(phrase.japanese, {
+          onStart: () => setPlaybackStatus('playing'),
+          onEnd: () => {
+            setActivePhraseId(undefined);
+            setPlaybackStatus('idle');
+          },
+          onError: () => setPlaybackStatus('failed'),
+        });
+      },
     });
   }
 
@@ -146,6 +156,7 @@ export function TravelJapaneseScreen({ onBack }: TravelJapaneseScreenProps) {
         <button type="button" onClick={() => setView('favorites')}>我的常用句</button>
       </div>
       <CategoryList onSelectCategory={handleSelectCategory} />
+      <p>日文語音由 VOICEVOX Nemo 製作</p>
     </section>
   );
 }

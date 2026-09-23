@@ -8,6 +8,7 @@ export default defineConfig({
     setupFiles: ['./src/test/setup.ts'],
     pool: 'threads',
     maxWorkers: 1,
+    exclude: ['node_modules/**', 'tools/travel-japanese-audio-qa/qa-data.test.mjs'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html'],

@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cancelSpeech, isSpeechSynthesisAvailable, speakJapanese } from './phraseAudio';
+import { cancelPlayback, isSpeechSynthesisAvailable, playBundledAudio, speakJapanese } from './phraseAudio';
 
 class StubSpeechSynthesisUtterance {
   lang = '';
@@ -15,6 +15,7 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  vi.useRealTimers();
 });
 
 describe('phraseAudio（Phase 4 US2，SpeechSynthesis 封裝）', () => {
@@ -67,15 +68,120 @@ describe('phraseAudio（Phase 4 US2，SpeechSynthesis 封裝）', () => {
     expect(onError).toHaveBeenCalledTimes(1);
   });
 
-  it('cancelSpeech() 於 speechSynthesis 不存在時安全 no-op 不拋出例外', () => {
+  it('cancelPlayback() 於 speechSynthesis 不存在時安全 no-op 不拋出例外', () => {
     vi.stubGlobal('speechSynthesis', undefined);
-    expect(() => cancelSpeech()).not.toThrow();
+    expect(() => cancelPlayback()).not.toThrow();
   });
 
-  it('cancelSpeech() 於 speechSynthesis 存在時呼叫 cancel()', () => {
+  it('cancelPlayback() 於 speechSynthesis 存在時呼叫 cancel()', () => {
     const cancel = vi.fn();
     vi.stubGlobal('speechSynthesis', { cancel, speak: vi.fn() });
-    cancelSpeech();
+    cancelPlayback();
     expect(cancel).toHaveBeenCalledTimes(1);
+  });
+
+  it('speechSynthesis 逾時未收到任何終止事件時視同失敗（onError），不永久停留', () => {
+    vi.useFakeTimers();
+    vi.stubGlobal('speechSynthesis', { cancel: vi.fn(), speak: vi.fn() });
+    const onError = vi.fn();
+    speakJapanese('こんにちは', { onError });
+
+    expect(onError).not.toHaveBeenCalled();
+    vi.advanceTimersByTime(10000);
+    expect(onError).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('phraseAudio（Maintenance：playBundledAudio Primary 層 + timeout/terminal-state）', () => {
+  beforeEach(() => {
+    vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('bundled 音檔以 phraseId 推導固定路徑並成功播放時呼叫 onPlaying', async () => {
+    let capturedSrc = '';
+    vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(function (this: HTMLAudioElement) {
+      capturedSrc = this.src;
+      queueMicrotask(() => this.dispatchEvent(new Event('playing')));
+      return Promise.resolve();
+    });
+
+    const onPlaying = vi.fn();
+    playBundledAudio('tj-001', { onPlaying });
+
+    await vi.waitFor(() => expect(onPlaying).toHaveBeenCalledTimes(1));
+    expect(capturedSrc).toContain('/audio/travel-japanese/tj-001.mp3');
+  });
+
+  // Single-Phrase Audio POC Preparation（tj-097「お願いします。」）：僅驗證路徑推導，不建立正式 audio fixture。
+  it('bundled 音檔以 phraseId tj-097 推導路徑 /audio/travel-japanese/tj-097.mp3', async () => {
+    let capturedSrc = '';
+    vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(function (this: HTMLAudioElement) {
+      capturedSrc = this.src;
+      queueMicrotask(() => this.dispatchEvent(new Event('playing')));
+      return Promise.resolve();
+    });
+
+    const onPlaying = vi.fn();
+    playBundledAudio('tj-097', { onPlaying });
+
+    await vi.waitFor(() => expect(onPlaying).toHaveBeenCalledTimes(1));
+    expect(capturedSrc).toContain('/audio/travel-japanese/tj-097.mp3');
+  });
+
+  it('bundled 音檔載入失敗（error 事件）時呼叫 onError，不拋出例外', async () => {
+    vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(function (this: HTMLAudioElement) {
+      queueMicrotask(() => this.dispatchEvent(new Event('error')));
+      return Promise.resolve();
+    });
+
+    const onError = vi.fn();
+    expect(() => playBundledAudio('tj-001', { onError })).not.toThrow();
+    await vi.waitFor(() => expect(onError).toHaveBeenCalledTimes(1));
+  });
+
+  it('bundled 音檔 play() 被拒絕（例如缺少對應音檔／404）時呼叫 onError', async () => {
+    vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(() => Promise.reject(new Error('missing asset')));
+
+    const onError = vi.fn();
+    playBundledAudio('tj-108', { onError });
+    await vi.waitFor(() => expect(onError).toHaveBeenCalledTimes(1));
+  });
+
+  it('bundled 音檔逾時未收到任何終止事件時視同失敗（onError），不永久停留', () => {
+    vi.useFakeTimers();
+    vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(() => Promise.resolve());
+
+    const onError = vi.fn();
+    playBundledAudio('tj-001', { onError });
+    expect(onError).not.toHaveBeenCalled();
+    vi.advanceTimersByTime(10000);
+    expect(onError).toHaveBeenCalledTimes(1);
+  });
+
+  it('新播放請求觸發時終止前一個 bundled audio（pause 並重置）', () => {
+    const pause = vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {});
+    vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(() => Promise.resolve());
+
+    playBundledAudio('tj-001', {});
+    playBundledAudio('tj-002', {});
+
+    expect(pause).toHaveBeenCalled();
+  });
+
+  it('cancelPlayback() 同時終止 bundled audio 與 speechSynthesis', () => {
+    const pause = vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {});
+    vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(() => Promise.resolve());
+    const cancel = vi.fn();
+    vi.stubGlobal('speechSynthesis', { cancel, speak: vi.fn() });
+
+    playBundledAudio('tj-001', {});
+    cancelPlayback();
+
+    expect(pause).toHaveBeenCalled();
+    expect(cancel).toHaveBeenCalled();
   });
 });

@@ -3,6 +3,19 @@ export const APP_SHELL_CACHE = `${APP_SHELL_CACHE_PREFIX}v2`;
 export const APPROVED_STATIC_PREFIXES = ['/assets/', '/src/data/tokyo/', '/icons/'];
 export const PRECACHE_URLS = ['/', '/index.html', '/manifest.webmanifest'];
 
+// Dedicated namespace/version for travel-japanese phrase audio (Feature 004 Maintenance, Phase 13):
+// kept separate from APP_SHELL_CACHE so audio invalidation never touches app-shell cache entries,
+// and so install-time precache never has to cover all 108 audio files.
+export const AUDIO_CACHE_PREFIX = 'travel-japanese-audio-';
+export const AUDIO_CACHE = `${AUDIO_CACHE_PREFIX}v1`;
+const AUDIO_REQUEST_PREFIX = '/audio/travel-japanese/';
+
+export function isAudioAssetRequest(request: Request): boolean {
+  if (request.method !== 'GET') return false;
+  const url = new URL(request.url);
+  return url.pathname.startsWith(AUDIO_REQUEST_PREFIX);
+}
+
 // Only same-origin, non-redirected, non-opaque HTML responses may become the offline App Shell fallback.
 const SAFE_RESPONSE_TYPES = new Set(['basic', 'default']);
 
@@ -46,7 +59,11 @@ if (isServiceWorkerRuntime()) {
       .then((keys: string[]) =>
         Promise.all(
           keys
-            .filter((key) => key.startsWith(APP_SHELL_CACHE_PREFIX) && key !== APP_SHELL_CACHE)
+            .filter(
+              (key) =>
+                (key.startsWith(APP_SHELL_CACHE_PREFIX) && key !== APP_SHELL_CACHE) ||
+                (key.startsWith(AUDIO_CACHE_PREFIX) && key !== AUDIO_CACHE),
+            )
             .map((key) => caches.delete(key)),
         ),
       );
@@ -63,6 +80,10 @@ if (isServiceWorkerRuntime()) {
     const request = event.request as Request;
     if (isNavigationRequest(request)) {
       event.respondWith(handleNavigationRequest(request));
+      return;
+    }
+    if (isAudioAssetRequest(request)) {
+      event.respondWith(handleAudioAssetRequest(request));
       return;
     }
     if (!isCacheableRequest(request)) return;
@@ -98,4 +119,21 @@ function handleNavigationRequest(request: Request): Promise<Response> {
       if (cached) return cached;
       throw networkError;
     });
+}
+
+// Cache-on-first-successful-fetch (Phase 13): only a 2xx response is ever written to the audio
+// cache, so a 404/failed fetch never gets mistaken for a successfully cached phrase.
+function handleAudioAssetRequest(request: Request): Promise<Response> {
+  return caches.open(AUDIO_CACHE).then((cache) =>
+    cache.match(request).then(
+      (cached: Response | undefined) =>
+        cached ||
+        fetch(request).then((response: Response) => {
+          if (response.ok) {
+            cache.put(request, response.clone());
+          }
+          return response;
+        }),
+    ),
+  );
 }

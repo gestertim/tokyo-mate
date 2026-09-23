@@ -1,0 +1,1645 @@
+{
+  "generatedAt": "2026-09-23T11:14:15.358Z",
+  "mode": "dry-run",
+  "phraseCount": 108,
+  "selectedCount": 108,
+  "firstId": "tj-001",
+  "lastId": "tj-108",
+  "styleId": 10001,
+  "speakerUuid": "2171909e-d2d1-4bbb-aa45-442c12732665",
+  "nemoVersion": "0.24.0",
+  "parameters": {
+    "speedScale": 0.8,
+    "pitchScale": 0,
+    "intonationScale": 1,
+    "volumeScale": 1,
+    "pauseLengthScale": 1,
+    "prePhonemeLength": 0.1,
+    "postPhonemeLength": 0.1
+  },
+  "plan": [
+    {
+      "id": "tj-001",
+      "japanese": "パスポートです。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-001.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-002",
+      "japanese": "荷物が出てきません。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-002.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-003",
+      "japanese": "この便に乗り遅れました。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-003.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-004",
+      "japanese": "手荷物を預けたいです。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-004.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-005",
+      "japanese": "免税店はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-005.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-006",
+      "japanese": "両替はどこでできますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-006.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-007",
+      "japanese": "搭乗口はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-007.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-008",
+      "japanese": "出国審査はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-008.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-009",
+      "japanese": "Wi-Fiはどこで借りられますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-009.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-010",
+      "japanese": "スーツケースが壊れています。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-010.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-011",
+      "japanese": "乗り継ぎのカウンターはどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-011.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-012",
+      "japanese": "この荷物はここに置いてもいいですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-012.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-013",
+      "japanese": "トイレはどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-013.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-014",
+      "japanese": "荷物を探しています。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-014.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-015",
+      "japanese": "モバイルバッテリーを機内に持ち込めますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-015.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-016",
+      "japanese": "チェックインをお願いします。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-016.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-017",
+      "japanese": "チェックアウトは何時ですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-017.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-018",
+      "japanese": "部屋に鍵を忘れました。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-018.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-019",
+      "japanese": "Wi-Fiのパスワードを教えてください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-019.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-020",
+      "japanese": "タオルをもう一枚もらえますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-020.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-021",
+      "japanese": "エアコンが動きません。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-021.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-022",
+      "japanese": "荷物を預かってもらえますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-022.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-023",
+      "japanese": "部屋を変えてもらえますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-023.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-024",
+      "japanese": "朝食は何時からですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-024.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-025",
+      "japanese": "タクシーを呼んでもらえますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-025.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-026",
+      "japanese": "部屋の掃除は結構です。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-026.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-027",
+      "japanese": "お湯が出ません。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-027.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-028",
+      "japanese": "もう一泊したいです。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-028.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-029",
+      "japanese": "近くにコンビニはありますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-029.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-030",
+      "japanese": "禁煙の部屋にしてください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-030.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-031",
+      "japanese": "メニューを見せてください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-031.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-032",
+      "japanese": "おすすめは何ですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-032.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-033",
+      "japanese": "これをください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-033.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-034",
+      "japanese": "辛くしないでください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-034.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-035",
+      "japanese": "会計をお願いします。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-035.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-036",
+      "japanese": "アレルギーがあります。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-036.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-037",
+      "japanese": "卵を抜いてください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-037.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-038",
+      "japanese": "これは何が入っていますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-038.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-039",
+      "japanese": "水をください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-039.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-040",
+      "japanese": "取り皿をください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-040.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-041",
+      "japanese": "二人分お願いします。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-041.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-042",
+      "japanese": "お箸をください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-042.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-043",
+      "japanese": "お手洗いはどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-043.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-044",
+      "japanese": "持ち帰りできますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-044.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-045",
+      "japanese": "とても美味しかったです。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-045.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-046",
+      "japanese": "デザートはありますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-046.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-047",
+      "japanese": "おしぼりをください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-047.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-048",
+      "japanese": "これはいくらですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-048.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-049",
+      "japanese": "試着してもいいですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-049.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-050",
+      "japanese": "他の色はありますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-050.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-051",
+      "japanese": "大きいサイズはありますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-051.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-052",
+      "japanese": "免税できますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-052.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-053",
+      "japanese": "カードで払えますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-053.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-054",
+      "japanese": "袋をもらえますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-054.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-055",
+      "japanese": "これを二つください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-055.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-056",
+      "japanese": "少し安くなりますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-056.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-057",
+      "japanese": "返品したいです。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-057.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-058",
+      "japanese": "領収書をください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-058.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-059",
+      "japanese": "これは日本製ですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-059.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-060",
+      "japanese": "少し考えます。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-060.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-061",
+      "japanese": "これを包んでもらえますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-061.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-062",
+      "japanese": "試着室はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-062.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-063",
+      "japanese": "この電車は新宿に行きますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-063.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-064",
+      "japanese": "切符売り場はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-064.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-065",
+      "japanese": "ここから浅草までいくらですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-065.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-066",
+      "japanese": "次の電車は何時ですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-066.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-067",
+      "japanese": "この席は空いていますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-067.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-068",
+      "japanese": "乗り換えはどこでしますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-068.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-069",
+      "japanese": "このバスは空港に行きますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-069.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-070",
+      "japanese": "タクシー乗り場はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-070.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-071",
+      "japanese": "この住所まで行きたいです。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-071.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-072",
+      "japanese": "ICカードをチャージしたいです。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-072.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-073",
+      "japanese": "反対方向の電車に乗ってしまいました。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-073.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-074",
+      "japanese": "終電は何時ですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-074.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-075",
+      "japanese": "一番近い駅はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-075.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-076",
+      "japanese": "ここで降ります。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-076.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-077",
+      "japanese": "この電車は各駅停車ですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-077.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-078",
+      "japanese": "警察を呼んでください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-078.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-079",
+      "japanese": "救急車を呼んでください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-079.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-080",
+      "japanese": "やめてください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-080.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-081",
+      "japanese": "気分が悪いです。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-081.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-082",
+      "japanese": "パスポートをなくしました。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-082.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-083",
+      "japanese": "近くの病院はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-083.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-084",
+      "japanese": "交番はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-084.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-085",
+      "japanese": "薬局はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-085.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-086",
+      "japanese": "助けてください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-086.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-087",
+      "japanese": "財布を盗まれました。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-087.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-088",
+      "japanese": "ここが痛いです。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-088.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-089",
+      "japanese": "熱があります。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-089.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-090",
+      "japanese": "道に迷いました。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-090.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-091",
+      "japanese": "日本語が話せません。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-091.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-092",
+      "japanese": "英語を話せる人はいますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-092.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-093",
+      "japanese": "病院へ連れて行ってください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-093.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-094",
+      "japanese": "こんにちは。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-094.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-095",
+      "japanese": "ありがとうございます。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-095.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-096",
+      "japanese": "すみません。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-096.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-097",
+      "japanese": "お願いします。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-097.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-098",
+      "japanese": "わかりません。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-098.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-099",
+      "japanese": "もう一度言ってください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-099.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-100",
+      "japanese": "写真を撮ってもらえますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-100.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-101",
+      "japanese": "ゆっくり話してもらえますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-101.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-102",
+      "japanese": "これは何ですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-102.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-103",
+      "japanese": "英語のメニューはありますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-103.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-104",
+      "japanese": "トイレを貸してください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-104.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-105",
+      "japanese": "ちょっと待ってください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-105.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-106",
+      "japanese": "また来ます。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-106.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-107",
+      "japanese": "お先に失礼します。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-107.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-108",
+      "japanese": "ここに座ってもいいですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-108.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    }
+  ],
+  "success": [],
+  "failures": [],
+  "skipped": []
+}

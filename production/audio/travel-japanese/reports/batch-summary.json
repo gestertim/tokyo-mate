@@ -1,0 +1,3820 @@
+{
+  "generatedAt": "2026-09-23T11:15:18.695Z",
+  "mode": "full-batch",
+  "phraseCount": 108,
+  "selectedCount": 108,
+  "firstId": "tj-001",
+  "lastId": "tj-108",
+  "styleId": 10001,
+  "speakerUuid": "2171909e-d2d1-4bbb-aa45-442c12732665",
+  "nemoVersion": "0.24.0",
+  "parameters": {
+    "speedScale": 0.8,
+    "pitchScale": 0,
+    "intonationScale": 1,
+    "volumeScale": 1,
+    "pauseLengthScale": 1,
+    "prePhonemeLength": 0.1,
+    "postPhonemeLength": 0.1
+  },
+  "plan": [
+    {
+      "id": "tj-001",
+      "japanese": "パスポートです。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-001.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-002",
+      "japanese": "荷物が出てきません。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-002.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-003",
+      "japanese": "この便に乗り遅れました。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-003.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-004",
+      "japanese": "手荷物を預けたいです。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-004.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-005",
+      "japanese": "免税店はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-005.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-006",
+      "japanese": "両替はどこでできますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-006.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-007",
+      "japanese": "搭乗口はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-007.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-008",
+      "japanese": "出国審査はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-008.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-009",
+      "japanese": "Wi-Fiはどこで借りられますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-009.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-010",
+      "japanese": "スーツケースが壊れています。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-010.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-011",
+      "japanese": "乗り継ぎのカウンターはどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-011.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-012",
+      "japanese": "この荷物はここに置いてもいいですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-012.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-013",
+      "japanese": "トイレはどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-013.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-014",
+      "japanese": "荷物を探しています。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-014.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-015",
+      "japanese": "モバイルバッテリーを機内に持ち込めますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-015.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-016",
+      "japanese": "チェックインをお願いします。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-016.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-017",
+      "japanese": "チェックアウトは何時ですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-017.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-018",
+      "japanese": "部屋に鍵を忘れました。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-018.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-019",
+      "japanese": "Wi-Fiのパスワードを教えてください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-019.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-020",
+      "japanese": "タオルをもう一枚もらえますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-020.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-021",
+      "japanese": "エアコンが動きません。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-021.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-022",
+      "japanese": "荷物を預かってもらえますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-022.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-023",
+      "japanese": "部屋を変えてもらえますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-023.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-024",
+      "japanese": "朝食は何時からですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-024.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-025",
+      "japanese": "タクシーを呼んでもらえますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-025.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-026",
+      "japanese": "部屋の掃除は結構です。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-026.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-027",
+      "japanese": "お湯が出ません。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-027.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-028",
+      "japanese": "もう一泊したいです。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-028.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-029",
+      "japanese": "近くにコンビニはありますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-029.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-030",
+      "japanese": "禁煙の部屋にしてください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-030.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-031",
+      "japanese": "メニューを見せてください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-031.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-032",
+      "japanese": "おすすめは何ですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-032.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-033",
+      "japanese": "これをください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-033.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-034",
+      "japanese": "辛くしないでください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-034.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-035",
+      "japanese": "会計をお願いします。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-035.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-036",
+      "japanese": "アレルギーがあります。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-036.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-037",
+      "japanese": "卵を抜いてください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-037.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-038",
+      "japanese": "これは何が入っていますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-038.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-039",
+      "japanese": "水をください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-039.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-040",
+      "japanese": "取り皿をください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-040.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-041",
+      "japanese": "二人分お願いします。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-041.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-042",
+      "japanese": "お箸をください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-042.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-043",
+      "japanese": "お手洗いはどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-043.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-044",
+      "japanese": "持ち帰りできますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-044.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-045",
+      "japanese": "とても美味しかったです。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-045.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-046",
+      "japanese": "デザートはありますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-046.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-047",
+      "japanese": "おしぼりをください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-047.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-048",
+      "japanese": "これはいくらですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-048.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-049",
+      "japanese": "試着してもいいですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-049.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-050",
+      "japanese": "他の色はありますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-050.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-051",
+      "japanese": "大きいサイズはありますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-051.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-052",
+      "japanese": "免税できますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-052.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-053",
+      "japanese": "カードで払えますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-053.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-054",
+      "japanese": "袋をもらえますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-054.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-055",
+      "japanese": "これを二つください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-055.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-056",
+      "japanese": "少し安くなりますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-056.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-057",
+      "japanese": "返品したいです。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-057.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-058",
+      "japanese": "領収書をください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-058.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-059",
+      "japanese": "これは日本製ですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-059.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-060",
+      "japanese": "少し考えます。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-060.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-061",
+      "japanese": "これを包んでもらえますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-061.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-062",
+      "japanese": "試着室はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-062.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-063",
+      "japanese": "この電車は新宿に行きますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-063.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-064",
+      "japanese": "切符売り場はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-064.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-065",
+      "japanese": "ここから浅草までいくらですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-065.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-066",
+      "japanese": "次の電車は何時ですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-066.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-067",
+      "japanese": "この席は空いていますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-067.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-068",
+      "japanese": "乗り換えはどこでしますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-068.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-069",
+      "japanese": "このバスは空港に行きますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-069.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-070",
+      "japanese": "タクシー乗り場はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-070.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-071",
+      "japanese": "この住所まで行きたいです。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-071.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-072",
+      "japanese": "ICカードをチャージしたいです。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-072.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-073",
+      "japanese": "反対方向の電車に乗ってしまいました。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-073.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-074",
+      "japanese": "終電は何時ですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-074.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-075",
+      "japanese": "一番近い駅はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-075.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-076",
+      "japanese": "ここで降ります。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-076.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-077",
+      "japanese": "この電車は各駅停車ですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-077.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-078",
+      "japanese": "警察を呼んでください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-078.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-079",
+      "japanese": "救急車を呼んでください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-079.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-080",
+      "japanese": "やめてください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-080.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-081",
+      "japanese": "気分が悪いです。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-081.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-082",
+      "japanese": "パスポートをなくしました。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-082.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-083",
+      "japanese": "近くの病院はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-083.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-084",
+      "japanese": "交番はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-084.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-085",
+      "japanese": "薬局はどこですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-085.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-086",
+      "japanese": "助けてください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-086.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-087",
+      "japanese": "財布を盗まれました。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-087.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-088",
+      "japanese": "ここが痛いです。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-088.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-089",
+      "japanese": "熱があります。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-089.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-090",
+      "japanese": "道に迷いました。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-090.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-091",
+      "japanese": "日本語が話せません。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-091.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-092",
+      "japanese": "英語を話せる人はいますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-092.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-093",
+      "japanese": "病院へ連れて行ってください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-093.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-094",
+      "japanese": "こんにちは。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-094.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-095",
+      "japanese": "ありがとうございます。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-095.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-096",
+      "japanese": "すみません。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-096.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-097",
+      "japanese": "お願いします。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-097.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-098",
+      "japanese": "わかりません。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-098.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-099",
+      "japanese": "もう一度言ってください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-099.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-100",
+      "japanese": "写真を撮ってもらえますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-100.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-101",
+      "japanese": "ゆっくり話してもらえますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-101.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-102",
+      "japanese": "これは何ですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-102.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-103",
+      "japanese": "英語のメニューはありますか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-103.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-104",
+      "japanese": "トイレを貸してください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-104.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-105",
+      "japanese": "ちょっと待ってください。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-105.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-106",
+      "japanese": "また来ます。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-106.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-107",
+      "japanese": "お先に失礼します。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-107.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    },
+    {
+      "id": "tj-108",
+      "japanese": "ここに座ってもいいですか。",
+      "outputPath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-108.wav",
+      "styleId": 10001,
+      "parameters": {
+        "speedScale": 0.8,
+        "pitchScale": 0,
+        "intonationScale": 1,
+        "volumeScale": 1,
+        "pauseLengthScale": 1,
+        "prePhonemeLength": 0.1,
+        "postPhonemeLength": 0.1
+      }
+    }
+  ],
+  "success": [
+    {
+      "id": "tj-002",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 73216,
+      "durationSeconds": 1.5253333333333334
+    },
+    {
+      "id": "tj-003",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 89600,
+      "durationSeconds": 1.8666666666666667
+    },
+    {
+      "id": "tj-004",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 84480,
+      "durationSeconds": 1.76
+    },
+    {
+      "id": "tj-005",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 82432,
+      "durationSeconds": 1.7173333333333334
+    },
+    {
+      "id": "tj-006",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 88576,
+      "durationSeconds": 1.8453333333333333
+    },
+    {
+      "id": "tj-007",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 84480,
+      "durationSeconds": 1.76
+    },
+    {
+      "id": "tj-008",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 94208,
+      "durationSeconds": 1.9626666666666666
+    },
+    {
+      "id": "tj-009",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 99328,
+      "durationSeconds": 2.0693333333333332
+    },
+    {
+      "id": "tj-010",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 94720,
+      "durationSeconds": 1.9733333333333334
+    },
+    {
+      "id": "tj-011",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 107008,
+      "durationSeconds": 2.2293333333333334
+    },
+    {
+      "id": "tj-012",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 117248,
+      "durationSeconds": 2.4426666666666668
+    },
+    {
+      "id": "tj-013",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 69120,
+      "durationSeconds": 1.44
+    },
+    {
+      "id": "tj-014",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 77312,
+      "durationSeconds": 1.6106666666666667
+    },
+    {
+      "id": "tj-015",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 128512,
+      "durationSeconds": 2.6773333333333333
+    },
+    {
+      "id": "tj-016",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 83456,
+      "durationSeconds": 1.7386666666666666
+    },
+    {
+      "id": "tj-017",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 86528,
+      "durationSeconds": 1.8026666666666666
+    },
+    {
+      "id": "tj-018",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 86528,
+      "durationSeconds": 1.8026666666666666
+    },
+    {
+      "id": "tj-019",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 116736,
+      "durationSeconds": 2.432
+    },
+    {
+      "id": "tj-020",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 99328,
+      "durationSeconds": 2.0693333333333332
+    },
+    {
+      "id": "tj-021",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 69632,
+      "durationSeconds": 1.4506666666666668
+    },
+    {
+      "id": "tj-022",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 95744,
+      "durationSeconds": 1.9946666666666666
+    },
+    {
+      "id": "tj-023",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 80384,
+      "durationSeconds": 1.6746666666666667
+    },
+    {
+      "id": "tj-024",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 89600,
+      "durationSeconds": 1.8666666666666667
+    },
+    {
+      "id": "tj-025",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 90624,
+      "durationSeconds": 1.888
+    },
+    {
+      "id": "tj-026",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 90112,
+      "durationSeconds": 1.8773333333333333
+    },
+    {
+      "id": "tj-027",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 55808,
+      "durationSeconds": 1.1626666666666667
+    },
+    {
+      "id": "tj-028",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 75264,
+      "durationSeconds": 1.568
+    },
+    {
+      "id": "tj-029",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 92672,
+      "durationSeconds": 1.9306666666666668
+    },
+    {
+      "id": "tj-030",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 92672,
+      "durationSeconds": 1.9306666666666668
+    },
+    {
+      "id": "tj-031",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 76288,
+      "durationSeconds": 1.5893333333333333
+    },
+    {
+      "id": "tj-032",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 73728,
+      "durationSeconds": 1.536
+    },
+    {
+      "id": "tj-033",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 54784,
+      "durationSeconds": 1.1413333333333333
+    },
+    {
+      "id": "tj-034",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 75776,
+      "durationSeconds": 1.5786666666666667
+    },
+    {
+      "id": "tj-035",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 81408,
+      "durationSeconds": 1.696
+    },
+    {
+      "id": "tj-036",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 68608,
+      "durationSeconds": 1.4293333333333333
+    },
+    {
+      "id": "tj-037",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 75776,
+      "durationSeconds": 1.5786666666666667
+    },
+    {
+      "id": "tj-038",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 92160,
+      "durationSeconds": 1.92
+    },
+    {
+      "id": "tj-039",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 56832,
+      "durationSeconds": 1.184
+    },
+    {
+      "id": "tj-040",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 67072,
+      "durationSeconds": 1.3973333333333333
+    },
+    {
+      "id": "tj-041",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 80384,
+      "durationSeconds": 1.6746666666666667
+    },
+    {
+      "id": "tj-042",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 61440,
+      "durationSeconds": 1.28
+    },
+    {
+      "id": "tj-043",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 76288,
+      "durationSeconds": 1.5893333333333333
+    },
+    {
+      "id": "tj-044",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 74752,
+      "durationSeconds": 1.5573333333333332
+    },
+    {
+      "id": "tj-045",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 75264,
+      "durationSeconds": 1.568
+    },
+    {
+      "id": "tj-046",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 71168,
+      "durationSeconds": 1.4826666666666666
+    },
+    {
+      "id": "tj-047",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 65024,
+      "durationSeconds": 1.3546666666666667
+    },
+    {
+      "id": "tj-048",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 66048,
+      "durationSeconds": 1.376
+    },
+    {
+      "id": "tj-049",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 75264,
+      "durationSeconds": 1.568
+    },
+    {
+      "id": "tj-050",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 71168,
+      "durationSeconds": 1.4826666666666666
+    },
+    {
+      "id": "tj-051",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 84992,
+      "durationSeconds": 1.7706666666666666
+    },
+    {
+      "id": "tj-052",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 66560,
+      "durationSeconds": 1.3866666666666667
+    },
+    {
+      "id": "tj-053",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 72192,
+      "durationSeconds": 1.504
+    },
+    {
+      "id": "tj-054",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 68096,
+      "durationSeconds": 1.4186666666666667
+    },
+    {
+      "id": "tj-055",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 69632,
+      "durationSeconds": 1.4506666666666668
+    },
+    {
+      "id": "tj-056",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 79872,
+      "durationSeconds": 1.664
+    },
+    {
+      "id": "tj-057",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 63488,
+      "durationSeconds": 1.3226666666666667
+    },
+    {
+      "id": "tj-058",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 71168,
+      "durationSeconds": 1.4826666666666666
+    },
+    {
+      "id": "tj-059",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 78848,
+      "durationSeconds": 1.6426666666666667
+    },
+    {
+      "id": "tj-060",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 62976,
+      "durationSeconds": 1.312
+    },
+    {
+      "id": "tj-061",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 84480,
+      "durationSeconds": 1.76
+    },
+    {
+      "id": "tj-062",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 79872,
+      "durationSeconds": 1.664
+    },
+    {
+      "id": "tj-063",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 107520,
+      "durationSeconds": 2.24
+    },
+    {
+      "id": "tj-064",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 82432,
+      "durationSeconds": 1.7173333333333334
+    },
+    {
+      "id": "tj-065",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 104960,
+      "durationSeconds": 2.1866666666666665
+    },
+    {
+      "id": "tj-066",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 92672,
+      "durationSeconds": 1.9306666666666668
+    },
+    {
+      "id": "tj-067",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 81920,
+      "durationSeconds": 1.7066666666666668
+    },
+    {
+      "id": "tj-068",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 86016,
+      "durationSeconds": 1.792
+    },
+    {
+      "id": "tj-069",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 99840,
+      "durationSeconds": 2.08
+    },
+    {
+      "id": "tj-070",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 91136,
+      "durationSeconds": 1.8986666666666667
+    },
+    {
+      "id": "tj-071",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 89088,
+      "durationSeconds": 1.856
+    },
+    {
+      "id": "tj-072",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 101376,
+      "durationSeconds": 2.112
+    },
+    {
+      "id": "tj-073",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 134144,
+      "durationSeconds": 2.7946666666666666
+    },
+    {
+      "id": "tj-074",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 79872,
+      "durationSeconds": 1.664
+    },
+    {
+      "id": "tj-075",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 97792,
+      "durationSeconds": 2.037333333333333
+    },
+    {
+      "id": "tj-076",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 53248,
+      "durationSeconds": 1.1093333333333333
+    },
+    {
+      "id": "tj-077",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 107520,
+      "durationSeconds": 2.24
+    },
+    {
+      "id": "tj-078",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 83456,
+      "durationSeconds": 1.7386666666666666
+    },
+    {
+      "id": "tj-079",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 87552,
+      "durationSeconds": 1.824
+    },
+    {
+      "id": "tj-080",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 56832,
+      "durationSeconds": 1.184
+    },
+    {
+      "id": "tj-081",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 65024,
+      "durationSeconds": 1.3546666666666667
+    },
+    {
+      "id": "tj-082",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 78848,
+      "durationSeconds": 1.6426666666666667
+    },
+    {
+      "id": "tj-083",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 96256,
+      "durationSeconds": 2.005333333333333
+    },
+    {
+      "id": "tj-084",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 72192,
+      "durationSeconds": 1.504
+    },
+    {
+      "id": "tj-085",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 76288,
+      "durationSeconds": 1.5893333333333333
+    },
+    {
+      "id": "tj-086",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 60928,
+      "durationSeconds": 1.2693333333333334
+    },
+    {
+      "id": "tj-087",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 81408,
+      "durationSeconds": 1.696
+    },
+    {
+      "id": "tj-088",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 60416,
+      "durationSeconds": 1.2586666666666666
+    },
+    {
+      "id": "tj-089",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 55808,
+      "durationSeconds": 1.1626666666666667
+    },
+    {
+      "id": "tj-090",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 66048,
+      "durationSeconds": 1.376
+    },
+    {
+      "id": "tj-091",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 77824,
+      "durationSeconds": 1.6213333333333333
+    },
+    {
+      "id": "tj-092",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 93184,
+      "durationSeconds": 1.9413333333333334
+    },
+    {
+      "id": "tj-093",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 93184,
+      "durationSeconds": 1.9413333333333334
+    },
+    {
+      "id": "tj-094",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 45056,
+      "durationSeconds": 0.9386666666666666
+    },
+    {
+      "id": "tj-095",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 68608,
+      "durationSeconds": 1.4293333333333333
+    },
+    {
+      "id": "tj-096",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 45056,
+      "durationSeconds": 0.9386666666666666
+    },
+    {
+      "id": "tj-097",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 54272,
+      "durationSeconds": 1.1306666666666667
+    },
+    {
+      "id": "tj-098",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 47616,
+      "durationSeconds": 0.992
+    },
+    {
+      "id": "tj-099",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 79360,
+      "durationSeconds": 1.6533333333333333
+    },
+    {
+      "id": "tj-100",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 84480,
+      "durationSeconds": 1.76
+    },
+    {
+      "id": "tj-101",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 92160,
+      "durationSeconds": 1.92
+    },
+    {
+      "id": "tj-102",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 64000,
+      "durationSeconds": 1.3333333333333333
+    },
+    {
+      "id": "tj-103",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 84992,
+      "durationSeconds": 1.7706666666666666
+    },
+    {
+      "id": "tj-104",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 75776,
+      "durationSeconds": 1.5786666666666667
+    },
+    {
+      "id": "tj-105",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 70144,
+      "durationSeconds": 1.4613333333333334
+    },
+    {
+      "id": "tj-106",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 46080,
+      "durationSeconds": 0.96
+    },
+    {
+      "id": "tj-107",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 73728,
+      "durationSeconds": 1.536
+    },
+    {
+      "id": "tj-108",
+      "valid": true,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "dataSize": 86528,
+      "durationSeconds": 1.8026666666666666
+    }
+  ],
+  "failures": [],
+  "skipped": [
+    {
+      "id": "tj-001",
+      "reason": "valid output exists"
+    }
+  ],
+  "structuralValidation": {
+    "totalWavFiles": 108,
+    "expectedWavFiles": 108,
+    "missingIds": [],
+    "extraFiles": [],
+    "invalidWavCount": 0,
+    "zeroByteCount": 0,
+    "sampleRates": [
+      24000
+    ],
+    "minDurationSeconds": 0.9386666666666666,
+    "maxDurationSeconds": 2.7946666666666666,
+    "minFileSize": 45100,
+    "maxFileSize": 134188,
+    "files": [
+      {
+        "file": "tj-001.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-001.wav",
+        "fileSize": 53804,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 53760,
+        "durationSeconds": 1.12
+      },
+      {
+        "file": "tj-002.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-002.wav",
+        "fileSize": 73260,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 73216,
+        "durationSeconds": 1.5253333333333334
+      },
+      {
+        "file": "tj-003.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-003.wav",
+        "fileSize": 89644,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 89600,
+        "durationSeconds": 1.8666666666666667
+      },
+      {
+        "file": "tj-004.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-004.wav",
+        "fileSize": 84524,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 84480,
+        "durationSeconds": 1.76
+      },
+      {
+        "file": "tj-005.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-005.wav",
+        "fileSize": 82476,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 82432,
+        "durationSeconds": 1.7173333333333334
+      },
+      {
+        "file": "tj-006.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-006.wav",
+        "fileSize": 88620,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 88576,
+        "durationSeconds": 1.8453333333333333
+      },
+      {
+        "file": "tj-007.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-007.wav",
+        "fileSize": 84524,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 84480,
+        "durationSeconds": 1.76
+      },
+      {
+        "file": "tj-008.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-008.wav",
+        "fileSize": 94252,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 94208,
+        "durationSeconds": 1.9626666666666666
+      },
+      {
+        "file": "tj-009.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-009.wav",
+        "fileSize": 99372,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 99328,
+        "durationSeconds": 2.0693333333333332
+      },
+      {
+        "file": "tj-010.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-010.wav",
+        "fileSize": 94764,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 94720,
+        "durationSeconds": 1.9733333333333334
+      },
+      {
+        "file": "tj-011.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-011.wav",
+        "fileSize": 107052,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 107008,
+        "durationSeconds": 2.2293333333333334
+      },
+      {
+        "file": "tj-012.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-012.wav",
+        "fileSize": 117292,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 117248,
+        "durationSeconds": 2.4426666666666668
+      },
+      {
+        "file": "tj-013.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-013.wav",
+        "fileSize": 69164,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 69120,
+        "durationSeconds": 1.44
+      },
+      {
+        "file": "tj-014.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-014.wav",
+        "fileSize": 77356,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 77312,
+        "durationSeconds": 1.6106666666666667
+      },
+      {
+        "file": "tj-015.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-015.wav",
+        "fileSize": 128556,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 128512,
+        "durationSeconds": 2.6773333333333333
+      },
+      {
+        "file": "tj-016.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-016.wav",
+        "fileSize": 83500,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 83456,
+        "durationSeconds": 1.7386666666666666
+      },
+      {
+        "file": "tj-017.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-017.wav",
+        "fileSize": 86572,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 86528,
+        "durationSeconds": 1.8026666666666666
+      },
+      {
+        "file": "tj-018.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-018.wav",
+        "fileSize": 86572,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 86528,
+        "durationSeconds": 1.8026666666666666
+      },
+      {
+        "file": "tj-019.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-019.wav",
+        "fileSize": 116780,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 116736,
+        "durationSeconds": 2.432
+      },
+      {
+        "file": "tj-020.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-020.wav",
+        "fileSize": 99372,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 99328,
+        "durationSeconds": 2.0693333333333332
+      },
+      {
+        "file": "tj-021.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-021.wav",
+        "fileSize": 69676,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 69632,
+        "durationSeconds": 1.4506666666666668
+      },
+      {
+        "file": "tj-022.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-022.wav",
+        "fileSize": 95788,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 95744,
+        "durationSeconds": 1.9946666666666666
+      },
+      {
+        "file": "tj-023.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-023.wav",
+        "fileSize": 80428,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 80384,
+        "durationSeconds": 1.6746666666666667
+      },
+      {
+        "file": "tj-024.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-024.wav",
+        "fileSize": 89644,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 89600,
+        "durationSeconds": 1.8666666666666667
+      },
+      {
+        "file": "tj-025.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-025.wav",
+        "fileSize": 90668,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 90624,
+        "durationSeconds": 1.888
+      },
+      {
+        "file": "tj-026.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-026.wav",
+        "fileSize": 90156,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 90112,
+        "durationSeconds": 1.8773333333333333
+      },
+      {
+        "file": "tj-027.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-027.wav",
+        "fileSize": 55852,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 55808,
+        "durationSeconds": 1.1626666666666667
+      },
+      {
+        "file": "tj-028.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-028.wav",
+        "fileSize": 75308,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 75264,
+        "durationSeconds": 1.568
+      },
+      {
+        "file": "tj-029.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-029.wav",
+        "fileSize": 92716,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 92672,
+        "durationSeconds": 1.9306666666666668
+      },
+      {
+        "file": "tj-030.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-030.wav",
+        "fileSize": 92716,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 92672,
+        "durationSeconds": 1.9306666666666668
+      },
+      {
+        "file": "tj-031.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-031.wav",
+        "fileSize": 76332,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 76288,
+        "durationSeconds": 1.5893333333333333
+      },
+      {
+        "file": "tj-032.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-032.wav",
+        "fileSize": 73772,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 73728,
+        "durationSeconds": 1.536
+      },
+      {
+        "file": "tj-033.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-033.wav",
+        "fileSize": 54828,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 54784,
+        "durationSeconds": 1.1413333333333333
+      },
+      {
+        "file": "tj-034.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-034.wav",
+        "fileSize": 75820,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 75776,
+        "durationSeconds": 1.5786666666666667
+      },
+      {
+        "file": "tj-035.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-035.wav",
+        "fileSize": 81452,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 81408,
+        "durationSeconds": 1.696
+      },
+      {
+        "file": "tj-036.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-036.wav",
+        "fileSize": 68652,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 68608,
+        "durationSeconds": 1.4293333333333333
+      },
+      {
+        "file": "tj-037.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-037.wav",
+        "fileSize": 75820,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 75776,
+        "durationSeconds": 1.5786666666666667
+      },
+      {
+        "file": "tj-038.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-038.wav",
+        "fileSize": 92204,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 92160,
+        "durationSeconds": 1.92
+      },
+      {
+        "file": "tj-039.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-039.wav",
+        "fileSize": 56876,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 56832,
+        "durationSeconds": 1.184
+      },
+      {
+        "file": "tj-040.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-040.wav",
+        "fileSize": 67116,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 67072,
+        "durationSeconds": 1.3973333333333333
+      },
+      {
+        "file": "tj-041.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-041.wav",
+        "fileSize": 80428,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 80384,
+        "durationSeconds": 1.6746666666666667
+      },
+      {
+        "file": "tj-042.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-042.wav",
+        "fileSize": 61484,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 61440,
+        "durationSeconds": 1.28
+      },
+      {
+        "file": "tj-043.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-043.wav",
+        "fileSize": 76332,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 76288,
+        "durationSeconds": 1.5893333333333333
+      },
+      {
+        "file": "tj-044.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-044.wav",
+        "fileSize": 74796,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 74752,
+        "durationSeconds": 1.5573333333333332
+      },
+      {
+        "file": "tj-045.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-045.wav",
+        "fileSize": 75308,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 75264,
+        "durationSeconds": 1.568
+      },
+      {
+        "file": "tj-046.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-046.wav",
+        "fileSize": 71212,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 71168,
+        "durationSeconds": 1.4826666666666666
+      },
+      {
+        "file": "tj-047.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-047.wav",
+        "fileSize": 65068,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 65024,
+        "durationSeconds": 1.3546666666666667
+      },
+      {
+        "file": "tj-048.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-048.wav",
+        "fileSize": 66092,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 66048,
+        "durationSeconds": 1.376
+      },
+      {
+        "file": "tj-049.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-049.wav",
+        "fileSize": 75308,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 75264,
+        "durationSeconds": 1.568
+      },
+      {
+        "file": "tj-050.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-050.wav",
+        "fileSize": 71212,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 71168,
+        "durationSeconds": 1.4826666666666666
+      },
+      {
+        "file": "tj-051.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-051.wav",
+        "fileSize": 85036,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 84992,
+        "durationSeconds": 1.7706666666666666
+      },
+      {
+        "file": "tj-052.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-052.wav",
+        "fileSize": 66604,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 66560,
+        "durationSeconds": 1.3866666666666667
+      },
+      {
+        "file": "tj-053.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-053.wav",
+        "fileSize": 72236,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 72192,
+        "durationSeconds": 1.504
+      },
+      {
+        "file": "tj-054.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-054.wav",
+        "fileSize": 68140,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 68096,
+        "durationSeconds": 1.4186666666666667
+      },
+      {
+        "file": "tj-055.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-055.wav",
+        "fileSize": 69676,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 69632,
+        "durationSeconds": 1.4506666666666668
+      },
+      {
+        "file": "tj-056.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-056.wav",
+        "fileSize": 79916,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 79872,
+        "durationSeconds": 1.664
+      },
+      {
+        "file": "tj-057.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-057.wav",
+        "fileSize": 63532,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 63488,
+        "durationSeconds": 1.3226666666666667
+      },
+      {
+        "file": "tj-058.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-058.wav",
+        "fileSize": 71212,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 71168,
+        "durationSeconds": 1.4826666666666666
+      },
+      {
+        "file": "tj-059.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-059.wav",
+        "fileSize": 78892,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 78848,
+        "durationSeconds": 1.6426666666666667
+      },
+      {
+        "file": "tj-060.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-060.wav",
+        "fileSize": 63020,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 62976,
+        "durationSeconds": 1.312
+      },
+      {
+        "file": "tj-061.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-061.wav",
+        "fileSize": 84524,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 84480,
+        "durationSeconds": 1.76
+      },
+      {
+        "file": "tj-062.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-062.wav",
+        "fileSize": 79916,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 79872,
+        "durationSeconds": 1.664
+      },
+      {
+        "file": "tj-063.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-063.wav",
+        "fileSize": 107564,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 107520,
+        "durationSeconds": 2.24
+      },
+      {
+        "file": "tj-064.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-064.wav",
+        "fileSize": 82476,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 82432,
+        "durationSeconds": 1.7173333333333334
+      },
+      {
+        "file": "tj-065.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-065.wav",
+        "fileSize": 105004,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 104960,
+        "durationSeconds": 2.1866666666666665
+      },
+      {
+        "file": "tj-066.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-066.wav",
+        "fileSize": 92716,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 92672,
+        "durationSeconds": 1.9306666666666668
+      },
+      {
+        "file": "tj-067.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-067.wav",
+        "fileSize": 81964,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 81920,
+        "durationSeconds": 1.7066666666666668
+      },
+      {
+        "file": "tj-068.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-068.wav",
+        "fileSize": 86060,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 86016,
+        "durationSeconds": 1.792
+      },
+      {
+        "file": "tj-069.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-069.wav",
+        "fileSize": 99884,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 99840,
+        "durationSeconds": 2.08
+      },
+      {
+        "file": "tj-070.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-070.wav",
+        "fileSize": 91180,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 91136,
+        "durationSeconds": 1.8986666666666667
+      },
+      {
+        "file": "tj-071.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-071.wav",
+        "fileSize": 89132,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 89088,
+        "durationSeconds": 1.856
+      },
+      {
+        "file": "tj-072.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-072.wav",
+        "fileSize": 101420,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 101376,
+        "durationSeconds": 2.112
+      },
+      {
+        "file": "tj-073.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-073.wav",
+        "fileSize": 134188,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 134144,
+        "durationSeconds": 2.7946666666666666
+      },
+      {
+        "file": "tj-074.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-074.wav",
+        "fileSize": 79916,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 79872,
+        "durationSeconds": 1.664
+      },
+      {
+        "file": "tj-075.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-075.wav",
+        "fileSize": 97836,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 97792,
+        "durationSeconds": 2.037333333333333
+      },
+      {
+        "file": "tj-076.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-076.wav",
+        "fileSize": 53292,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 53248,
+        "durationSeconds": 1.1093333333333333
+      },
+      {
+        "file": "tj-077.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-077.wav",
+        "fileSize": 107564,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 107520,
+        "durationSeconds": 2.24
+      },
+      {
+        "file": "tj-078.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-078.wav",
+        "fileSize": 83500,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 83456,
+        "durationSeconds": 1.7386666666666666
+      },
+      {
+        "file": "tj-079.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-079.wav",
+        "fileSize": 87596,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 87552,
+        "durationSeconds": 1.824
+      },
+      {
+        "file": "tj-080.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-080.wav",
+        "fileSize": 56876,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 56832,
+        "durationSeconds": 1.184
+      },
+      {
+        "file": "tj-081.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-081.wav",
+        "fileSize": 65068,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 65024,
+        "durationSeconds": 1.3546666666666667
+      },
+      {
+        "file": "tj-082.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-082.wav",
+        "fileSize": 78892,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 78848,
+        "durationSeconds": 1.6426666666666667
+      },
+      {
+        "file": "tj-083.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-083.wav",
+        "fileSize": 96300,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 96256,
+        "durationSeconds": 2.005333333333333
+      },
+      {
+        "file": "tj-084.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-084.wav",
+        "fileSize": 72236,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 72192,
+        "durationSeconds": 1.504
+      },
+      {
+        "file": "tj-085.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-085.wav",
+        "fileSize": 76332,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 76288,
+        "durationSeconds": 1.5893333333333333
+      },
+      {
+        "file": "tj-086.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-086.wav",
+        "fileSize": 60972,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 60928,
+        "durationSeconds": 1.2693333333333334
+      },
+      {
+        "file": "tj-087.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-087.wav",
+        "fileSize": 81452,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 81408,
+        "durationSeconds": 1.696
+      },
+      {
+        "file": "tj-088.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-088.wav",
+        "fileSize": 60460,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 60416,
+        "durationSeconds": 1.2586666666666666
+      },
+      {
+        "file": "tj-089.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-089.wav",
+        "fileSize": 55852,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 55808,
+        "durationSeconds": 1.1626666666666667
+      },
+      {
+        "file": "tj-090.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-090.wav",
+        "fileSize": 66092,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 66048,
+        "durationSeconds": 1.376
+      },
+      {
+        "file": "tj-091.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-091.wav",
+        "fileSize": 77868,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 77824,
+        "durationSeconds": 1.6213333333333333
+      },
+      {
+        "file": "tj-092.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-092.wav",
+        "fileSize": 93228,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 93184,
+        "durationSeconds": 1.9413333333333334
+      },
+      {
+        "file": "tj-093.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-093.wav",
+        "fileSize": 93228,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 93184,
+        "durationSeconds": 1.9413333333333334
+      },
+      {
+        "file": "tj-094.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-094.wav",
+        "fileSize": 45100,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 45056,
+        "durationSeconds": 0.9386666666666666
+      },
+      {
+        "file": "tj-095.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-095.wav",
+        "fileSize": 68652,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 68608,
+        "durationSeconds": 1.4293333333333333
+      },
+      {
+        "file": "tj-096.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-096.wav",
+        "fileSize": 45100,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 45056,
+        "durationSeconds": 0.9386666666666666
+      },
+      {
+        "file": "tj-097.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-097.wav",
+        "fileSize": 54316,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 54272,
+        "durationSeconds": 1.1306666666666667
+      },
+      {
+        "file": "tj-098.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-098.wav",
+        "fileSize": 47660,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 47616,
+        "durationSeconds": 0.992
+      },
+      {
+        "file": "tj-099.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-099.wav",
+        "fileSize": 79404,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 79360,
+        "durationSeconds": 1.6533333333333333
+      },
+      {
+        "file": "tj-100.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-100.wav",
+        "fileSize": 84524,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 84480,
+        "durationSeconds": 1.76
+      },
+      {
+        "file": "tj-101.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-101.wav",
+        "fileSize": 92204,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 92160,
+        "durationSeconds": 1.92
+      },
+      {
+        "file": "tj-102.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-102.wav",
+        "fileSize": 64044,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 64000,
+        "durationSeconds": 1.3333333333333333
+      },
+      {
+        "file": "tj-103.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-103.wav",
+        "fileSize": 85036,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 84992,
+        "durationSeconds": 1.7706666666666666
+      },
+      {
+        "file": "tj-104.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-104.wav",
+        "fileSize": 75820,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 75776,
+        "durationSeconds": 1.5786666666666667
+      },
+      {
+        "file": "tj-105.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-105.wav",
+        "fileSize": 70188,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 70144,
+        "durationSeconds": 1.4613333333333334
+      },
+      {
+        "file": "tj-106.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-106.wav",
+        "fileSize": 46124,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 46080,
+        "durationSeconds": 0.96
+      },
+      {
+        "file": "tj-107.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-107.wav",
+        "fileSize": 73772,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 73728,
+        "durationSeconds": 1.536
+      },
+      {
+        "file": "tj-108.wav",
+        "filePath": "C:\\Users\\geste\\spec-kit\\tokyo-mate\\production\\audio\\travel-japanese\\wav\\tj-108.wav",
+        "fileSize": 86572,
+        "valid": true,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "dataSize": 86528,
+        "durationSeconds": 1.8026666666666666
+      }
+    ],
+    "pass": true
+  }
+}

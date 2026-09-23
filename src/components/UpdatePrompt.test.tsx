@@ -3,21 +3,35 @@ import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { UpdatePrompt } from './UpdatePrompt';
 
-function mockServiceWorkerContainer(waiting: { postMessage: ReturnType<typeof vi.fn> } | null) {
+function mockServiceWorkerContainer(
+  waiting: { postMessage: ReturnType<typeof vi.fn> } | null,
+  options: { update?: ReturnType<typeof vi.fn> } = {},
+) {
   const listeners: Record<string, ((event?: unknown) => void)[]> = {};
+  const update = options.update ?? vi.fn().mockResolvedValue(undefined);
+  const registration = {
+    waiting,
+    addEventListener: vi.fn(),
+    update,
+  };
   const container = {
     controller: {},
-    getRegistration: vi.fn().mockResolvedValue({
-      waiting,
-      addEventListener: vi.fn(),
-    }),
+    getRegistration: vi.fn().mockResolvedValue(registration),
     addEventListener: (type: string, handler: (event?: unknown) => void) => {
       listeners[type] = [...(listeners[type] ?? []), handler];
     },
     removeEventListener: vi.fn(),
   };
   Object.defineProperty(navigator, 'serviceWorker', { configurable: true, value: container });
-  return { container, listeners };
+  return { container, listeners, registration, update };
+}
+
+function setVisibilityState(state: DocumentVisibilityState) {
+  Object.defineProperty(document, 'visibilityState', { configurable: true, value: state });
+}
+
+function dispatchVisibilityChange() {
+  document.dispatchEvent(new Event('visibilitychange'));
 }
 
 describe('UpdatePrompt（FR-024 / SC-013 新版本不強制中斷目前任務）', () => {
@@ -78,5 +92,66 @@ describe('UpdatePrompt（FR-024 / SC-013 新版本不強制中斷目前任務）
     expect(reload).toHaveBeenCalledTimes(1);
     expect(waiting.postMessage).not.toHaveBeenCalled();
     Object.defineProperty(window, 'location', { configurable: true, value: originalLocation });
+  });
+});
+
+describe('UpdatePrompt — Phase 14（PWA Update Reliability：foreground registration.update()）', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  beforeEach(() => {
+    Object.defineProperty(navigator, 'serviceWorker', { configurable: true, value: undefined });
+    setVisibilityState('visible');
+  });
+
+  it('App 回到前景（visibilitychange 且 visible）時呼叫 registration.update()', async () => {
+    const { update } = mockServiceWorkerContainer(null);
+    render(<UpdatePrompt />);
+    await Promise.resolve();
+
+    dispatchVisibilityChange();
+    expect(update).toHaveBeenCalledTimes(1);
+  });
+
+  it('document.visibilityState 非 visible 時不呼叫 update()', async () => {
+    const { update } = mockServiceWorkerContainer(null);
+    render(<UpdatePrompt />);
+    await Promise.resolve();
+
+    setVisibilityState('hidden');
+    dispatchVisibilityChange();
+    expect(update).not.toHaveBeenCalled();
+  });
+
+  it('同一 session 內短時間內重複觸發 foreground 會被節流，不重複呼叫 update()', async () => {
+    const { update } = mockServiceWorkerContainer(null);
+    render(<UpdatePrompt />);
+    await Promise.resolve();
+
+    dispatchVisibilityChange();
+    dispatchVisibilityChange();
+    dispatchVisibilityChange();
+    expect(update).toHaveBeenCalledTimes(1);
+  });
+
+  it('update() rejection 被容錯處理，不拋出未捕捉例外', async () => {
+    const update = vi.fn().mockRejectedValue(new Error('offline'));
+    mockServiceWorkerContainer(null, { update });
+    render(<UpdatePrompt />);
+    await Promise.resolve();
+
+    expect(() => dispatchVisibilityChange()).not.toThrow();
+    await Promise.resolve();
+    expect(update).toHaveBeenCalledTimes(1);
+  });
+
+  it('既有 waiting worker 偵測、提示與 controllerchange reload 行為於本階段維持不變', async () => {
+    const waiting = { postMessage: vi.fn() };
+    mockServiceWorkerContainer(waiting);
+    render(<UpdatePrompt />);
+    const status = await screen.findByRole('status');
+    expect(status).toHaveTextContent('有新版本可用');
+    expect(screen.getByText('稍後更新')).toBeInTheDocument();
   });
 });
