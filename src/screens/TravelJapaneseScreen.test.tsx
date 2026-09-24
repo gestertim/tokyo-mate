@@ -239,6 +239,91 @@ describe('TravelJapaneseScreen — Phase 4 + Maintenance US2（三層語音播�
   });
 });
 
+// Hotfix：Playback Attempt Isolation（Fallback Race Fix，對應 T072 實機發現之男聲 MP3／女聲
+// SpeechSynthesis 交替問題）。以下為 UI 整合層級的 regression coverage；更細緻的 attempt-token
+// 隔離行為由 phraseAudio.test.ts 直接覆蓋。
+describe('TravelJapaneseScreen — Hotfix：Playback Attempt Isolation（Fallback Race Fix）', () => {
+  it('G. active phrase 於 requested/playing 時播放按鈕 disabled，其他 phrase 播放按鈕仍可操作', async () => {
+    stubBundledAudio('no-event');
+    stubSpeechSynthesis();
+    const user = userEvent.setup();
+    render(<TravelJapaneseScreen onBack={vi.fn()} />);
+    await user.click(screen.getByRole('button', { name: '日常溝通' }));
+
+    const playButtons = screen.getAllByRole('button', { name: '播放' });
+    expect(playButtons.length).toBeGreaterThan(1);
+
+    await user.click(playButtons[0]);
+    expect(screen.getByText('已要求播放')).toBeInTheDocument();
+
+    const playButtonsAfterClick = screen.getAllByRole('button', { name: '播放' });
+    expect(playButtonsAfterClick[0]).toBeDisabled();
+    expect(playButtonsAfterClick[1]).not.toBeDisabled();
+
+    // 收藏／搜尋／分類導覽不受影響
+    expect(screen.getByRole('button', { name: '返回情境清單' })).not.toBeDisabled();
+    const [firstFavoriteButton] = screen.getAllByRole('button', { name: /收藏/ });
+    expect(firstFavoriteButton).not.toBeDisabled();
+  });
+
+  it('F. 播放 phrase A 時改播 phrase B：A 被停止，B 正常播放，A 的遲到 callback 不得影響 B', async () => {
+    vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {});
+    const instances: HTMLAudioElement[] = [];
+    vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(function (this: HTMLAudioElement) {
+      instances.push(this);
+      return Promise.resolve();
+    });
+    stubSpeechSynthesis();
+    const user = userEvent.setup();
+    render(<TravelJapaneseScreen onBack={vi.fn()} />);
+    await user.click(screen.getByRole('button', { name: '日常溝通' }));
+
+    const playButtons = screen.getAllByRole('button', { name: '播放' });
+    await user.click(playButtons[0]); // Phrase A 開始播放（尚未觸發事件）
+    await user.click(playButtons[1]); // Phrase B 取代 A
+    expect(instances.length).toBe(2);
+
+    instances[0].dispatchEvent(new Event('error')); // Phrase A 的遲到事件
+    instances[1].dispatchEvent(new Event('playing')); // Phrase B 正常成功播放
+
+    const cards = screen.getAllByRole('article');
+    expect(await within(cards[1]).findByText('播放中')).toBeInTheDocument();
+    expect(screen.getAllByText('播放中').length).toBe(1);
+    expect(within(cards[0]).queryByText('播放失敗')).not.toBeInTheDocument();
+
+    const playButtonsAfter = screen.getAllByRole('button', { name: '播放' });
+    expect(playButtonsAfter[1]).toBeDisabled(); // B 播放中 disabled
+    expect(playButtonsAfter[0]).not.toBeDisabled(); // A 已恢復 idle，可再次操作
+  });
+
+  it('D. 最新 primary 成功播放後，舊（已被取代）attempt 遲到失敗不得觸發 SpeechSynthesis fallback', async () => {
+    vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {});
+    const instances: HTMLAudioElement[] = [];
+    vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(function (this: HTMLAudioElement) {
+      instances.push(this);
+      return Promise.resolve();
+    });
+    const { speak } = stubSpeechSynthesis();
+    const user = userEvent.setup();
+    render(<TravelJapaneseScreen onBack={vi.fn()} />);
+    await user.click(screen.getByRole('button', { name: '日常溝通' }));
+
+    const playButtons = screen.getAllByRole('button', { name: '播放' });
+    await user.click(playButtons[0]); // Phrase A 第一次 attempt（尚未觸發事件，instances[0]）
+    await user.click(playButtons[1]); // Phrase B 取代 A（A 的按鈕因此恢復可操作，instances[1]）
+    await user.click(playButtons[0]); // Phrase A 第二次（最新）attempt 取代 B（instances[2]）
+
+    expect(instances.length).toBe(3);
+    instances[2].dispatchEvent(new Event('playing')); // 最新 attempt 成功播放
+    expect(await screen.findByText('播放中')).toBeInTheDocument();
+
+    // 第一次（更早已被取代兩次）attempt 才遲到觸發 error，不得誤觸 fallback 中止已成功的最新 attempt
+    instances[0].dispatchEvent(new Event('error'));
+    expect(speak).not.toHaveBeenCalled();
+    expect(screen.getByText('播放中')).toBeInTheDocument();
+  });
+});
+
 describe('TravelJapaneseScreen — Phase 5 US3（搜尋）', () => {
   it('繁中搜尋、日文搜尋、部分關鍵字皆可找到結果', async () => {
     stubSpeechSynthesis();

@@ -12,7 +12,7 @@ WAV master、不修改既有 Human QA PASS/FAIL 事實。
 
 | Command | 實際結果 |
 |---|---|
-| `npm run test`（`vitest run`） | **PASS** — Test Files 48 passed (48)；Tests 417 passed (417) |
+| `npm run test`（`vitest run`） | **PASS** — Test Files 48 passed (48)；Tests 431 passed (431) |
 | QA Node suite — `node --test tools/travel-japanese-audio-qa/qa-data.test.mjs` | **PASS** — tests 8、pass 8、fail 0 |
 | `npm run build` | **PASS** — `tsc -b && vite build` 成功，69 modules transformed |
 | `npm run test:pwa-red-gate`（Playwright） | **PASS** — 4 passed (4) |
@@ -20,7 +20,7 @@ WAV master、不修改既有 Human QA PASS/FAIL 事實。
 
 ## 目前最新 Final 統計數字（本次實際執行結果為準）
 
-- Vitest：**417 / 417**（48 / 48 test files）
+- Vitest：**431 / 431**（48 / 48 test files）
 - QA Node suite：**8 / 8**
 - PWA Red Gate：**4 / 4**
 - Build：**PASS**
@@ -33,7 +33,7 @@ execution record，2026-09-23 較早執行）記錄「Vitest 49/49 files、422/4
 `specs/004-travel-japanese-phrases/tasks.md` T068–T071 記錄「48 個測試檔、413 個測試」。上述兩組數字
 均為**當時執行結果**，各自對應其記錄當下的 repository 狀態，本文件不竄改、不刪除該等歷史數字。
 
-**目前 Final Integration Verification 統一以本文件記錄之數字為準**（417 / 417、8 / 8、4 / 4、
+**目前 Final Integration Verification 統一以本文件記錄之數字為準**（431 / 431、8 / 8、4 / 4、
 Build PASS、`git diff --check` PASS）；`travel-japanese-audio-production-verification.md` 第 8 節已
 新增指標，明確標示其 422/422 數字為當時執行結果並指向本文件作為目前最新引用來源。
 

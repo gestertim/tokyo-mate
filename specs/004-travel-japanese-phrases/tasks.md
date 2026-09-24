@@ -696,15 +696,18 @@ red-gate 行為與型別／打包正確性，且未引入未經授權之 depende
 
 - [X] T068 執行 `npx vitest run`：確認 Feature 004 全部測試（含 T056／T059／T061／T065 新增案例）通過，
       且既有 Feature 001／002／003 自動化測試維持 100% 原有通過狀態；若發現既有測試失敗，依
-      [plan.md](./plan.md)「Regression Failure Handling」視為 regression blocker 並優先處理
+      [plan.md](./plan.md)「Regression Failure Handling」視為 regression blocker 並優先處理。
+      本次實際執行結果：**48 / 48 test files、431 / 431 tests 全數通過**。
 - [X] T069 執行 `npm run build`：確認型別檢查與打包無誤
 - [X] T070 執行 `npm run test:pwa-red-gate`：確認既有 PWA 行為（App Shell、offline fallback、update
-      prompt）與新增音檔 cache 邏輯皆不造成既有 red-gate 案例失敗
+      prompt）與新增音檔 cache 邏輯皆不造成既有 red-gate 案例失敗；本次實際執行結果：**4 / 4**
+      案例全數通過
 - [X] T071 執行 `git diff` / dependency drift check：確認 `package.json`／`package-lock.json` 無變動、
       確認本次變更範圍僅限於 Phase 12–14 所列檔案（`src/features/travel-japanese/phraseAudio.ts`、
       `src/screens/TravelJapaneseScreen.tsx`、`src/service-worker.ts`、
       `src/components/UpdatePrompt.tsx` 及對應測試檔），未觸及 `public/**`（音檔內容）、
-      `package.json`、既有 001–003 專屬檔案
+      `package.json`、既有 001–003 專屬檔案；本次實際執行結果：`git diff --check` 無輸出，
+      working tree 變更僅限本輪 hotfix 所需檔案，未加入 dependency
 
 **Checkpoint**：Phase 15 全數通過後，方可進入 Manual Cross-device Verification（Phase 16）
 

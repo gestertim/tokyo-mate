@@ -91,4 +91,30 @@ describe('PhraseCard（Phase 3 US1 + Phase 7 US5 安全標示）', () => {
     expect(screen.getByText('這是我的護照。')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /收藏/ })).not.toBeDisabled();
   });
+
+  // Hotfix：Button Interaction Guard（避免同一 phrase 於 playback 進行中被重複觸發，導致 attempt race）
+  it('Hotfix：isActivePlayback + requested 時播放按鈕 disabled', () => {
+    renderCard({ isActivePlayback: true, playbackStatus: 'requested' });
+    expect(screen.getByRole('button', { name: /播放/ })).toBeDisabled();
+  });
+
+  it('Hotfix：isActivePlayback + playing 時播放按鈕 disabled', () => {
+    renderCard({ isActivePlayback: true, playbackStatus: 'playing' });
+    expect(screen.getByRole('button', { name: /播放/ })).toBeDisabled();
+  });
+
+  it('Hotfix：isActivePlayback + failed 時播放按鈕恢復可操作（可重試）', () => {
+    renderCard({ isActivePlayback: true, playbackStatus: 'failed' });
+    expect(screen.getByRole('button', { name: /播放/ })).not.toBeDisabled();
+  });
+
+  it('Hotfix：isActivePlayback + idle 時播放按鈕可操作', () => {
+    renderCard({ isActivePlayback: true, playbackStatus: 'idle' });
+    expect(screen.getByRole('button', { name: /播放/ })).not.toBeDisabled();
+  });
+
+  it('Hotfix：isActivePlayback 為 false 時，即使 playbackStatus 為 playing，播放按鈕仍可操作（不同 phrase 不受全域狀態影響，不全域 disable）', () => {
+    renderCard({ isActivePlayback: false, playbackStatus: 'playing' });
+    expect(screen.getByRole('button', { name: /播放/ })).not.toBeDisabled();
+  });
 });

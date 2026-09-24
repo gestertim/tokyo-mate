@@ -185,3 +185,174 @@ describe('phraseAudio（Maintenance：playBundledAudio Primary 層 + timeout/ter
     expect(cancel).toHaveBeenCalled();
   });
 });
+
+// Hotfix：Playback Attempt Isolation（Fallback Race Fix，T072 實機發現的男聲/女聲交替問題）。
+// 目的：確認舊（已被取代）的 bundled playback attempt，其遲到的 play().catch／error／ended／timeout
+// 都不得再驅動任何 handler，避免誤觸 fallback 或誤停最新 attempt。
+describe('phraseAudio（Hotfix：Playback Attempt Isolation，Fallback Race Fix）', () => {
+  beforeEach(() => {
+    vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.useRealTimers();
+  });
+
+  it('A. 同一 phrase 快速重複觸發：舊 attempt 的 play() 才遲遲 reject 時，不得呼叫舊 attempt 的 onError', async () => {
+    const rejecters: Array<(reason: unknown) => void> = [];
+    vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(function () {
+      return new Promise((_resolve, reject) => {
+        rejecters.push(reject);
+      });
+    });
+
+    const onErrorA = vi.fn();
+    const onErrorB = vi.fn();
+
+    playBundledAudio('tj-001', { onError: onErrorA });
+    playBundledAudio('tj-001', { onError: onErrorB });
+    await vi.waitFor(() => expect(rejecters.length).toBe(2));
+
+    // 舊（第一次）attempt 的 play() 才遲遲 reject —— 不得誤觸舊 attempt 的 onError（避免驅動 fallback 中止新 attempt）
+    rejecters[0](new Error('stale rejection'));
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(onErrorA).not.toHaveBeenCalled();
+
+    // 新（第二次）attempt 仍可正常失敗／成功，不受舊 attempt 影響
+    rejecters[1](new Error('current rejection'));
+    await vi.waitFor(() => expect(onErrorB).toHaveBeenCalledTimes(1));
+  });
+
+  it('B. Stale Attempt Isolation：舊 attempt 遲到的 error / ended / timeout 事件都不得影響已被取代的 handlers', async () => {
+    vi.useFakeTimers();
+    const instances: HTMLAudioElement[] = [];
+    vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(function (this: HTMLAudioElement) {
+      instances.push(this);
+      return Promise.resolve();
+    });
+
+    const onErrorA = vi.fn();
+    const onEndedA = vi.fn();
+    playBundledAudio('tj-001', { onError: onErrorA, onEnded: onEndedA });
+    await vi.advanceTimersByTimeAsync(0);
+
+    const onPlayingB = vi.fn();
+    const onEndedB = vi.fn();
+    playBundledAudio('tj-001', { onPlaying: onPlayingB, onEnded: onEndedB });
+    await vi.advanceTimersByTimeAsync(0);
+    expect(instances.length).toBe(2);
+
+    // 舊 attempt（instances[0]）遲到的 error / ended 事件不得驅動舊 handlers
+    instances[0].dispatchEvent(new Event('error'));
+    instances[0].dispatchEvent(new Event('ended'));
+    expect(onErrorA).not.toHaveBeenCalled();
+    expect(onEndedA).not.toHaveBeenCalled();
+
+    // 新 attempt（instances[1]）成功播放並完整播完，不受舊 attempt 遲到事件影響
+    instances[1].dispatchEvent(new Event('playing'));
+    expect(onPlayingB).toHaveBeenCalledTimes(1);
+    instances[1].dispatchEvent(new Event('ended'));
+    expect(onEndedB).toHaveBeenCalledTimes(1);
+
+    // 新 attempt 已正常完成（自身 timeout 已隨 'ended' 被清除），逾時後兩邊 handlers 均不再被觸發
+    await vi.advanceTimersByTimeAsync(8000);
+    expect(onErrorA).not.toHaveBeenCalled();
+    expect(onEndedB).toHaveBeenCalledTimes(1);
+  });
+
+  it('C. Timeout Ownership：timeout 只暫停自己持有的 audio instance，不透過 global 誤停其他 attempt', async () => {
+    vi.useFakeTimers();
+    const instances: HTMLAudioElement[] = [];
+    vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(function (this: HTMLAudioElement) {
+      instances.push(this);
+      // 以獨立屬性覆蓋（非 vi.spyOn）建立每個 instance 各自獨立的 pause 計數，
+      // 避免與 prototype 層級的共用 spy 混淆。
+      this.pause = vi.fn();
+      return Promise.resolve();
+    });
+
+    const onPlayingA = vi.fn();
+    playBundledAudio('tj-001', { onPlaying: onPlayingA });
+    await vi.advanceTimersByTimeAsync(0);
+    instances[0].dispatchEvent(new Event('playing'));
+    expect(onPlayingA).toHaveBeenCalledTimes(1);
+
+    const onErrorB = vi.fn();
+    playBundledAudio('tj-002', { onError: onErrorB });
+    await vi.advanceTimersByTimeAsync(0);
+    expect(instances[0].pause).toHaveBeenCalledTimes(1); // A 因被 B 取代而終止一次
+
+    await vi.advanceTimersByTimeAsync(8000); // B 逾時
+    expect(onErrorB).toHaveBeenCalledTimes(1);
+    expect(instances[1].pause).toHaveBeenCalledTimes(1); // timeout 只暫停 B 自己持有的 audio
+    expect(instances[0].pause).toHaveBeenCalledTimes(1); // A 未被再次觸碰
+  });
+
+  it('D. Primary Success：最新 attempt 成功播放（onPlaying）後，舊 attempt 遲到失敗不得驅動任何 handler', async () => {
+    const instances: HTMLAudioElement[] = [];
+    vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(function (this: HTMLAudioElement) {
+      instances.push(this);
+      return Promise.resolve();
+    });
+
+    const onErrorA = vi.fn();
+    playBundledAudio('tj-001', { onError: onErrorA });
+    await vi.waitFor(() => expect(instances.length).toBe(1));
+
+    const onPlayingB = vi.fn();
+    playBundledAudio('tj-001', { onPlaying: onPlayingB });
+    await vi.waitFor(() => expect(instances.length).toBe(2));
+    instances[1].dispatchEvent(new Event('playing'));
+    expect(onPlayingB).toHaveBeenCalledTimes(1);
+
+    // 舊 attempt 遲到的 error（模擬即使已被取代，網路才回應 404）
+    instances[0].dispatchEvent(new Event('error'));
+    expect(onErrorA).not.toHaveBeenCalled();
+  });
+
+  it('E. Same Phrase Repeated Playback：同一句完整播完後再次播放，仍可正常啟動新的 primary playback', async () => {
+    const instances: HTMLAudioElement[] = [];
+    vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(function (this: HTMLAudioElement) {
+      instances.push(this);
+      return Promise.resolve();
+    });
+
+    const onEnded1 = vi.fn();
+    playBundledAudio('tj-001', { onEnded: onEnded1 });
+    await vi.waitFor(() => expect(instances.length).toBe(1));
+    instances[0].dispatchEvent(new Event('ended'));
+    expect(onEnded1).toHaveBeenCalledTimes(1);
+
+    const onPlaying2 = vi.fn();
+    playBundledAudio('tj-001', { onPlaying: onPlaying2 });
+    await vi.waitFor(() => expect(instances.length).toBe(2));
+    instances[1].dispatchEvent(new Event('playing'));
+    expect(onPlaying2).toHaveBeenCalledTimes(1);
+  });
+
+  it('F. Different Phrase Replacement：播放 phrase A 時改播 phrase B，A 被停止且 A 的遲到 callback 不得影響 B', async () => {
+    const instances: HTMLAudioElement[] = [];
+    vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(function (this: HTMLAudioElement) {
+      instances.push(this);
+      return Promise.resolve();
+    });
+
+    const onErrorA = vi.fn();
+    playBundledAudio('tj-001', { onError: onErrorA });
+    await vi.waitFor(() => expect(instances.length).toBe(1));
+
+    const onPlayingB = vi.fn();
+    const onEndedB = vi.fn();
+    playBundledAudio('tj-002', { onPlaying: onPlayingB, onEnded: onEndedB });
+    await vi.waitFor(() => expect(instances.length).toBe(2));
+
+    instances[0].dispatchEvent(new Event('error')); // A 的遲到事件
+    expect(onErrorA).not.toHaveBeenCalled();
+
+    instances[1].dispatchEvent(new Event('playing'));
+    expect(onPlayingB).toHaveBeenCalledTimes(1);
+    instances[1].dispatchEvent(new Event('ended'));
+    expect(onEndedB).toHaveBeenCalledTimes(1);
+  });
+});
