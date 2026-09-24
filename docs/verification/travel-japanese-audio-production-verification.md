@@ -92,13 +92,62 @@
 - Master Modified：NO
 - Permanent Baseline Changed：NO
 
-**精確獨立狀態（取代原「108-Phrase Production Complete：YES」單一措辭，避免被誤讀為已包含跨裝置驗證或部署）**：
+**精確獨立狀態（2026-09-24 Final Closure 更新；下方 T072／Deployment／Tag 三行取代原先「NOT
+COMPLETED」／「NOT STARTED」／「NOT CREATED」歷史狀態，該等歷史狀態為 hotfix 前之如實記錄，保留於本文件
+第 9 節作為 pre-hotfix finding，已於本輪 device verification 中 resolved）**：
 
 - MP3 Delivery Production：COMPLETE（僅指 108/108 MP3 conversion + structural/duration/mapping validation scope）
 - Human QA：108 / 108 PASS
-- Cross-device Verification（T072）：NOT COMPLETED
-- Production Deployment：NOT STARTED
-- New Safety Tag：NOT CREATED
+- Cross-device Verification（T072）：**COMPLETE / PASS**（2026-09-24，Windows Chrome、iPhone
+  Browser、Android Chrome、Android Installed PWA 四種環境全數 PASS，詳見第 9 節）
+- Production Deployment：**COMPLETE**（production redeploy PASS，automated production verify PASS）
+- New Safety Tag：**CREATED**（`004-audio-production-safe-baseline`）
+
+## 9. Cross-device Human Device Verification（T072，2026-09-24）
+
+> 本節記錄 Feature 004 Final Closure 批准之人工實機驗證結果。此前第 7 節「Cross-device Verification
+> （T072）：NOT COMPLETED」／「Production Deployment：NOT STARTED」／「New Safety Tag：NOT CREATED」
+> 為 hotfix 前之如實記錄，保留作為 pre-hotfix finding，狀態已於本節 resolved，不刪除歷史文字。
+
+- **Hotfix commit**：`ce61352fa3859c881143b4541299070aa2c55ede`
+- **Production redeploy**：PASS
+- **Automated production verify**：PASS
+- **Audio playback race（男/女聲交替、需二次點擊）**：resolved in device verification
+- **Production status**：verified
+
+### A. Windows / Desktop Chrome
+
+- 第一次播放立即有聲：PASS
+- 正式男聲 MP3：PASS
+- 第二次播放仍為男聲：PASS
+- 無男/女聲交替：PASS
+
+### B. iPhone Browser
+
+- 第一次播放立即有聲：PASS
+- 不需第二次點擊：PASS
+- 正式男聲：PASS
+- 第二次播放仍為男聲：PASS
+
+### C. Android Chrome
+
+- 第一次播放立即有聲：PASS
+- 不需第二次點擊：PASS
+- 正式男聲：PASS
+- 第二次播放仍為男聲：PASS
+
+### D. Android Installed PWA
+
+- 第一次播放立即有聲：PASS
+- 第二次播放仍為男聲：PASS
+- 無男/女聲交替：PASS
+- Cached offline replay：PASS
+- 無 reload loop：PASS
+
+**Overall T072：PASS**
+
+既有 Human QA 108/108 PASS 之事實不因本次 device verification 而變更、覆寫或重複計入；本節僅記錄跨裝置
+人工實機走查（bundled MP3 playback、cache、fallback 排序）之結果。
 
 ## 8. Phase C MP3 delivery execution record（2026-09-23）
 

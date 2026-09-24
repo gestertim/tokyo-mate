@@ -43,3 +43,25 @@ Build PASS、`git diff --check` PASS）；`travel-japanese-audio-production-veri
 - 本次執行未變更 Human QA PASS/FAIL 事實。
 - 本次執行未 commit、未 push、未 deploy、未建立 tag、未移動任何 baseline。
 - T072（跨裝置人工走查）狀態不受本文件影響，仍為未完成。
+
+## Final Closure Re-verification（2026-09-24）
+
+> 本節為 Feature 004 Final Closure 批准之最終驗證重跑紀錄，與上方 2026-09-23 Analyze Remediation
+> 執行紀錄並列保留，不覆寫、不刪除。
+
+| Command | 實際結果 |
+|---|---|
+| `npm run test`（`vitest run`） | **PASS** — Test Files 48 passed (48)；Tests 431 passed (431) |
+| `npm run build` | **PASS** — `tsc -b && vite build` 成功，69 modules transformed |
+| `npm run test:pwa-red-gate`（Playwright） | **PASS** — 4 passed (4) |
+| `git diff --check` | **PASS** — 無輸出 |
+
+- Hotfix commit：`ce61352fa3859c881143b4541299070aa2c55ede`
+- Production redeploy：PASS
+- T072（跨裝置人工實機走查）：**COMPLETE / PASS**（詳見
+  [docs/verification/travel-japanese-audio-production-verification.md](./travel-japanese-audio-production-verification.md#9-cross-device-human-device-verificationt0722026-09-24)）
+- Android PWA cached offline replay：PASS
+- Audio playback race（男/女聲交替、需二次點擊）：resolved in device verification
+- Production status：verified
+- 108 個 MP3、WAV master、`package.json`／`package-lock.json`、service-worker 架構、Human QA 108/108
+  事實均未變動。

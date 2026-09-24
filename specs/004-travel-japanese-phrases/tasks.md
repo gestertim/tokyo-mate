@@ -718,7 +718,7 @@ red-gate 行為與型別／打包正確性，且未引入未經授權之 depende
 **Purpose**：以人工走查確認實際裝置／瀏覽器行為符合預期；目標為跨品牌行動裝置可用，**不**將特定品牌
 設定調整列為產品必要步驟。
 
-- [ ] T072 建立並執行跨裝置手動驗證矩陣（至少涵蓋 Windows Chrome、iPhone 瀏覽器、Android Chrome、
+- [X] T072 建立並執行跨裝置手動驗證矩陣（至少涵蓋 Windows Chrome、iPhone 瀏覽器、Android Chrome、
       Android 已安裝 PWA 四種環境），拆分為 A／B 兩部分，記錄各環境走查結果與任何觀察到的差異（不得將
       任何單一品牌特定設定調整記為產品必要前置步驟）：
 
@@ -747,7 +747,7 @@ Checkpoint 失敗，但 Maintenance Closure（T073）MUST 如實記錄 B 部分�
 **Purpose**：彙整本次 Maintenance 全部驗證結果，確認既有 Feature 004 歷史任務未被覆寫，確認 repository
 safety 與 授權邊界全數維持。
 
-- [ ] T073 彙整 Maintenance 執行結果並確認：(a) T001–T045 之任務內容與 `[X]` 完成狀態未被覆寫或重編；
+- [X] T073 彙整 Maintenance 執行結果並確認：(a) T001–T045 之任務內容與 `[X]` 完成狀態未被覆寫或重編；
       (b) 本次新增之 T046–T072 依 Phase 10–16 全數完成或明確記錄未完成原因；(c) 0 新增 npm
       dependency；(d) 未建立任何實際 MP3 音檔（production baseline approval 不等於 108 句正式音檔完成）；
       (e) `004-safe-baseline`（`ddc73392be88b1bb2e44356a1e4077d96d97bf45`）未被移動；
@@ -823,17 +823,26 @@ safety 與 授權邊界全數維持。
   僅限 `src/features/travel-japanese/phraseAudio.ts`（含測試）、`src/screens/TravelJapaneseScreen.tsx`
   （含測試）、`src/service-worker.ts`（含測試）、`src/components/UpdatePrompt.tsx`（含測試），未觸及
   `public/**`、`package.json` 或既有 001–003 專屬檔案。PASS。
-- **T072（Manual Cross-device Verification）**：**未執行**——coding agent 無法操作實體 Windows
-  Chrome／iPhone／Android Chrome／已安裝 PWA 裝置，此為需要人工於實體裝置執行之任務，**待成人教育者
-  或其他人工測試者實際執行**。A 部分（不依賴正式 MP3）之底層行為已由本次自動化測試等效覆蓋（bundled
-  404 → SpeechSynthesis fallback、timeout 恢復、PWA update prompt、foreground update、graceful
-  failure），但跨裝置人工走查本身尚未執行，不得以自動化測試結果替代標記為 `PASS`。B 部分維持
-  `BLOCKED`／`PENDING`（原因：正式 MP3 assets 尚未產生）。
-- **T073（Maintenance Closure）**：**PARTIAL**——T001–T045 完成狀態未被覆寫；T046–T054、T056–T071 已
-  完成；T055 已正式批准但 108 句正式 MP3 仍未完成；T072 人工跨裝置驗證尚未執行；0 新增 npm
-  dependency；未建立任何實際 MP3；`004-safe-baseline` 未被移動；本次 Maintenance 範圍內無
-  commit／push／tag。因 108 句正式 production 尚未完成且 T072 尚未執行，**不得宣稱整個 Maintenance
-  fully complete**。
+- **T072（Manual Cross-device Verification）**：**COMPLETE**——2026-09-24 由人工測試者於四種實體環境
+      實際執行完整走查，結果如下：
+      - **A. Windows / Desktop Chrome**：第一次播放立即有聲 PASS；正式男聲 MP3 PASS；第二次播放仍為
+        男聲 PASS；無男/女聲交替 PASS。
+      - **B. iPhone Browser**：第一次播放立即有聲 PASS；不需第二次點擊 PASS；正式男聲 PASS；第二次
+        播放仍為男聲 PASS。
+      - **C. Android Chrome**：第一次播放立即有聲 PASS；不需第二次點擊 PASS；正式男聲 PASS；第二次
+        播放仍為男聲 PASS。
+      - **D. Android Installed PWA**：第一次播放立即有聲 PASS；第二次播放仍為男聲 PASS；無男/女聲交替
+        PASS；cached offline replay PASS；無 reload loop PASS。
+      - **Overall T072：PASS**。B 部分（正式 bundled MP3 playback／cached offline replay／uncached
+        offline behavior）已隨正式 108 句 MP3 production 完成而一併於本輪實機驗證中執行並全數 PASS，
+        不再為 `BLOCKED`／`PENDING`。既有 Human QA 108/108 PASS 之事實不因本次 device verification 而
+        變更或重複計入。
+- **T073（Maintenance Closure）**：**COMPLETE**——T001–T045 完成狀態未被覆寫；T046–T072 依 Phase
+      10–16 全數完成；T055 已正式批准且 108 句正式 MP3 production 已完成；T072 人工跨裝置驗證已於
+      2026-09-24 完成且四種環境全數 PASS；0 新增 npm dependency；`004-safe-baseline`
+      （`ddc73392be88b1bb2e44356a1e4077d96d97bf45`）未被移動；production redeploy PASS；automated
+      production verify PASS；verification evidence 已同步。Maintenance Phase（T046–T073）fully
+      complete。
 
 ### Phase C MP3 Delivery Execution Record（2026-09-23）
 
@@ -895,3 +904,11 @@ tag、不移動 baseline。**T071／T072／T073 之既有內容與狀態不受�
 **Checkpoint**：Phase 18 完成後，`/speckit-analyze` 對應之 CRITICAL-1／HIGH-1／HIGH-2／HIGH-3 findings
 之 documentation／evidence 缺口皆已補齊；T072 仍為未完成、production deployment 仍未開始、new safety
 tag 仍未建立，皆不因本 Phase 而變更。
+
+> **後續狀態更新（2026-09-24，Feature 004 Final Closure）**：上列「T072 仍為未完成、production
+> deployment 仍未開始、new safety tag 仍未建立」為 Phase 18（2026-09-23）執行當下之如實記錄，
+> **保留不刪除**。此三項已於 2026-09-24 依序完成：T072 已於本文件上方 Maintenance Execution Record
+> 更新為 `COMPLETE`（四種環境實機驗證全數 PASS）；production deployment 已完成並經 automated
+> production verify PASS；新 safety tag `004-audio-production-safe-baseline` 已依本輪 Final Closure
+> 批准建立。詳見
+> [docs/verification/travel-japanese-audio-production-verification.md](../../docs/verification/travel-japanese-audio-production-verification.md)。
