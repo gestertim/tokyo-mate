@@ -6,5 +6,10 @@
       { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
       { "key": "X-Frame-Options", "value": "DENY" }
     ]
-  }]
+  }],
+  "git": {
+    "deploymentEnabled": {
+      "checkpoint/005-local-testonly-20261008": false
+    }
+  }
 }
