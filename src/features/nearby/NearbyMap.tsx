@@ -9,7 +9,7 @@ interface NearbyMapProps {
   onMapUnavailable?: () => void;
 }
 
-const GEOAPIFY_TILE_URL = 'https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey={apiKey}';
+const GEOAPIFY_TILE_URL = '/api/map/tile/{z}/{x}/{y}.png';
 const GEOAPIFY_ATTRIBUTION =
   '© <a href="https://www.geoapify.com/">Geoapify</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const DEFAULT_CENTER: [number, number] = [35.6762, 139.6503];
@@ -32,9 +32,8 @@ export function NearbyMap({ places, selectedPlaceId, onSelectPlace, onMapUnavail
   useEffect(() => {
     if (!containerRef.current) return undefined;
     try {
-      const apiKey = (import.meta.env.VITE_GEOAPIFY_API_KEY as string | undefined) ?? '';
       const map = L.map(containerRef.current).setView(DEFAULT_CENTER, 13);
-      const tileLayer = L.tileLayer(GEOAPIFY_TILE_URL.replace('{apiKey}', apiKey), {
+      const tileLayer = L.tileLayer(GEOAPIFY_TILE_URL, {
         attribution: GEOAPIFY_ATTRIBUTION,
         maxZoom: 20,
       });

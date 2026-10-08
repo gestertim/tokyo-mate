@@ -63,7 +63,8 @@ describe('NearbyMap', () => {
     expect(L.map).toHaveBeenCalledTimes(1);
     expect(L.tileLayer).toHaveBeenCalledTimes(1);
     const [url, options] = vi.mocked(L.tileLayer).mock.calls[0];
-    expect(url).toContain('geoapify.com');
+    expect(url).toBe('/api/map/tile/{z}/{x}/{y}.png');
+    expect(url).not.toContain('apiKey');
     expect((options as { attribution: string }).attribution).toContain('Geoapify');
   });
 

@@ -11,7 +11,8 @@ vi.mock('../../api/_lib/openai.js', () => ({
   getOpenAIModel: () => 'gpt-4o-mini',
 }));
 
-import { POST } from '../../api/photo-translate';
+// 歷史內容契約的隔離回歸；真實 HTTP 拒絕路徑另見 paid-handlers-rejection.test.ts。
+import { executeUpstream as POST } from '../../api/photo-translate';
 
 function postPhotoTranslate(body: unknown, contentType = 'application/json'): Promise<Response> {
   return POST(new Request('http://localhost/api/photo-translate', {

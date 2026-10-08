@@ -5,6 +5,7 @@ interface OcrResultPanelProps {
   croppedObjectUrl: string;
   ocr: OcrState;
   translation?: TranslationState;
+  accessMessage?: string;
   onSelectTranslationTarget?: (target: PhotoTranslateTargetLanguage) => void;
   onRetryTranslate?: () => void;
   onRetryOcr: () => void;
@@ -17,6 +18,7 @@ export function OcrResultPanel({
   croppedObjectUrl,
   ocr,
   translation,
+  accessMessage,
   onSelectTranslationTarget,
   onRetryTranslate,
   onRetryOcr,
@@ -51,7 +53,8 @@ export function OcrResultPanel({
             <p>{ocr.sourceText}</p>
           </section>
           {onSelectTranslationTarget && onRetryTranslate ? (
-            <TranslationPanel translation={translation} onSelectTarget={onSelectTranslationTarget} onRetryTranslate={onRetryTranslate} />
+            <TranslationPanel translation={translation} accessMessage={accessMessage}
+              onSelectTarget={onSelectTranslationTarget} onRetryTranslate={onRetryTranslate} />
           ) : (
             <section aria-labelledby="translation-result-heading">
               <h4 id="translation-result-heading">翻譯結果</h4>
@@ -81,7 +84,7 @@ export function OcrResultPanel({
 
       {ocr.status === 'failure' && (
         <>
-          <p role="alert">辨識服務暫時無法使用，請稍後重試辨識，或重新選取範圍。</p>
+          <p role="alert">{accessMessage ?? '辨識服務暫時無法使用，請稍後重試辨識，或重新選取範圍。'}</p>
           <button type="button" onClick={onRetryOcr}>
             重試辨識
           </button>

@@ -108,6 +108,23 @@ afterEach(() => {
 });
 
 describe('Service Worker cache privacy boundary (FR-017 / FR-018 / FR-026)', () => {
+  it.each(['/api/auth/login', '/api/auth/callback', '/api/auth/session', '/api/me/quota',
+    '/api/admin/overview', '/api/map/tile/1/0/0.png'])('005 %s 即使是 navigation 也不攔截或查快取', async (path) => {
+    const runtime = await loadServiceWorkerRuntime();
+    try {
+      const request = new Request(`${location.origin}${path}`);
+      Object.defineProperty(request, 'mode', { value: 'navigate' });
+      const respondWith = vi.fn();
+      runtime.listeners.fetch[0]({ request, respondWith });
+      expect(respondWith).not.toHaveBeenCalled();
+      expect(runtime.cacheApi.open).not.toHaveBeenCalled();
+      expect(runtime.cacheApi.match).not.toHaveBeenCalled();
+      expect(runtime.serviceWorker.isCacheableRequest(request)).toBe(false);
+    } finally {
+      restoreGlobal('self', runtime.originalSelf);
+      restoreGlobal('caches', runtime.originalCaches);
+    }
+  });
   it('precache 清單只包含 App Shell 入口，不含任何 API 或使用者資料路徑', () => {
     for (const url of PRECACHE_URLS) {
       expect(url.startsWith('/api/')).toBe(false);

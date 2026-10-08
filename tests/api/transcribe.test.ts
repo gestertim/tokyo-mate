@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { POST } from '../../api/transcribe';
+// 歷史內容契約的隔離回歸；真實 HTTP 拒絕路徑另見 paid-handlers-rejection.test.ts。
+import { executeUpstream as POST } from '../../api/transcribe';
 import { createOpenAIClient } from '../../api/_lib/openai';
 
 vi.mock('../../api/_lib/openai', () => ({

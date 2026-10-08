@@ -1,13 +1,16 @@
 import { createOpenAIClient, getOpenAIModel } from './_lib/openai.js';
 import { failure, isRecord, readJsonBody, success } from './_lib/http.js';
 import { normalizeAssistantResult } from './_lib/assistant-schema.js';
-import { translationInstruction } from './_lib/prompts/translation.js';
-import { travelInstruction } from './_lib/prompts/travel.js';
 import { liveDataInstruction } from './_lib/prompts/live-data.js';
 import { emergencyInstruction } from './_lib/prompts/emergency.js';
 import { selectKnowledgeEntries, serializeKnowledgeContext } from '../src/services/knowledge.js';
 import type { AssistantResult } from '../src/types/assistant';
 import type { UserRequest, UserTone } from '../src/types/request';
+import { createPaidEndpointBoundary, type PaidBoundaryOptions } from './_lib/paid-endpoint-boundary.js';
+import { buildTravelInput, buildTranslationInput } from './_lib/upstream-text-inputs.js';
+
+export const createHandler = (options?: PaidBoundaryOptions) => createPaidEndpointBoundary('assistant', options);
+export const POST = createHandler();
 
 const invalidInput = {
   code: 'INVALID_INPUT' as const,
@@ -32,7 +35,7 @@ interface VerificationTiming {
   model: string;
 }
 
-export async function POST(request: Request): Promise<Response> {
+export async function executeUpstream(request: Request): Promise<Response> {
   const serverStart = performance.now();
   const correlationId = request.headers.get('x-tokyo-mate-verification-id') ?? `server-${Date.now()}`;
   const timing: VerificationTiming = {
@@ -185,7 +188,7 @@ async function requestProviderTravel(text: string, tone: UserTone, contextSummar
       model,
       reasoning: { effort: 'low' },
       text: { verbosity: 'low' },
-      input: `${travelInstruction(contextSummary)}\n使用者問題：${text}\n語氣：${tone}`,
+      input: buildTravelInput(text, tone, contextSummary),
     });
   } catch (error) {
     timing.providerMs = roundMilliseconds(performance.now() - providerStart);
@@ -326,7 +329,7 @@ async function requestProviderTranslation(text: string, tone: UserTone, timing: 
   try {
     response = await client.responses.create({
       model,
-      input: `${translationInstruction(tone)}\n使用者文字：${text}`,
+      input: buildTranslationInput(text, tone),
     });
   } catch (error) {
     timing.providerMs = roundMilliseconds(performance.now() - providerStart);

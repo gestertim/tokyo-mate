@@ -3,6 +3,7 @@ import type { PhotoTranslateTargetLanguage, TranslationState } from '../../types
 
 interface TranslationPanelProps {
   translation?: TranslationState;
+  accessMessage?: string;
   onSelectTarget: (target: PhotoTranslateTargetLanguage) => void;
   onRetryTranslate: () => void;
 }
@@ -16,7 +17,7 @@ function otherTarget(target: PhotoTranslateTargetLanguage): PhotoTranslateTarget
   return target === 'zh-TW' ? 'ja' : 'zh-TW';
 }
 
-export function TranslationPanel({ translation, onSelectTarget, onRetryTranslate }: TranslationPanelProps) {
+export function TranslationPanel({ translation, accessMessage, onSelectTarget, onRetryTranslate }: TranslationPanelProps) {
   const selectedTarget = translation?.selectedTarget;
   const status = translation?.status ?? 'idle';
   const displayed = translation?.displayed;
@@ -57,12 +58,12 @@ export function TranslationPanel({ translation, onSelectTarget, onRetryTranslate
         <>
           {displayed?.text ? (
             <>
-              <p role="alert">切換翻譯失敗，可重試；以下為切換前最後一次成功的翻譯結果（{TARGET_LABELS[displayed.target]}）：</p>
+              <p role="alert">{accessMessage ?? '切換翻譯失敗，可重試；'}以下為切換前最後一次成功的翻譯結果（{TARGET_LABELS[displayed.target]}）：</p>
               <p>{displayed.text}</p>
               <AudioPlayer key={`${displayed.target}:${displayed.text}`} text={displayed.text} language={displayed.target} />
             </>
           ) : (
-            <p role="alert">翻譯服務暫時無法使用，請重新嘗試翻譯。</p>
+            <p role="alert">{accessMessage ?? '翻譯服務暫時無法使用，請重新嘗試翻譯。'}</p>
           )}
           <button type="button" onClick={onRetryTranslate}>
             重新嘗試翻譯

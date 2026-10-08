@@ -1,13 +1,18 @@
 import OpenAI from 'openai';
-import { createInstrumentedFetch } from './openai-attempt-instrumentation.js';
+import { createInstrumentedFetch, type OpenAIAttemptInstrumentationDeps } from './openai-attempt-instrumentation.js';
 
-// verificationCorrelationId 僅用於一次性 attempt-level 驗證記錄，不影響 request semantics、maxRetries 或 timeout（均維持 SDK 預設）。
-export function createOpenAIClient(verificationCorrelationId?: string): OpenAI {
-  const apiKey = process.env.OPENAI_API_KEY;
+export function createOpenAIClient(
+  verificationCorrelationId?: string,
+  options: OpenAIAttemptInstrumentationDeps & { apiKey?: string; timeoutMs?: number } = {},
+): OpenAI {
+  const apiKey = options.apiKey ?? process.env.OPENAI_API_KEY;
   if (!apiKey) {
     throw new Error('OPENAI_API_KEY is not configured');
   }
-  return new OpenAI({ apiKey, fetch: createInstrumentedFetch(verificationCorrelationId) });
+  if (options.timeoutMs !== undefined && (!Number.isSafeInteger(options.timeoutMs) || options.timeoutMs <= 0))
+    throw new RangeError('timeoutMs 必須為正安全整數');
+  return new OpenAI({ apiKey, maxRetries: 0, fetch: createInstrumentedFetch(verificationCorrelationId, options),
+    ...(options.timeoutMs !== undefined ? { timeout: options.timeoutMs } : {}) });
 }
 
 export function getOpenAIModel(): string {

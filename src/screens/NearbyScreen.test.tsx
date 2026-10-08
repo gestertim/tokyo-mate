@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { NearbyScreen } from './NearbyScreen';
 import * as api from '../services/api';
+import * as accessApi from '../services/access-api';
 import * as geolocation from '../services/geolocation';
 import type { PlaceResult } from '../types/place';
 
@@ -55,6 +56,7 @@ function unreliablePlace(overrides: Partial<PlaceResult> = {}): PlaceResult {
 describe('NearbyScreen — User Story 1 地圖理解', () => {
   beforeEach(() => {
     vi.restoreAllMocks();
+    vi.spyOn(accessApi, 'loadMapAccess').mockResolvedValue({ eligibleForInteractiveMap: true, reason: 'eligible', fetchedAt: '2026-10-06T02:00:00.000Z', resetAt: new Date(Date.now() + 60000).toISOString() });
     mapPropsHolder.current = undefined as unknown as Record<string, unknown>;
   });
 
@@ -112,6 +114,7 @@ describe('NearbyScreen — User Story 1 地圖理解', () => {
 describe('NearbyScreen — User Story 2 前往此地', () => {
   beforeEach(() => {
     vi.restoreAllMocks();
+    vi.spyOn(accessApi, 'loadMapAccess').mockResolvedValue({ eligibleForInteractiveMap: true, reason: 'eligible', fetchedAt: '2026-10-06T02:00:00.000Z', resetAt: new Date(Date.now() + 60000).toISOString() });
     mapPropsHolder.current = undefined as unknown as Record<string, unknown>;
   });
 
@@ -152,6 +155,7 @@ describe('NearbyScreen — User Story 2 前往此地', () => {
 describe('NearbyScreen — User Story 3 手動地區', () => {
   beforeEach(() => {
     vi.restoreAllMocks();
+    vi.spyOn(accessApi, 'loadMapAccess').mockResolvedValue({ eligibleForInteractiveMap: true, reason: 'eligible', fetchedAt: '2026-10-06T02:00:00.000Z', resetAt: new Date(Date.now() + 60000).toISOString() });
     mapPropsHolder.current = undefined as unknown as Record<string, unknown>;
   });
 
@@ -175,6 +179,7 @@ describe('NearbyScreen — User Story 3 手動地區', () => {
 describe('NearbyScreen — User Story 4 韌性與一致性', () => {
   beforeEach(() => {
     vi.restoreAllMocks();
+    vi.spyOn(accessApi, 'loadMapAccess').mockResolvedValue({ eligibleForInteractiveMap: true, reason: 'eligible', fetchedAt: '2026-10-06T02:00:00.000Z', resetAt: new Date(Date.now() + 60000).toISOString() });
     mapPropsHolder.current = undefined as unknown as Record<string, unknown>;
   });
 

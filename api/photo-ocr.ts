@@ -1,6 +1,10 @@
 import { createOpenAIClient, getOpenAIModel } from './_lib/openai.js';
 import { failure, isRecord, readJsonBody, success } from './_lib/http.js';
 import { photoOcrInstruction } from './_lib/prompts/photo-ocr.js';
+import { createPaidEndpointBoundary, type PaidBoundaryOptions } from './_lib/paid-endpoint-boundary.js';
+
+export const createHandler = (options?: PaidBoundaryOptions) => createPaidEndpointBoundary('photo-ocr', options);
+export const POST = createHandler();
 
 const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
 const allowedMimeTypes = new Set(['image/jpeg', 'image/png', 'image/webp']);
@@ -30,7 +34,7 @@ interface OcrProviderResult {
   sourceText?: string;
 }
 
-export async function POST(request: Request): Promise<Response> {
+export async function executeUpstream(request: Request): Promise<Response> {
   let body: PhotoOcrRequestBody;
   try {
     body = await readJsonBody<PhotoOcrRequestBody>(request);

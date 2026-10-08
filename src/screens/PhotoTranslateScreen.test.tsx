@@ -100,6 +100,33 @@ async function completeOcrSuccess(sourceText: string) {
   await waitFor(() => expect(screen.getByText(sourceText)).toBeInTheDocument());
 }
 
+describe('005 照片付費拒絕：保留本機內容與單一明確提示', () => {
+  it('未核准 OCR 留下照片與選區，恢復事件不自動重送', async () => {
+    vi.mocked(requestPhotoOcr).mockRejectedValueOnce({
+      code: 'ACCESS_NOT_APPROVED', userMessage: '此帳號目前沒有有效的付費功能核准資格。你仍可查看公開內容。',
+    });
+    acquirePhoto();
+    confirmValidSelection();
+    expect(await screen.findByRole('alert')).toHaveTextContent('沒有有效的付費功能核准資格');
+    expect(screen.getByAltText('已選取的照片區域')).toBeInTheDocument();
+    fireEvent(window, new Event('online'));
+    fireEvent(window, new Event('focus'));
+    expect(requestPhotoOcr).toHaveBeenCalledTimes(1);
+  });
+  it('額度拒絕翻譯保留照片／OCR 原文，不顯示 provider error 或自動補送', async () => {
+    await completeOcrSuccess('保留這份原文');
+    vi.mocked(requestPhotoTranslate).mockRejectedValueOnce({
+      code: 'WEEKLY_QUOTA_EXHAUSTED', userMessage: '本週額度暫不可用，請申請當週追加。',
+    });
+    fireEvent.click(screen.getByRole('button', { name: '繁體中文' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent('本週額度暫不可用');
+    expect(screen.getByText('保留這份原文')).toBeInTheDocument();
+    expect(screen.getByAltText('已選取的照片區域')).toBeInTheDocument();
+    fireEvent(window, new Event('online'));
+    expect(requestPhotoTranslate).toHaveBeenCalledTimes(1);
+  });
+});
+
 describe('PhotoTranslateScreen（Phase 2 Photo Acquisition 轉場, FR-002）', () => {
   it('預設 phase 為 acquisition 並渲染 PhotoAcquisitionPanel', () => {
     render(<PhotoTranslateScreen />);

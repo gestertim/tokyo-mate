@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { POST } from '../../api/assistant';
+// 歷史內容契約的隔離回歸；真實 HTTP 拒絕路徑另見 paid-handlers-rejection.test.ts。
+import { executeUpstream as POST } from '../../api/assistant';
 import latencyCases from '../fixtures/latency-cases.json';
 
 // Deterministic intent routing regression matrix.

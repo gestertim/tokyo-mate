@@ -15,7 +15,7 @@ export function HomeScreen({ onOpenKnowledge }: HomeScreenProps) {
   const [photoTranslateOpen, setPhotoTranslateOpen] = useState(false);
   const [travelJapaneseOpen, setTravelJapaneseOpen] = useState(false);
   if (assistantOpen) return <AssistantScreen initialText={text} onBack={() => setAssistantOpen(false)} />;
-  if (nearbyOpen) return <NearbyScreen onBack={() => setNearbyOpen(false)} />;
+  if (nearbyOpen) return <NearbyScreen onBack={() => setNearbyOpen(false)} onOpenPublic={onOpenKnowledge} />;
   if (photoTranslateOpen) return <PhotoTranslateScreen onBack={() => setPhotoTranslateOpen(false)} />;
   if (travelJapaneseOpen) return <TravelJapaneseScreen onBack={() => setTravelJapaneseOpen(false)} />;
   return <section aria-labelledby="home-heading">

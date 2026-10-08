@@ -1,5 +1,11 @@
 # Tokyo Mate 東京通
 
+> **005 本機開發狀態**：目前工作樹包含部分 API 防護實作，尚未完成或部署。六個付費 handler 預設未配置時 fail-closed（503）；Public 不送付費 POST，互動地圖需最新資格，原有免費內容仍可用。不要把下方既有 MVP 功能與驗證描述視為本輪正式整合已通過；詳見 [005 本機實作證據](docs/verification/005-local-implementation-evidence.md)。既有 baseline 與待驗證狀態保留。
+
+005 新增「本人申請與操作狀態」手動入口：提出付費資格／本週追加、查詢本人清單與撤回、以原操作端點及識別碼查看記帳狀態。進入頁面不自動申請或查詢，不重送付費操作；`settled`不代表內容成功取得。清單完整JSON上限64 KiB，超限縮頁並正確續頁。這些僅為已批准本機 factories／UI，預設未配置仍503；沒有啟用正式Redis／OIDC、付費API或部署。
+
+005 D13 已完成指定 OIDC library 與可信影像 decoder 的本機接線／測試：驗證使用攔截 transport、測試 RSA/JWKS 與記憶體 JPEG／PNG／WebP fixtures，未連接 Google 帳戶、未存圖或呼叫 vision。六個付費端點仍停用；正式服務／Vercel部署未驗。D07／D08 [request-epoch 契約](specs/005-api-protection-access-modes/contracts/request-epoch-and-key-lifecycle.md) 的 T157～T161 本機子範圍已完成：原子首次 grant、原命令手動確認、本人唯讀 oneOf 與 TEST_ONLY 管理分步稽核。沒有正式資料／key 清除、輪替或 legacy cutover；完整回歸 1287 個實跑通過、0 跳過，僅為本機證據。詳見最新本機證據，既有 MVP validation 狀態不變。
+
 給東京自由行旅客的實用 Web App —— 把常用的旅遊翻譯、問答、地圖與日文表達工具，集中在一個手機瀏覽器就能開啟的小幫手。
 
 不需要懂日文，也不需要熟悉東京，就能即時翻譯、詢問旅遊問題、拍照翻譯看不懂的文字、探索附近的景點與美食，並在需要開口說日文時，快速找到合適的一句話。Tokyo Mate 重視手機操作體驗，目前已有 6 項可以實際使用的功能。
@@ -155,8 +161,29 @@ VITE_GEOAPIFY_API_KEY=
 ### Development server
 
 ```bash
-npm run dev
+npm run dev -- --host 127.0.0.1
 ```
+
+Vite 預設提供前端於 `http://127.0.0.1:5173/`。東京百科與旅遊日文等 Public 內容可直接操作；付費資格狀態需要 `/api`，Vite 會代理至 `http://localhost:3000`。未啟動相應本機 API server 時，額度區會顯示「目前無法確認」，但不會阻擋 Public 內容。不得以 TEST_ONLY fixture 作為正式 API factory fallback。
+
+另開終端機啟動明確標示的 TEST_ONLY 本機 API（僅記憶體測試身分，不讀 env／秘密、不連外；缺少 `--test-only`、production／Vercel 環境一律拒絕）：
+
+```powershell
+node scripts\005-test-only-server.mjs --test-only
+```
+
+開啟 `http://127.0.0.1:5173/api/auth/login` 選擇測試身分（未登入／待核准／第一級／第二級／已撤銷／管理者）；額度橫幅顯示於首頁，管理者介面為 `http://127.0.0.1:5173/admin`（`test-admin` 可核准 `test-pending`）。目前此入口只涵蓋 session、額度、地圖資格與管理端；`/api/me/requests`、epoch 與六個付費端點不在其中（付費端點由 targeted mock 測試覆蓋，production 仍 `live:false`）。
+
+### 005 TEST_ONLY 隔離驗證
+
+以下只執行本機 mock，不登入真實 Google／Upstash、不呼叫付費上游：
+
+```powershell
+npm test -- tests/api/phase-b-process.test.ts tests/api/oidc-flow.test.ts tests/api/admin-auth.test.ts tests/api/quota-reservation.test.ts tests/api/protected-endpoint-pipeline.test.ts tests/api/protected-endpoint-success.integration.test.ts
+npm run build
+```
+
+Phase B dry-run 使用 `.specify/phase-b-plan-v5.json` 保存非秘密計畫；重跑會重用同一 namespace／inventory／操作限制及 digest，並綁定 Lua／runner source hashes。條件式 execute 需核對該 digest、當次 Read Regions／付款方式／其他 workload 與有來源及時區的用量觀測；齊備後才提示無回顯秘密輸入，並以本機狀態檔阻止第二次批次。不要將憑證放進命令列、環境變數或檔案。production 六端點仍 `live:false`，speech 真實呼叫受阻。
 
 ### Build
 

@@ -11,7 +11,8 @@ vi.mock('../../api/_lib/openai.js', () => ({
   getOpenAIModel: () => 'gpt-4o-mini',
 }));
 
-import { POST } from '../../api/photo-ocr';
+// 歷史內容契約的隔離回歸；真實 HTTP 拒絕路徑另見 paid-handlers-rejection.test.ts。
+import { executeUpstream as POST } from '../../api/photo-ocr';
 
 function buildDataUrl(mimeType: string, byteLength: number): string {
   return `data:${mimeType};base64,${Buffer.alloc(byteLength, 1).toString('base64')}`;

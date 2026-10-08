@@ -6,6 +6,7 @@ import { LiveDataStatus } from '../../components/LiveDataStatus';
 import { EmergencyAnswerCard } from '../emergency/EmergencyAnswerCard';
 import { NearbyScreen } from '../../screens/NearbyScreen';
 import * as api from '../../services/api';
+import * as accessApi from '../../services/access-api';
 import * as geolocation from '../../services/geolocation';
 import type { PlaceResult } from '../../types/place';
 
@@ -54,6 +55,7 @@ describe('nearby and emergency journeys', () => {
 describe('NearbyScreen category wiring, distance and recovery', () => {
   beforeEach(() => {
     vi.restoreAllMocks();
+    vi.spyOn(accessApi, 'loadMapAccess').mockResolvedValue({ eligibleForInteractiveMap: true, reason: 'eligible', fetchedAt: '2026-10-06T02:00:00.000Z', resetAt: new Date(Date.now() + 60000).toISOString() });
   });
 
   it('passes the selected category through to the /api/places request for manual area search', async () => {

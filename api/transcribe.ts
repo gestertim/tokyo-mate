@@ -1,5 +1,9 @@
 import { createOpenAIClient } from './_lib/openai.js';
 import { failure, success } from './_lib/http.js';
+import { createPaidEndpointBoundary, type PaidBoundaryOptions } from './_lib/paid-endpoint-boundary.js';
+
+export const createHandler = (options?: PaidBoundaryOptions) => createPaidEndpointBoundary('transcribe', options);
+export const POST = createHandler();
 
 const allowedMimeTypes = new Set(['audio/webm', 'audio/mp4', 'audio/m4a', 'audio/wav', 'audio/aac']);
 const mimeExtensionMap: Record<string, string> = {
@@ -12,7 +16,7 @@ const mimeExtensionMap: Record<string, string> = {
 
 const invalidAudio = { code: 'INVALID_INPUT' as const, userTitle: '音訊檔案無效', userMessage: '無法讀取錄音檔案，請重新錄音。', actionableStep: '請確認麥克風功能正常後再試一次，或改用文字輸入。' };
 
-export async function POST(request: Request): Promise<Response> {
+export async function executeUpstream(request: Request): Promise<Response> {
   try {
     let form: FormData;
     try { form = await request.formData(); } catch { return Response.json(failure(invalidAudio), { status: 400 }); }

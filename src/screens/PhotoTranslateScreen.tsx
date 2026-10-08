@@ -9,6 +9,14 @@ import type { PhotoTranslateTargetLanguage, PhotoTranslateTaskState } from '../t
 
 const INITIAL_TASK: PhotoTranslateTaskState = { phase: 'acquisition', regionVersion: 0 };
 
+function accessFailureMessage(error: unknown): string | undefined {
+  if (typeof error !== 'object' || error === null || !('code' in error) ||
+      !('userMessage' in error) || typeof error.userMessage !== 'string') return undefined;
+  return ['AUTH_REQUIRED', 'ACCESS_NOT_APPROVED', 'PROTECTION_SERVICE_UNAVAILABLE', 'NETWORK_ERROR',
+    'DAILY_QUOTA_EXHAUSTED', 'WEEKLY_QUOTA_EXHAUSTED', 'RATE_LIMITED', 'DUPLICATE_REQUEST',
+    'IDEMPOTENCY_CONFLICT'].includes(String(error.code)) ? error.userMessage : undefined;
+}
+
 interface PhotoTranslateScreenProps {
   onBack?: () => void;
 }
@@ -26,7 +34,7 @@ async function blobUrlToDataUrl(blobUrl: string): Promise<string> {
 }
 
 export function PhotoTranslateScreen({ onBack }: PhotoTranslateScreenProps) {
-  const [task, setTask] = useState<PhotoTranslateTaskState>(INITIAL_TASK);
+  const [task, setTask] = useState<PhotoTranslateTaskState & { accessMessage?: string }>(INITIAL_TASK);
 
   // 依 FR-013／FR-014：原始照片 object URL 於更換照片、更換為新照片或離開功能（卸載）時即時 revoke，不長期保留任務外資源。
   useEffect(() => {
@@ -54,10 +62,11 @@ export function PhotoTranslateScreen({ onBack }: PhotoTranslateScreenProps) {
 
   function handleReselectRegion() {
     // 依 FR-016：一旦開始重新選取，立即（依 phase 切換）隱藏舊 OCR 結果，不等待新選取確認。
-    setTask((current) => ({ ...current, phase: 'region_selection' }));
+    setTask((current) => ({ ...current, phase: 'region_selection', accessMessage: undefined }));
   }
 
   async function runOcr(regionVersionAtRequest: number, croppedObjectUrl: string) {
+    setTask((current) => ({ ...current, accessMessage: undefined }));
     try {
       const imageDataUrl = await blobUrlToDataUrl(croppedObjectUrl);
       const result = await requestPhotoOcr(imageDataUrl, regionVersionAtRequest);
@@ -71,10 +80,12 @@ export function PhotoTranslateScreen({ onBack }: PhotoTranslateScreenProps) {
             : { forRegionVersion: regionVersionAtRequest, status: 'no_reliable_text' },
         };
       });
-    } catch {
+    } catch (error: unknown) {
       setTask((current) => {
         if (current.regionVersion !== regionVersionAtRequest) return current;
-        return { ...current, phase: 'error', ocr: { forRegionVersion: regionVersionAtRequest, status: 'failure' } };
+        return { ...current, phase: 'error',
+          accessMessage: accessFailureMessage(error),
+          ocr: { forRegionVersion: regionVersionAtRequest, status: 'failure' } };
       });
     }
   }
@@ -108,6 +119,7 @@ export function PhotoTranslateScreen({ onBack }: PhotoTranslateScreenProps) {
 
   // 依 data-model.md §3：翻譯回應僅在仍對應目前 regionVersion 與使用者當下選擇的 target 時才可套用，避免 out-of-order / stale 結果復活。
   async function runTranslate(regionVersionAtRequest: number, target: PhotoTranslateTargetLanguage, sourceText: string) {
+    setTask((current) => ({ ...current, accessMessage: undefined }));
     try {
       const result = await requestPhotoTranslate(sourceText, target);
       setTask((current) => {
@@ -124,13 +136,14 @@ export function PhotoTranslateScreen({ onBack }: PhotoTranslateScreenProps) {
           },
         };
       });
-    } catch {
+    } catch (error: unknown) {
       setTask((current) => {
         if (current.regionVersion !== regionVersionAtRequest) return current;
         if (current.translation?.selectedTarget !== target) return current;
         return {
           ...current,
           phase: 'translation_result',
+          accessMessage: accessFailureMessage(error),
           translation: current.translation ? { ...current.translation, status: 'failure' } : current.translation,
         };
       });
@@ -205,6 +218,7 @@ export function PhotoTranslateScreen({ onBack }: PhotoTranslateScreenProps) {
         <OcrResultPanel
           croppedObjectUrl={task.region?.croppedObjectUrl ?? ''}
           ocr={task.ocr}
+          accessMessage={task.accessMessage}
           translation={task.translation}
           onSelectTranslationTarget={handleSelectTranslationTarget}
           onRetryTranslate={handleRetryTranslate}

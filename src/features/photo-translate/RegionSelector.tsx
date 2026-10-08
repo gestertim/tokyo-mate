@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import type { CSSProperties, KeyboardEvent as ReactKeyboardEvent, PointerEvent as ReactPointerEvent } from 'react';
 import type { PhotoTranslatePhoto, PhotoTranslateRegion } from '../../types/photoTranslate';
+import { scaledOcrSize, validateOcrBlob } from '../../services/image-payload';
 
 type RegionRect = PhotoTranslateRegion['rect'];
 type Corner = 'nw' | 'ne' | 'sw' | 'se';
@@ -83,6 +84,7 @@ export function RegionSelector({ photo, onConfirm }: RegionSelectorProps) {
   const dragStateRef = useRef<DragState | null>(null);
   const [naturalSize, setNaturalSize] = useState<{ width: number; height: number } | null>(null);
   const [rect, setRect] = useState<RegionRect | null>(null);
+  const [error, setError] = useState<string>();
 
   function handleImageLoad() {
     const image = imageRef.current;
@@ -177,14 +179,21 @@ export function RegionSelector({ photo, onConfirm }: RegionSelectorProps) {
 
   function handleConfirm() {
     if (!isValid || !rect || !imageRef.current) return;
+    setError(undefined);
     const canvas = document.createElement('canvas');
-    canvas.width = Math.max(1, Math.round(rect.width));
-    canvas.height = Math.max(1, Math.round(rect.height));
+    const size = scaledOcrSize(rect.width, rect.height);
+    canvas.width = size.width;
+    canvas.height = size.height;
     const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    if (!ctx) { setError('此瀏覽器無法處理選取影像，請重新嘗試或改用文字。'); return; }
     ctx.drawImage(imageRef.current, rect.x, rect.y, rect.width, rect.height, 0, 0, canvas.width, canvas.height);
     canvas.toBlob((blob) => {
-      if (!blob) return;
+      if (!blob) { setError('無法產生選取影像，請重新選取範圍。'); return; }
+      try { validateOcrBlob(blob); }
+      catch (value) {
+        setError(value instanceof Error ? value.message : '無法確認影像，請重新選取範圍。');
+        return;
+      }
       const croppedObjectUrl = URL.createObjectURL(blob);
       onConfirm({ rect, croppedObjectUrl });
     }, 'image/jpeg');
@@ -197,6 +206,8 @@ export function RegionSelector({ photo, onConfirm }: RegionSelectorProps) {
     <section aria-labelledby="region-selector-heading" data-testid="region-selector">
       <h3 id="region-selector-heading">選取要辨識的文字範圍</h3>
       <p>在照片上拖曳出要辨識的文字範圍</p>
+      <p>送出副本最長邊限制2048像素；細字不清楚時請縮小選取範圍，原圖不會被覆寫。</p>
+      {error && <p role="alert">{error}</p>}
       <div
         ref={wrapperRef}
         data-testid="region-selector-surface"

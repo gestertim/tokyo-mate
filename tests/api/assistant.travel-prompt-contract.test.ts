@@ -11,7 +11,8 @@ vi.mock('../../api/_lib/openai.js', () => ({
   getOpenAIModel: () => 'gpt-5.6-terra',
 }));
 
-import { POST } from '../../api/assistant';
+// 歷史內容契約的隔離回歸；真實 HTTP 拒絕路徑另見 paid-handlers-rejection.test.ts。
+import { executeUpstream as POST } from '../../api/assistant';
 
 async function postAssistant(text: string) {
   return POST(new Request('http://localhost/api/assistant', {

@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   test: {
     environment: 'jsdom',
-    setupFiles: ['./src/test/setup.ts'],
+    setupFiles: ['./tests/support/block-external-network.ts', './src/test/setup.ts'],
     pool: 'threads',
     maxWorkers: 1,
     exclude: ['node_modules/**', 'tools/travel-japanese-audio-qa/qa-data.test.mjs'],

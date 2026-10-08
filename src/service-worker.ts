@@ -78,6 +78,7 @@ if (isServiceWorkerRuntime()) {
 
   self.addEventListener('fetch', (event: any) => {
     const request = event.request as Request;
+    if (new URL(request.url).pathname.startsWith('/api/')) return;
     if (isNavigationRequest(request)) {
       event.respondWith(handleNavigationRequest(request));
       return;

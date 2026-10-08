@@ -1,10 +1,14 @@
 import { createOpenAIClient } from './_lib/openai.js';
 import { failure, isRecord, readJsonBody, success } from './_lib/http.js';
 import type { SpeechGenerationRequest } from '../src/types/speech';
+import { createPaidEndpointBoundary, type PaidBoundaryOptions } from './_lib/paid-endpoint-boundary.js';
+
+export const createHandler = (options?: PaidBoundaryOptions) => createPaidEndpointBoundary('speech', options);
+export const POST = createHandler();
 
 const invalidSpeech = { code: 'INVALID_INPUT' as const, userTitle: '無法合成語音', userMessage: '發音內容過長或格式不正確。', actionableStep: '請直接展示畫面上的日文字給對方觀看。' };
 
-export async function POST(request: Request): Promise<Response> {
+export async function executeUpstream(request: Request): Promise<Response> {
   try {
     const body = await readJsonBody<Partial<SpeechGenerationRequest>>(request);
     if (!isRecord(body) || typeof body.text !== 'string' || body.text.length === 0 || body.text.length > 500 || !['ja', 'zh-TW'].includes(body.language ?? '') || (body.speed && !['normal', 'slow'].includes(body.speed))) {

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { PlaceCategory } from '../../types/place';
 
 interface NearbyExplorerProps {
+  restricted?: boolean;
   onUseMyLocation?: (category: PlaceCategory) => void;
   onManualAreaSearch?: (area: string, category: PlaceCategory) => void;
 }
@@ -15,15 +16,15 @@ const categoryOptions: Array<{ value: PlaceCategory; label: string }> = [
   { value: 'station', label: '車站' },
 ];
 
-export function NearbyExplorer({ onUseMyLocation, onManualAreaSearch }: NearbyExplorerProps) {
+export function NearbyExplorer({ onUseMyLocation, onManualAreaSearch, restricted = false }: NearbyExplorerProps) {
   const [manualArea, setManualArea] = useState('');
   const [category, setCategory] = useState<PlaceCategory>('all');
 
   return (
     <section aria-label="附近探索">
       <div role="group" aria-label="附近探索位置選擇">
-        <button type="button" onClick={() => onUseMyLocation?.(category)}>使用我的位置</button>
-        <button type="button" onClick={() => onManualAreaSearch?.(manualArea.trim() || '淺草', category)}>輸入地區</button>
+        <button type="button" disabled={restricted} onClick={() => onUseMyLocation?.(category)}>使用我的位置</button>
+        <button type="button" disabled={restricted} onClick={() => onManualAreaSearch?.(manualArea.trim() || '淺草', category)}>輸入地區</button>
       </div>
       <label>
         手動地區

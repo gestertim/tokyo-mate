@@ -1,5 +1,9 @@
 import { failure, isRecord, isNonEmptyString, readJsonBody, success } from './_lib/http.js';
 import type { ProductError } from '../src/types/error';
+import { createPaidEndpointBoundary, type PaidBoundaryOptions } from './_lib/paid-endpoint-boundary.js';
+
+export const createHandler = (options?: PaidBoundaryOptions) => createPaidEndpointBoundary('places', options);
+export const POST = createHandler();
 
 const allowedCategories = ['food', 'shopping', 'attraction', 'convenience', 'station', 'all'] as const;
 type AllowedCategory = (typeof allowedCategories)[number];
@@ -39,7 +43,7 @@ type GooglePlace = {
   types?: string[];
 };
 
-export async function POST(request: Request): Promise<Response> {
+export async function executeUpstream(request: Request): Promise<Response> {
   try {
     const body = await readJsonBody<Partial<{ location: { type?: string; coordinates?: { latitude?: unknown; longitude?: unknown }; manualArea?: string }; category?: string; query?: string }>>(request);
     if (!isRecord(body) || !isRecord(body.location)) {

@@ -7,11 +7,30 @@ export type ErrorCode =
   | 'PLACES_SERVICE_UNAVAILABLE'
   | 'LIVE_SEARCH_UNAVAILABLE'
   | 'NETWORK_ERROR'
-  | 'INVALID_INPUT';
+  | 'INVALID_INPUT'
+  | 'AUTH_REQUIRED'
+  | 'ACCESS_NOT_APPROVED'
+  | 'ADMIN_REQUIRED'
+  | 'METHOD_NOT_ALLOWED'
+  | 'PAYLOAD_TOO_LARGE'
+  | 'RATE_LIMITED'
+  | 'DAILY_QUOTA_EXHAUSTED'
+  | 'WEEKLY_QUOTA_EXHAUSTED'
+  | 'MAP_TILE_QUOTA_EXHAUSTED'
+  | 'INVALID_TILE_COORDINATE'
+  | 'DUPLICATE_REQUEST'
+  | 'IDEMPOTENCY_CONFLICT'
+  | 'OPERATION_NOT_FOUND'
+  | 'OPERATION_NO_LONGER_EXECUTABLE'
+  | 'REQUEST_NOT_FOUND'
+  | 'REQUEST_ALREADY_RESOLVED'
+  | 'PROTECTION_SERVICE_UNAVAILABLE';
 
 export interface ProductError {
   code: ErrorCode;
   userTitle: string;
   userMessage: string;
   actionableStep: string;
+  retryAfterSeconds?: number;
+  quotaScope?: 'all' | 'request';
 }
